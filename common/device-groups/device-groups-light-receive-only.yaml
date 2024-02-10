@@ -1,0 +1,8 @@
+packages:
+  device_groups_base: !include device-groups-base.yaml
+
+device_groups:
+  - group_name: ${device_group_name}
+    send_mask: 0
+    lights:
+      - light_primary

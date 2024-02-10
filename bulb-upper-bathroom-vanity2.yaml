@@ -1,0 +1,11 @@
+substitutions:
+  device_name: bulb-upper-bathroom-vanity2
+  friendly_name: Upper Bathroom Vanity Bulb 2
+  device_group_name: group-upper-bathroom-vanity-lights
+  area: Upper Bathroom
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  device: !include common/devices/bulbs/tuya-generic-beken-n-bp5758d-a19.yaml
+  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml

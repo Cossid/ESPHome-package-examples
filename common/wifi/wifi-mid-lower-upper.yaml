@@ -1,0 +1,17 @@
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_password
+      bssid: !secret wifi_ch11_bssid
+      channel: 11
+      priority: 20
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_password
+      bssid: !secret wifi_ch6_bssid
+      channel: 6
+      priority: 2
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_password
+      bssid: !secret wifi_ch1_bssid
+      channel: 1
+      priority: 1

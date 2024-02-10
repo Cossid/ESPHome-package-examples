@@ -1,0 +1,17 @@
+substitutions:
+  device_name: switch-mud-room1
+  friendly_name: Mud Room Light
+  device_group_name: group-mud-room-lights
+  detach_relay: "true"
+  motion_on_time: '10' # time (in seconds) to leave the relay on after motion is sensed 
+  motion_off_holdoff: '0'  # how long (in seconds) to ignore motion if turned off via button or motion ending
+  button_hold_for_hold_on_time: '1s'  # how long to press and hold the button to switch to hold-on mode
+  restore_mode_relay: ALWAYS_ON
+  restore_mode_motion: RESTORE_DEFAULT_ON
+  area: Mud Room
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  device: !include common/devices/switches/motion-single.yaml
+  device_groups: !include common/device-groups/device-groups-light.yaml

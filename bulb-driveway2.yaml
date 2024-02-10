@@ -1,0 +1,11 @@
+substitutions:
+  device_name: bulb-driveway2
+  friendly_name: Driveway Bulb 2
+  device_group_name: group-driveway-lights
+  area: Driveway
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  device: !include common/devices/bulbs/cree-100w-n.yaml
+  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml

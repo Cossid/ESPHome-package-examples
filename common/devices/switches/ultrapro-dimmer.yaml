@@ -1,0 +1,88 @@
+substitutions:
+  detach_relay: "false"
+  status_light_follows_primary_light_state: "false"
+  status_inverted: "false"
+  min_power: "0.1"
+  max_power: "1.0"
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  project_name: "UltraPro.WFD3001_CB3S_Serial_PWM_Dimmer_Switch"
+  project_version: "0.0.1"
+  hardware_info: "UltraPro WFD3001 CB3S Serial PWM Dimmer Switch"
+
+globals:
+- id: detach_relay_value
+  type: bool
+  initial_value: ${detach_relay}
+- id: status_light_follows_primary_light_state_value
+  type: bool
+  initial_value: ${status_light_follows_primary_light_state}
+
+bk72xx:
+  board: cb3s
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+uart:
+  baud_rate: 115200
+  tx_pin: GPIO11
+  rx_pin: GPIO10
+  # debug:
+  #   direction: BOTH
+  #   dummy_receiver: false
+  #   after:
+  #     delimiter: "\n"
+  #   sequence:
+  #     - lambda: UARTDebug::log_string(direction, bytes);
+
+output:
+  - platform: template
+    id: output_template
+    type: float
+    min_power: ${min_power}
+    max_power: ${max_power}
+    zero_means_zero: true
+    write_action:
+      # - logger.log:
+      #     format: "%f"
+      #     args: [state]
+      - uart.write: !lambda return {0x65, 0xAA, 0x00, 0x01, 0x05, 0x00, 0x00, 0x00, (uint8_t)(state * 255), 0x00, (uint8_t)(277 + (uint8_t)(state * 255))};
+
+light:
+  - platform: monochromatic
+    id: light_primary
+    name: ""
+    output: output_template
+    #gamma_correct: 1.0
+    #default_transition_length: 0s
+    restore_mode: ${restore_mode_light}
+  - platform: status_led
+    id: light_status
+    pin:
+      number: GPIO24
+      inverted: ${status_inverted}
+    restore_mode: RESTORE_DEFAULT_OFF
+
+binary_sensor:
+  - platform: gpio
+    id: button_up
+    pin:
+      number: GPIO7 # On/Up Button
+      inverted: true
+    on_click:
+      - light.turn_on: light_primary
+  - platform: gpio
+    id: button_down
+    pin:
+      number: GPIO8 # Off/Down Button
+      inverted: true
+    on_click:
+      - light.turn_off: light_primary
+  - platform: gpio
+    id: button_reset
+    pin:
+      number: GPIO6 # Reset Button
+      inverted: true
+    #on_click:
+    #- TODO

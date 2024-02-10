@@ -1,0 +1,14 @@
+substitutions:
+  project_name: "DevBoard.CBU"
+  project_version: "0.0.1"
+  hardware_info: "Tuya CBU Dev Board"
+
+bk72xx:
+  board: cbu
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+logger:
+  level: VERBOSE

@@ -1,0 +1,30 @@
+substitutions:
+  project_name: "Aijia.6in_Recessed_RGBWW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Aijia 6in Recessed RGBWW Bulb"
+  restore_mode_light: RESTORE_DEFAULT_OFF
+
+bk72xx:
+  board: generic-bk7231n-qfn32-tuya
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  rgbww_light: !include ../../light/rgbww.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+output:
+  - platform: libretiny_pwm
+    id: output_red
+    pin: GPIO8
+  - platform: libretiny_pwm
+    id: output_green
+    pin: GPIO24
+  - platform: libretiny_pwm
+    id: output_blue
+    pin: GPIO7
+  - platform: libretiny_pwm
+    id: output_cold_white
+    pin: GPIO26
+  - platform: libretiny_pwm
+    id: output_warm_white
+    pin: GPIO6

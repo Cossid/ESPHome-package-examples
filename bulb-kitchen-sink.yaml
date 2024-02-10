@@ -1,0 +1,12 @@
+substitutions:
+  device_name: bulb-kitchen-sink
+  friendly_name: Kitchen Sink Bulb
+  device_group_name: group-kitchen-sink-lights
+  restore_mode_light: ALWAYS_OFF
+  area: Kitchen Sink
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  device: !include common/devices/bulbs/teckin-br30.yaml
+  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml

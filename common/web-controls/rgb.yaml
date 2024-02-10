@@ -1,0 +1,56 @@
+esphome:
+  on_boot:
+    - if:
+        condition:
+          lambda: return 1;
+        then:
+          lambda: |-
+            id(light_primary).add_new_remote_values_callback([]() {
+              id(number_red).publish_state(id(light_primary).remote_values.get_red());
+              id(number_green).publish_state(id(light_primary).remote_values.get_green());
+              id(number_blue).publish_state(id(light_primary).remote_values.get_blue());
+            }); return;
+
+number:
+  - platform: template
+    name: Color - Red
+    id: number_red
+    #internal: true
+    disabled_by_default: true
+    mode: slider
+    min_value: 0.0
+    max_value: 1.0
+    step: 0.01
+    update_interval: never
+    set_action:
+      - light.control:
+          id: light_primary
+          red: !lambda return x;
+  - platform: template
+    name: Color - Green
+    id: number_green
+    #internal: true
+    disabled_by_default: true
+    mode: slider
+    min_value: 0.0
+    max_value: 1.0
+    step: 0.01
+    update_interval: never
+    set_action:
+      - light.control:
+          id: light_primary
+          green: !lambda return x;
+  - platform: template
+    name: Color - Blue
+    id: number_blue
+    #internal: true
+    disabled_by_default: true
+    mode: slider
+    min_value: 0.0
+    max_value: 1.0
+    step: 0.01
+    update_interval: never
+    set_action:
+      - light.control:
+          id: light_primary
+          blue: !lambda return x;

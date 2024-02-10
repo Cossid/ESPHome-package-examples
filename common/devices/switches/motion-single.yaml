@@ -1,0 +1,189 @@
+substitutions:
+  motion_on_time: '10' # time (in seconds) to leave the relay on after motion is sensed 
+  motion_off_holdoff: '0'  # how long (in seconds) to ignore motion if turned off via button or motion ending
+  button_hold_for_hold_on_time: '1s'  # how long to press and hold the button to switch to hold-on mode
+  restore_mode_relay: ALWAYS_ON
+  restore_mode_motion: RESTORE_DEFAULT_ON
+  detach_relay: "true"
+  status_light_follows_primary_light_state: "false"
+  project_name: "CloudFree/Milfra.SWM1/MFA05_ESP8266_1_Button_Motion_Switch"
+  project_version: "0.0.1"
+  hardware_info: "CloudFree/Milfra SWM1/MFA05 ESP8266 1 Button Motion Switch"
+  ignore_sun: "false"
+
+globals:
+  - id: motion_state
+    type: int
+    restore_value: no
+    initial_value: '0'
+    # 0 = off
+    # 1 = on by motion
+    # 2 = off after motion, in hold-off
+    # 3 = hold-on state
+    # 4 = quick on via button when no motion
+  - id: motion_keep_on_seconds_remaining
+    type: int
+    restore_value: no
+    initial_value: '0'
+  - id: global_ignore_sun
+    type: bool
+    restore_value: no
+    initial_value: ${ignore_sun}
+
+esp8266:
+  board: esp8285
+  restore_from_flash: true
+  #early_pin_init: false
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  dummy_light: !include ../../light/dummy-light.yaml
+
+light: 
+  - platform: status_led
+    id: light_status
+    pin:
+      # Blue LED
+      number: GPIO13
+      inverted: true
+
+# The green LED appears to mask the blue 
+# It also appears to be overridden by the relay
+output:
+  - platform: gpio
+    # Green LED
+    id: led1
+    pin: GPIO16
+        
+switch:
+  - platform: gpio
+    name: "Load Power"
+    id: load_power
+    disabled_by_default: true
+    restore_mode: ${restore_mode_relay}
+    pin: GPIO12
+  - platform: template
+    id: motion_enabled
+    name: "Motion Enabled"
+    optimistic: true
+    restore_mode: ${restore_mode_motion}
+
+binary_sensor:
+  - platform: gpio
+    id: button_toggle
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: true
+    on_click:
+      - light.turn_on: light_primary
+
+  - platform: gpio
+    name: "Motion Sense"
+    device_class: "motion"
+    pin:
+      number: GPIO5
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - logger.log:
+            format: "state %d, motion high"
+            args: [ 'id(motion_state)' ]
+        -  if: 
+            condition:
+              and:
+                - lambda: return ((id(motion_state) == 0 || id(motion_state) == 1) && id(light_state).state == 0 && id(motion_enabled).state == 1);
+                - or:
+                  - sun.is_below_horizon:
+                  - lambda: return id(global_ignore_sun) == 1;
+            then:
+              - script.stop: motion_stopped
+              - globals.set:
+                  id: motion_state
+                  value: "1"
+              - light.turn_on: light_primary
+          
+    on_release:
+      then:
+        - logger.log:
+            format: "state %d, motion low"
+            args: [ 'id(motion_state)' ]
+        - if:
+            condition:
+              and:
+                - lambda: return (id(motion_state) == 1 && id(motion_enabled).state == 1);
+                - or:
+                  - sun.is_below_horizon:
+                  - lambda: return id(global_ignore_sun) == 1;
+            then:
+              - script.execute: motion_stopped
+
+  - platform: gpio
+    id: light_state
+    name: "Light Sense"
+    device_class: "light"
+    pin:
+      number: GPIO14
+      mode: INPUT
+      
+script:
+  # immediately stops the timer and turns everything off
+  # only runs if we're turned on by motion or a quick press
+  - id: motion_stopped
+    mode: restart
+    then:         
+          - globals.set:
+              id: motion_state
+              value: "1"
+          - globals.set:
+              id: motion_keep_on_seconds_remaining
+              value: ${motion_on_time}
+          - while: 
+              condition:
+                and:
+                  - lambda: return(id(motion_keep_on_seconds_remaining) > 0);
+                  - or:
+                    - sun.is_below_horizon:
+                    - lambda: return id(global_ignore_sun) == 1;
+              then:
+                - logger.log:
+                    format: "off after motion, seconds_remaining %d"
+                    args: [ 'id(motion_keep_on_seconds_remaining)' ]
+                - lambda: id(motion_keep_on_seconds_remaining) -= 1;
+                - delay: 1s
+          - light.turn_off: light_primary
+  - id: update_status
+    then:
+      - if:
+          condition:
+            lambda: return id(light_primary).remote_values.get_state() > 0;
+          then:
+            - if:
+                condition:
+                  lambda: return to_string("${status_light_follows_primary_light_state}") == "true";
+                then:
+                  light.turn_on: light_status
+          else:
+            - if:
+                condition:
+                  lambda: return to_string("${status_light_follows_primary_light_state}") == "true";
+                then:
+                  light.turn_off: light_status
+  - id: update_relay
+    then:
+      - if:
+          condition:
+            lambda: return id(light_primary).remote_values.get_state() > 0;
+          then:
+            - if:
+                condition:
+                  lambda: return to_string("${detach_relay}") == "false";
+                then:
+                  - switch.turn_on: load_power
+          else:
+            - if:
+                condition:
+                  lambda: return to_string("${detach_relay}") == "false";
+                then:
+                  - switch.turn_off: load_power

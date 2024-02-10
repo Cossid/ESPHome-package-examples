@@ -1,0 +1,11 @@
+substitutions:
+  device_name: bulb-fireplace2
+  friendly_name: Fireplace Bulb 2
+  device_group_name: group-fireplace-lights
+  area: Fireplace Lights
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  device: !include common/devices/bulbs/teckin-br30.yaml
+  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml

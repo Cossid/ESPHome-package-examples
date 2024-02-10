@@ -1,0 +1,110 @@
+substitutions:
+  detach_relay: "false"
+  status_light_follows_primary_light_state: "false"
+  status_inverted: "false"
+  restore_mode_relay: RESTORE_DEFAULT_OFF
+  project_name: "Linkind.WS240010008_ESP32-Solo1_2_Button_Switch"
+  project_version: "0.0.1"
+  hardware_info: "Linkind WS240010008 ESP32-Solo1 2 Button Switch"
+
+globals:
+- id: detach_relay_value
+  type: bool
+  initial_value: ${detach_relay}
+- id: status_light_follows_primary_light_state_value
+  type: bool
+  initial_value: ${status_light_follows_primary_light_state}
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: y
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  dummy_light: !include ../../light/dummy-light.yaml
+
+switch:
+  - platform: gpio
+    name: "Load Power"
+    id: relay
+    disabled_by_default: true
+    pin: GPIO5 # Relay
+    restore_mode: ${restore_mode_relay}
+
+# output:
+#   - platform: gpio
+#     pin: GPIO14
+#     inverted: false
+#     id: led_green
+#   - platform: gpio
+#     pin: GPIO26
+#     id: led_red
+
+  # TODO: Impliment LED hooks
+
+  #pin: GPIO25 might or might not be hooked up to something? Not clear.
+
+binary_sensor:
+  - platform: gpio
+    id: button_on
+    pin:
+      number: GPIO32
+      inverted: true
+      mode: INPUT_PULLUP
+    on_click:
+      - light.turn_on: light_primary
+  - platform: gpio
+    id: button_off
+    pin:
+      number: GPIO33
+      inverted: true
+      mode: INPUT_PULLUP
+    on_click:
+      - light.turn_off: light_primary
+
+light:
+  - platform: status_led
+    id: light_status
+    pin:
+      number: GPIO26 # Red is GPIO26, Green is GPIO14
+      inverted: ${status_inverted}
+    restore_mode: RESTORE_DEFAULT_OFF
+
+script:
+  - id: update_status
+    then:
+      - if:
+          condition:
+            lambda: return id(light_primary).remote_values.get_state() > 0;
+          then:
+            - if:
+                condition:
+                  lambda: return id(status_light_follows_primary_light_state_value) == true;
+                then:
+                  light.turn_on: light_status
+          else:
+            - if:
+                condition:
+                  lambda: return id(status_light_follows_primary_light_state_value) == true;
+                then:
+                  light.turn_off: light_status
+  - id: update_relay
+    then:
+      - if:
+          condition:
+            lambda: return id(light_primary).remote_values.get_state() > 0;
+          then:
+            - if:
+                condition:
+                  lambda: return id(detach_relay_value) == false;
+                then:
+                  - switch.turn_on: relay
+          else:
+            - if:
+                condition:
+                  lambda: return id(detach_relay_value) == false;
+                then:
+                  - switch.turn_off: relay

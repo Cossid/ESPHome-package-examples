@@ -1,0 +1,76 @@
+substitutions:
+  restore_mode_relay1: RESTORE_DEFAULT_ON
+  restore_mode_relay2: RESTORE_DEFAULT_ON
+  restore_mode_relay3: RESTORE_DEFAULT_ON
+  voltage_divider: "2166"
+  current_resistor: "0.001 ohm"
+  calibration_power_uncalibrated_value: "170.3"
+  calibration_power_expected_value: "60"
+  calibration_current_uncalibrated_value: "1.39"
+  calibration_current_expected_value: "0.5"
+  project_name: "KMC.ESP8266_2M_HLW8012_4-Outlet-Extender"
+  project_version: "0.0.1"
+  hardware_info: "KMC ESP8266 2M HLW8012 4-Outlet Extender"
+
+esp8266:
+  board: esp_wroom_02
+  early_pin_init: false
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+
+switch:
+  - platform: gpio
+    id: relay1
+    name: "Outlet 1"
+    pin: GPIO15
+    restore_mode: ${restore_mode_relay1}
+  - platform: gpio
+    id: relay2
+    name: "Outlet 2"
+    pin: GPIO13
+    restore_mode: ${restore_mode_relay2}
+  - platform: gpio
+    id: relay3
+    name: "Outlet 3"
+    pin: GPIO14
+    restore_mode: ${restore_mode_relay3}
+
+binary_sensor:
+  - platform: gpio
+    id: binary_switch_all
+    pin: GPIO16
+    on_press:
+      then:
+        - switch.toggle: relay1
+        - switch.toggle: relay2
+        - switch.toggle: relay3
+
+status_led:
+  pin:
+    number: GPIO1
+    inverted: true
+
+sensor:
+  - platform: hlw8012
+    cf_pin: GPIO4
+    cf1_pin: GPIO5
+    sel_pin: GPIO12
+    current:
+      name: Current
+      filters:
+        - calibrate_linear:
+            - 0.0 -> 0.0
+            - ${calibration_current_uncalibrated_value} -> ${calibration_current_expected_value}
+    voltage:
+      name: Voltage
+    power:
+      name: Power
+      filters:
+        - calibrate_linear:
+            - 0.0 -> 0.0
+            - ${calibration_power_uncalibrated_value} -> ${calibration_power_expected_value}
+    energy:
+      name: Energy
+    voltage_divider: ${voltage_divider}
+    current_resistor: ${current_resistor}

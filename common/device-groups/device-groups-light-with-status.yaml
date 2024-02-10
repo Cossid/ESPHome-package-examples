@@ -1,0 +1,10 @@
+packages:
+  device_groups_base: !include device-groups-base.yaml
+
+device_groups:
+  - group_name: ${device_group_name}
+    lights:
+      - light_primary
+  - group_name: ${device_group_name}-status
+    lights:
+      - light_status

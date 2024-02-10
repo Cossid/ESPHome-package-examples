@@ -1,0 +1,31 @@
+substitutions:
+  project_name: "Horevo.Ceiling_Light_WB3S_PWM_RGBWW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Horevo Ceiling Light WB3S PWM RGBWW Bulb"
+
+bk72xx:
+  board: wb3s
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  rgbww_light: !include ../../light/rgbww.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+output:
+  - platform: libretiny_pwm
+    id: output_red
+    pin: GPIOWM5
+  - platform: libretiny_pwm
+    id: output_green
+    pin: GPIOWM4
+  - platform: libretiny_pwm
+    id: output_blue
+    pin: GPIOWM0
+  - platform: libretiny_pwm
+    id: output_cold_white
+    pin: GPIOWM3
+  - platform: libretiny_pwm
+    id: output_warm_white
+    pin: GPIOWM2
+
+# D1 is IR data

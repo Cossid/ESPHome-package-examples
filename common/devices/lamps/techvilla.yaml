@@ -1,0 +1,104 @@
+substitutions:
+  project_name: "Bubble.RGB_Lamp"
+  project_version: "0.0.1"
+  hardware_info: "Bubble RGB Lamp"
+
+esp8266:
+  board: esp01_1m
+  restore_from_flash: true
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  web_controls_rgb: !include ../../web-controls/rgb.yaml
+  web_controls_cct: !include ../../web-controls/cct.yaml
+
+logger:
+  baud_rate: 0
+
+# time:
+#   - platform: sntp
+#     id: the_time
+
+uart:
+  rx_pin: GPIO3
+  tx_pin: GPIO1
+  baud_rate: 9600
+
+tuya:
+
+#[00:22:42][C][tuya:039]:   Datapoint 20: switch (value: ON)
+#[00:22:42][C][tuya:045]:   Datapoint 21: enum (value: 4)
+#[00:22:42][C][tuya:041]:   Datapoint 22: int value (value: 1000)
+#[00:22:42][C][tuya:041]:   Datapoint 23: int value (value: 1000)
+#[00:22:42][C][tuya:043]:   Datapoint 24: string value (value: 001D03e803e8)
+#[00:22:42][C][tuya:056]:   Product: '{"p":"bvamyty4j1xpaqnc","v":"1.0.1","m":0}'
+
+light:
+  - platform: tuya
+    id: RGBid
+    name: RGB
+    #hsv_datapoint: 24
+    color_type: hsv
+    color_datapoint: 24
+    #on_turn_off:
+    #  - light.addressable_set:
+    #      id: RGBid
+    #      range_from: 0
+    #      range_to: 50
+    #      red: 100%
+    #      green: 0%
+    #      blue: 0%
+  - platform: tuya
+    name: CTWhite
+    dimmer_datapoint: 22
+    min_value: 30
+    max_value: 1000
+    color_temperature_datapoint: 23
+    color_temperature_max_value: 1000
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K
+    color_temperature_invert: true
+
+switch:
+  - platform: tuya
+    name: $friendly_name
+    switch_datapoint: 20
+
+# number:
+#   - platform: tuya
+#     name: "Color Mode"
+#     number_datapoint: 21
+#     min_value: 0
+#     max_value: 255
+#     step: 1
+#   - platform: tuya
+#     name: Dimmer
+#     number_datapoint: 22
+#     min_value: 30
+#     max_value: 1000
+#     step: 1
+#   - platform: tuya
+#     name: CT
+#     number_datapoint: 23
+#     min_value: 0
+#     max_value: 1000
+#     step: 1
+
+# sensor:
+#   - platform: tuya
+#     name: "20_value"
+#     sensor_datapoint: 20
+#   - platform: tuya
+#     name: "21_value"
+#     sensor_datapoint: 21
+#   - platform: tuya
+#     name: "22_value"
+#     sensor_datapoint: 22
+#   - platform: tuya
+#     name: "23_value"
+#     sensor_datapoint: 23
+
+# text_sensor:
+#   - platform: tuya
+#     name: "24_value"
+#     sensor_datapoint: 24

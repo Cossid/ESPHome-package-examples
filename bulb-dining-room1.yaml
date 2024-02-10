@@ -1,0 +1,11 @@
+substitutions:
+  device_name: bulb-dining-room1
+  friendly_name: Dining Room Bulb 1
+  device_group_name: group-dining-room-lights
+  area: Dining Room
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  device: !include common/devices/bulbs/daybetter-n-a19.yaml
+  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml

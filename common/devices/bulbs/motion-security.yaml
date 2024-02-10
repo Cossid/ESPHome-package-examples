@@ -1,0 +1,48 @@
+substitutions:
+  project_name: "Motion_Security.CT_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Motion Security CT Bulb"
+  restore_mode_light: RESTORE_DEFAULT_OFF
+
+bk72xx:
+  board: wb3s
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  rgbww_light: !include ../../light/rgbww.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+esphome:
+  name: bulb-motion-security
+  name_add_mac_suffix: true
+
+output:
+  - platform: libretiny_pwm
+    id: output_cold_white
+    pin: GPIOWM2 # Cold White
+  - platform: libretiny_pwm
+    id: output_warm_white
+    pin: GPIOWM3 # Warm White
+
+light:
+  - platform: cwww
+    restore_mode: ${restore_mode_light}
+    id: light_primary
+    name: ""
+    cold_white: output_cold_white
+    warm_white: output_warm_white
+    #color_interlock: true
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K
+
+binary_sensor:
+  - platform: gpio
+    pin: GPIO6
+    name: "Motion Sensor"
+    device_class: motion
+  - platform: gpio
+    pin: GPIO23
+    name: "Light Sensor"
+    device_class: light
+    filters:
+      - invert:

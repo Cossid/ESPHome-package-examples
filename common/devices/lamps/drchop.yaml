@@ -1,0 +1,91 @@
+esphome:
+  name: light-drchop
+  name_add_mac_suffix: true
+
+rtl87xx:
+  board: generic-rtl8710bn-2mb-788k
+  # framework:
+  #   version: dev
+
+# button:
+#   - platform: ...
+#     name: button1
+#     id: button1
+
+# light:
+#   - platform: fastled_clockless
+#     chipset: WS2812B
+#     pin: GPIO23
+#     num_leds: 48
+#     rgb_order: BRG
+#     name: "Light"
+#     id: led_matrix_light
+#     default_transition_length: 0s
+#     color_correct: [50%, 50%, 50%]
+#     restore_mode: ALWAYS_ON
+# light:
+#   - platform: neopixelbus
+#     type: GRB
+#     variant: WS2811
+#     pin: GPIO23
+#     num_leds: 48
+#     name: "NeoPixel Light"
+
+# display:
+#   - platform: addressable_light
+#     id: led_matrix_display
+#     addressable_light_id: led_matrix_light
+#     width: 1
+#     height: 48
+#     rotation: 180°
+#     update_interval: 16ms
+#     # lambda: |-
+#     #       // Draw a bulls-eye pattern
+#     #       Color red = Color(0xFF0000);
+#     #       Color green = Color(0x00FF00);
+#     #       Color blue = Color(0x0000FF);
+#     #       it.rectangle(0, 0, 8, 8, red);
+#     #       it.rectangle(1, 1, 6, 6, green);
+#     #       it.rectangle(2, 2, 4, 4, blue);
+#     #       it.rectangle(3, 3, 2, 2, red);
+
+# switch:
+#   - platform: template
+#     name: "relay"
+#     id: relay
+#     optimistic: true
+#   - platform: template
+#     id: template_switch
+#     name: template_switch
+#     optimistic: true
+
+# output:
+#   - platform: template
+#     id: dummy_output
+#     type: float
+#     write_action:
+#       - lambda: return;
+
+# light:
+#   - platform: rgbww
+#     id: internal_light
+#     name: Light1
+#     color_interlock: true
+#     cold_white_color_temperature: 6500 K
+#     warm_white_color_temperature: 2700 K
+#     red: dummy_output
+#     green: dummy_output
+#     blue: dummy_output
+#     cold_white: dummy_output
+#     warm_white: dummy_output
+  # - platform: rgbww
+  #   id: light_rgbww2
+  #   name: Light2
+  #   color_interlock: true
+  #   cold_white_color_temperature: 6500 K
+  #   warm_white_color_temperature: 2700 K
+  #   red: dummy_output
+  #   green: dummy_output
+  #   blue: dummy_output
+  #   cold_white: dummy_output
+  #   warm_white: dummy_output

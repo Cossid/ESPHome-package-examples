@@ -1,0 +1,46 @@
+substitutions:
+  project_name: "SwitchBot.A19_ESP32-C3_SM2335_RGBWW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "SwitchBot A19 ESP32-C3 SM2335 RGBWW Bulb"
+
+esp32:
+  variant: ESP32C3
+  board: esp32dev
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_BT_BLE_50_FEATURES_SUPPORTED: y
+      CONFIG_BT_BLE_42_FEATURES_SUPPORTED: y
+
+esphome:
+  platformio_options:
+    board_build.mcu: esp32c3
+    board_build.variant: esp32c3
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  rgbww_light: !include ../../light/rgbww.yaml
+
+sm2335:
+  data_pin: GPIO4
+  clock_pin: GPIO5
+  max_power_color_channels: 9
+  max_power_white_channels: 9
+
+# Individual outputs
+output:
+  - platform: sm2335
+    id: output_red
+    channel: 1
+  - platform: sm2335
+    id: output_green
+    channel: 0
+  - platform: sm2335
+    id: output_blue
+    channel: 2
+  - platform: sm2335
+    id: output_cold_white
+    channel: 4
+  - platform: sm2335
+    id: output_warm_white
+    channel: 3

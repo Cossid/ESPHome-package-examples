@@ -1,0 +1,29 @@
+substitutions:
+  project_name: "Tuya_Generic.S18_CB3S_IR_Repeater"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic S18 CB3S IR Repeater"
+
+bk72xx:
+  board: cb3s
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+# button:
+#   platform: gpio
+#   pin: GPIO6
+
+status_led:
+  pin: GPIO8
+
+remote_receiver:
+  pin:
+    number: GPIO7
+    inverted: true
+    mode: INPUT_PULLUP
+  # dump: all
+
+remote_transmitter:
+  pin: GPIO26
+  carrier_duty_percent: 50%

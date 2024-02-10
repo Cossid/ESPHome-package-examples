@@ -1,0 +1,79 @@
+substitutions:
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  project_name: "Tuya_Generic.CBU_PWM_RGBWW_Night_Light"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic CBU PWM RGBWW Night Light"
+
+bk72xx:
+  board: cbu
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+logger:
+  logs:
+    sensor: INFO
+
+# BS612 PIR Sensor
+
+output:
+  - platform: libretiny_pwm
+    id: output_red
+    pin: GPIO26
+  - platform: libretiny_pwm
+    id: output_green
+    pin: GPIO24
+  - platform: libretiny_pwm
+    id: output_blue
+    pin: GPIO6
+  - platform: libretiny_pwm
+    id: output_warm_white
+    pin: GPIO7
+  - platform: libretiny_pwm
+    id: output_cold_white
+    pin: GPIO8
+
+light:
+  - platform: rgbww
+    id: light_primary
+    restore_mode: ${restore_mode_light}
+    name: ""
+    red: output_red
+    green: output_green
+    blue: output_blue
+    warm_white: output_warm_white
+    cold_white: output_cold_white
+    color_interlock: true
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K
+
+binary_sensor:
+  - platform: gpio
+    id: button_toggle
+    #name: "Button"
+    pin:
+      number: GPIO20
+      inverted: true
+  - platform: gpio
+    id: luminosity_state
+    name: Binary Light Detection
+    pin:
+      number: GPIO9
+      mode: INPUT_PULLUP
+    device_class: light
+  - platform: gpio
+    id: motion_state
+    name: Motion Sensor
+    pin:
+      number: GPIO14
+      mode: INPUT_PULLUP
+    device_class: motion
+
+sensor:
+  - platform: adc
+    pin: A0
+    name: Luminosity
+    raw: true #0(bright)-636(dark) on raw
+    update_interval: 1s
+    device_class: illuminance

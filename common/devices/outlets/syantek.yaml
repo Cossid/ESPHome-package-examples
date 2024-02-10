@@ -1,0 +1,63 @@
+substitutions:
+  restore_mode_relay1: RESTORE_DEFAULT_ON
+  restore_mode_relay2: RESTORE_DEFAULT_ON
+  restore_mode_relay3: RESTORE_DEFAULT_ON
+  project_name: "Syantek.CB2S_Power_Extender"
+  project_version: "0.0.1"
+  hardware_info: "Syantek Power Extender CB2S"
+
+bk72xx:
+  board: cb2s
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+light:
+  - platform: binary
+    id: light_status
+    output: output_status_led
+
+# Red LED
+output:
+  - platform: gpio
+    id: output_status_led
+    pin: GPIO8
+    inverted: true
+
+switch:
+  - platform: gpio
+    id: relay1
+    name: "Outlet 1"
+    pin: GPIO6
+    restore_mode: ${restore_mode_relay1}
+  - platform: gpio
+    id: relay2
+    name: "Outlet 2"
+    pin: GPIO26
+    restore_mode: ${restore_mode_relay2}
+  - platform: gpio
+    id: relay3
+    name: "Outlet 3"
+    pin: GPIO24
+    restore_mode: ${restore_mode_relay3}
+
+binary_sensor:
+  - platform: gpio
+    id: binary_switch_all
+    pin:
+      number: GPIO10
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: relay1
+        - switch.toggle: relay2
+        - switch.toggle: relay3
+        - light.toggle: light_status
+
+# Blue LED
+status_led:
+  pin:
+    number: GPIO11
+    inverted: true

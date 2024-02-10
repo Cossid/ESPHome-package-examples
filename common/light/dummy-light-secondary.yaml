@@ -1,0 +1,52 @@
+substitutions:
+  restore_mode_light_secondary: RESTORE_AND_OFF
+  project_name: ""
+  project_version: "0.0.1"
+  hardware_info: ""
+  cold_white_color_temperature: "6500 K"
+  warm_white_color_temperature: "2700 K"
+  default_white_color_temperature: "2700 K"
+
+output:
+  - platform: template
+    id: output_dummy_secondary
+    type: float
+    write_action:
+      - lambda: return;
+
+light:
+  - platform: rgbww
+    id: light_secondary
+    #name: ""
+    restore_mode: ${restore_mode_light_secondary}
+    color_interlock: true
+    cold_white_color_temperature: ${cold_white_color_temperature}
+    warm_white_color_temperature: ${warm_white_color_temperature}
+    red: output_dummy_secondary
+    green: output_dummy_secondary
+    blue: output_dummy_secondary
+    cold_white: output_dummy_secondary
+    warm_white: output_dummy_secondary
+
+esphome:
+  on_boot:
+    if:
+      condition:
+        lambda: return id(light_secondary).current_values.get_red() == 1.0f && id(light_secondary).current_values.get_green() == 1.0f && id(light_secondary).current_values.get_blue() == 1.0f && (id(light_secondary).current_values.get_cold_white() == 1.0f || id(light_secondary).current_values.get_warm_white() == 1.0f);
+      then:
+        light.control:
+          id: light_secondary
+          red: 0%
+          green: 0%
+          blue: 0%
+          color_brightness: 0%
+          color_temperature: ${default_white_color_temperature}
+          brightness: 100%
+          # cold_white: 0%
+          # warm_white: 100%
+
+# button:
+#   - platform: template
+#     name: Dump Config
+#     on_press:
+#       lambda: return ESP_LOGCONFIG("LIGHT CONFIG", "Config - red %f green %f blue %f cold_white %f warm_white %f mode %u", id(light_secondary).current_values.get_red(), id(light_secondary).current_values.get_green(), id(light_secondary).current_values.get_blue(), id(light_secondary).current_values.get_cold_white(), id(light_secondary).current_values.get_warm_white(), id(light_secondary).current_values.get_color_mode());

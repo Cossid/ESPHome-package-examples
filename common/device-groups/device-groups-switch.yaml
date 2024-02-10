@@ -1,0 +1,7 @@
+packages:
+  device_groups_base: !include device-groups-base.yaml
+
+device_groups:
+  - group_name: ${device_group_name}
+    switches:
+      - internal_switch

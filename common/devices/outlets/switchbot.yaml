@@ -1,0 +1,94 @@
+substitutions:
+  restore_mode_relay: RESTORE_DEFAULT_ON
+  current_resistor: "0.0011"
+  voltage_divider: "1450"
+  project_name: "SwitchBot.ESP32-C3_BL0937"
+  project_version: "0.0.1"
+  hardware_info: "Switchbot ESP32-C3 BL0937"
+
+esp32:
+  variant: ESP32C3
+  board: esp32dev
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_BT_BLE_50_FEATURES_SUPPORTED: y
+      CONFIG_BT_BLE_42_FEATURES_SUPPORTED: y
+
+esphome:
+  platformio_options:
+    board_build.mcu: esp32c3
+    board_build.variant: esp32c3
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+
+sensor:
+  - platform: hlw8012
+    sel_pin:
+      number: GPIO20
+      inverted: true
+    cf_pin: GPIO18
+    cf1_pin: GPIO19
+    model: BL0937
+    current_resistor: ${current_resistor}
+    voltage_divider: ${voltage_divider}
+    current:
+      name: Current
+      accuracy_decimals: 1
+    voltage:
+      name: Voltage
+      accuracy_decimals: 1
+    power:
+      name: Power
+      accuracy_decimals: 1
+    energy:
+      name: Energy
+    update_interval: 3s
+    change_mode_every: 4
+
+switch:
+  - platform: gpio
+    name: Relay
+    id: relay
+    device_class: outlet
+    pin: GPIO6
+    restore_mode: ${restore_mode_relay}
+    on_turn_on:
+      then:
+        - light.turn_on: light_status
+    on_turn_off:
+      then:
+        - light.turn_off: light_status  
+
+binary_sensor:
+  - platform: gpio
+    id: button_primary
+    internal: true
+    pin:
+      number: GPIO2
+      mode: INPUT_PULLUP
+      inverted: true
+    filters:
+      - delayed_on: 10ms
+    on_press:
+      then:
+        - switch.toggle: relay 
+
+light:
+  - platform: binary
+    id: light_status
+    output: output_status_led
+    restore_mode: ${restore_mode_relay} # attach to relay state
+
+output:
+  # White status LED
+  - id: output_status_led
+    platform: gpio
+    pin: GPIO7
+    inverted: true
+
+status_led:
+  pin:
+    number: GPIO8
+    inverted: true

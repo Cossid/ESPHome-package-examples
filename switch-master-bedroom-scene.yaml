@@ -1,0 +1,16 @@
+substitutions:
+  device_name: switch-master-bedroom-scene
+  friendly_name: Master Bedroom Scene Controller
+  #device_group_name: group-master-bedroom-closet-light
+  detach_relay: "true"
+  status_light_follows_primary_light_state: "false"
+  status_inverted: "false"
+  restore_mode_relay: ALWAYS_OFF
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  area: Master Bedroom
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  device: !include common/devices/switches/ultrapro.yaml
+  #device_groups: !include common/device-groups/device-groups-light.yaml

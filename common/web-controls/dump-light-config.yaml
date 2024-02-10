@@ -1,0 +1,6 @@
+button:
+  - platform: template
+    name: Dump Config
+    internal: true
+    on_press:
+      lambda: return ESP_LOGCONFIG("LIGHT CONFIG", "Config - red %f green %f blue %f cold_white %f warm_white %f mode %u", id(light_primary).current_values.get_red(), id(light_primary).current_values.get_green(), id(light_primary).current_values.get_blue(), id(light_primary).current_values.get_cold_white(), id(light_primary).current_values.get_warm_white(), id(light_primary).current_values.get_color_mode());

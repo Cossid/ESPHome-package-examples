@@ -1,0 +1,43 @@
+substitutions:
+  project_name: "KMC.WB2S_4-Outlet_Extender"
+  project_version: "0.0.1"
+  hardware_info: "KMC WB2S 4-Outlet Extender"
+
+bk72xx:
+  board: wb2s
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+switch:
+  - platform: gpio
+    name: "Outlet 3"
+    id: relay3
+    pin: GPIO8
+  - platform: gpio
+    name: "Outlet 2"
+    id: relay2
+    pin: GPIO24
+  - platform: gpio
+    name: "Outlet 1"
+    id: relay1
+    pin: GPIO26
+  - platform: gpio
+    id: light_status
+    pin: GPIO11
+    inverted: yes
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO10
+      inverted: true
+    name: "Master Toggle"
+    id: "masterpowerbutton"
+    on_press:
+      then:
+        - switch.toggle: relay1
+        - switch.toggle: relay2
+        - switch.toggle: relay3
+        - switch.toggle: light_status

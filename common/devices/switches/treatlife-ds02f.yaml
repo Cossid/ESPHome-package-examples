@@ -1,0 +1,27 @@
+substitutions:
+  restore_mode_fan: RESTORE_DEFAULT_OFF
+  project_name: "Treatlife.DS02F_WB3S_TuyaMCU_Fan_Switch"
+  project_version: "0.0.1"
+  hardware_info: "Treatlife DS02F WB3S TuyaMCU Fan Switch"
+
+bk72xx:
+  board: wb3s
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+uart:
+  rx_pin: RX1
+  tx_pin: TX1
+  baud_rate: 115200
+
+tuya:
+
+fan:
+  - platform: "tuya"
+    name: ""
+    switch_datapoint: 1
+    speed_datapoint: 3
+    speed_count: 4
+    restore_mode: ${restore_mode_fan}

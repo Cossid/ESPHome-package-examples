@@ -1,0 +1,18 @@
+substitutions:
+  device_name: switch-driveway2
+  friendly_name: Driveway Light 2
+  device_group_name: group-driveway-lights
+  detach_relay: "true"
+  status_light_follows_primary_light_state: "true"
+  status_inverted: "false"
+  restore_mode_relay: ALWAYS_OFF
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  area: Driveway
+  warm_white_color_temperature: "2200 K"
+  default_white_color_temperature: "2200 K"
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  device: !include common/devices/switches/ultrapro.yaml
+  device_groups: !include common/device-groups/device-groups-light-with-status.yaml

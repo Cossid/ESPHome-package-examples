@@ -1,0 +1,28 @@
+substitutions:
+  project_name: "Dohome.A19_PWM_RGBWW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Dohome A19 PWM RGBWW Bulb"
+
+esp8266:
+  board: esp8285
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  rgbww_light: !include ../../light/rgbww.yaml
+
+output:
+  - platform: esp8266_pwm
+    id: output_red
+    pin: GPIO12
+  - platform: esp8266_pwm
+    id: output_green
+    pin: GPIO14
+  - platform: esp8266_pwm
+    id: output_blue
+    pin: GPIO5
+  - platform: esp8266_pwm
+    id: output_warm_white
+    pin: GPIO13
+  - platform: esp8266_pwm
+    id: output_cold_white
+    pin: GPIO4

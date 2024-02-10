@@ -1,0 +1,70 @@
+substitutions:
+  restore_mode_relay1: RESTORE_DEFAULT_ON
+  restore_mode_relay2: RESTORE_DEFAULT_ON
+  restore_mode_usb_a: RESTORE_DEFAULT_ON
+  restore_mode_usb_c: RESTORE_DEFAULT_ON
+  project_name: "Tuya-Generic.M04_CB2S_Wall_Outlet_with_Dual-USB"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic M04 CB2S Wall Outlet with Dual USB"
+
+bk72xx:
+  board: cb2s
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+status_led:
+  id: ledgreen
+  pin:
+    number: GPIO10
+    inverted: true
+
+binary_sensor:
+  - platform: gpio
+    id: button_top
+    pin:
+      number: GPIO11
+      mode: INPUT
+      inverted: true
+    on_press:
+      - switch.toggle: relay1
+  - platform: gpio
+    id: button_bottom
+    pin:
+      number: GPIO24
+      mode: INPUT
+      inverted: true
+    internal: true
+    on_press:
+      - switch.toggle: relay2
+
+switch:
+  - platform: gpio
+    name: "Top Outlet"
+    device_class: outlet
+    id: relay1
+    pin: GPIO26
+    inverted: false
+    restore_mode: ${restore_mode_relay1}
+  - platform: gpio
+    name: "Bottom Outlet"
+    device_class: outlet
+    id: relay2
+    pin: GPIO8
+    inverted: false
+    restore_mode: ${restore_mode_relay2}
+  - platform: gpio
+    name: "USB-A"
+    icon: mdi:usb
+    id: relay_usb_a
+    pin: GPIO6
+    inverted: false
+    restore_mode: ${restore_mode_usb_a}
+  - platform: gpio
+    name: "USB-C"
+    icon: mdi:usb
+    id: relay_usb_c
+    pin: GPIO7
+    inverted: false
+    restore_mode: ${restore_mode_usb_c}

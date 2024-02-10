@@ -1,0 +1,62 @@
+substitutions:
+  restore_mode_relay: RESTORE_DEFAULT_ON
+  project_name: "Sonoff.S31_ESP8266_1M_CSE7766"
+  project_version: "0.0.1"
+  hardware_info: "Sonoff S31 ESP8266 1M CSE7766"
+
+esp8266:
+  board: esp01_1m
+  restore_from_flash: true
+  early_pin_init: false
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+
+logger:
+  baud_rate: 0
+
+uart:
+  rx_pin: RX
+  baud_rate: 4800
+
+binary_sensor:
+  - platform: gpio
+    id: button_primary
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: true
+    on_press:
+      - switch.toggle: relay
+
+sensor:
+  - platform: cse7766
+    current:
+      name: Current
+      accuracy_decimals: 1
+    voltage:
+      name: Voltage
+      accuracy_decimals: 1
+    power:
+      name: Power
+      accuracy_decimals: 1
+      id: power
+  - platform: integration
+    name: Energy
+    sensor: power
+    time_unit: h
+    unit_of_measurement: kWh
+    filters:
+      - multiply: 0.001
+
+switch:
+  - platform: gpio
+    name: Relay
+    pin: GPIO12
+    id: relay
+    restore_mode: ${restore_mode_relay}
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: true

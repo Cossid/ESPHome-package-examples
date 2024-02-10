@@ -1,0 +1,41 @@
+substitutions:
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  cold_white_color_temperature: "6500 K"
+  warm_white_color_temperature: "2700 K"
+  default_white_color_temperature: "2700 K"
+
+packages:
+  web_controls_rgb: !include ../web-controls/rgb.yaml
+  web_controls_cct: !include ../web-controls/cct.yaml
+
+light:
+  - platform: rgbct
+    restore_mode: ${restore_mode_light}
+    id: light_primary
+    name: ""
+    color_interlock: true
+    cold_white_color_temperature: ${cold_white_color_temperature}
+    warm_white_color_temperature: ${warm_white_color_temperature}
+    red: output_red
+    green: output_green
+    blue: output_blue
+    white_brightness: output_brightness
+    color_temperature: output_temperature
+
+# On boot, if all colors and whites are set to full (defult unset), set default to warm white
+esphome:
+  on_boot:
+    if:
+      condition:
+        lambda: return id(light_primary).current_values.get_red() == 1.0f && id(light_primary).current_values.get_green() == 1.0f && id(light_primary).current_values.get_blue() == 1.0f && (id(light_primary).current_values.get_cold_white() == 1.0f || id(light_primary).current_values.get_warm_white() == 1.0f);
+      then:
+        light.control:
+          id: light_primary
+          red: 0%
+          green: 0%
+          blue: 0%
+          color_brightness: 0%
+          color_temperature: ${default_white_color_temperature}
+          brightness: 100%
+          # cold_white: 0%
+          # warm_white: 100%

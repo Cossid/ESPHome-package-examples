@@ -1,0 +1,36 @@
+substitutions:
+  project_name: "Tuya_Generic.100W_PWM_RGBWW_Spotlight"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic 100W (75W) PWM RGBWW Spotlight"
+
+bk72xx:
+  board: wb2l
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  rgbww_light: !include ../../light/rgbww.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+  ddp: !include ../../ddp/ddp.yaml
+
+# pins may be wrong, but it is PWM
+output:
+  - platform: libretiny_pwm
+    id: output_red
+    pin: GPIO8
+  - platform: libretiny_pwm
+    id: output_green
+    pin: GPIO24
+  - platform: libretiny_pwm
+    id: output_blue
+    pin: GPIO26
+  - platform: libretiny_pwm
+    id: output_warm_white
+    pin: GPIO6
+  - platform: libretiny_pwm
+    id: output_cold_white
+    pin: GPIO7
+
+light:
+  - id: !extend light_primary
+    effects:
+      - ddp

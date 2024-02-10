@@ -1,0 +1,8 @@
+substitutions:
+  project_name: "Kauf.A15_ESP8266_1M_PWM_RGBWW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Kauf A15 ESP8266 1M PWM RGBWW Bulb"
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  kauf.rgbww: github://KaufHA/kauf-rgbww-bulbs/kauf-bulb.yaml

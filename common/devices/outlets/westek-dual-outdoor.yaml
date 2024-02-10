@@ -1,0 +1,37 @@
+substitutions:
+  restore_mode_outlet: RESTORE_DEFAULT_OFF
+  project_name: "Westek.ESP8266_1M_Dual_Outdoor_Plug"
+  project_version: "0.0.1"
+  hardware_info: "Westek ESP8266 1M Dual Outdoor Plug"
+
+esp8266:
+  board: esp01_1m
+  early_pin_init: false
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+# wifi, logger, ota all in the yaml that calls this
+status_led:
+  pin:
+    number: GPIO4
+    inverted: true
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO13
+      mode: INPUT_PULLUP
+      inverted: true
+    id: toggle
+    on_press:
+      - switch.toggle: relay_outlets
+
+switch:
+  - platform: gpio
+    icon: mdi:power-socket-us
+    name: "Outlets"
+    pin: GPIO12
+    id: relay_outlets
+    restore_mode: ${restore_mode_outlet}

@@ -1,0 +1,19 @@
+substitutions:
+  device_name: garage-door-small
+  id_prefix: garage_door_small
+  friendly_name: Small Garage Door
+  #device_group_name: group-garage-lights
+  area: Garage
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  device: !include common/devices/garage-doors/ratgdo-esp32-d1-mini.yaml
+  btproxy: !include common/btproxy/btproxy.yaml
+  #device_groups: !include common/device-groups/device-groups-base.yaml
+
+# device_groups:
+#   - group_name: "${device_group_name}"
+#     send_mask: 0
+#     lights:
+#       - ${id_prefix}_light

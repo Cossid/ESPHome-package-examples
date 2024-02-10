@@ -1,0 +1,11 @@
+substitutions:
+  device_name: switch-upper-hallway1
+  friendly_name: Upper Hallway Light
+  device_group_name: group-upper-hallway-lights
+  area: Upper Hallway
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  device: !include common/devices/switches/motion-double.yaml
+  device_groups: !include common/device-groups/device-groups-light.yaml

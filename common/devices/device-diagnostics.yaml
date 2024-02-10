@@ -1,0 +1,60 @@
+substitutions:
+  hardware_info: Undefined Hardware
+  project_name: Undefined.Project
+  project_version: "0.0.1"
+
+esphome:
+  project:
+    name: ${project_name}
+    version: ${project_version}
+
+text_sensor:
+  - platform: template
+    name: Hardware Info
+    entity_category: diagnostic
+    update_interval: 24h
+    lambda: return {"$hardware_info"};
+  - platform: debug
+    device:
+      name: Device Info
+    reset_reason:
+      name: Reset Reason
+  - platform: version
+    name: ESPHome Version
+  - platform: wifi_info
+    ip_address:
+      name: Wifi IP Address
+    mac_address:
+      name: Wifi MAC Address
+    bssid:
+      name: Wifi Connected BSSID
+    # scan_results:
+    #   name: Wifi Latest Scan Results
+
+sensor:
+  - platform: uptime
+    name: Uptime
+  - platform: wifi_signal
+    name: WiFi Signal
+  - platform: debug
+    free:
+      name: "Heap Free"
+    loop_time:
+      name: "Longest Loop Time"
+
+button:
+  - platform: safe_mode
+    name: "Safe Mode"
+    entity_category: diagnostic
+  - platform: restart
+    name: Restart
+    entity_category: diagnostic
+  - platform: template
+    id: save_preferences
+    name: "Save Preferences"
+    entity_category: diagnostic
+    on_press:
+      - lambda: global_preferences->sync();
+
+debug:
+  #update_interval: 10min # default 60 seconds

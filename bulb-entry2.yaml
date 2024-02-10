@@ -1,0 +1,11 @@
+substitutions:
+  device_name: bulb-entry2
+  friendly_name: Entry Bulb 2
+  device_group_name: group-entry-lights
+  area: Entry
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  device: !include common/devices/bulbs/tuya-generic-beken-n-bp5758d-a19.yaml
+  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml

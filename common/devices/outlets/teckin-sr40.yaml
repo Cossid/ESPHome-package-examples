@@ -1,0 +1,81 @@
+substitutions:
+  restore_mode_relay1: RESTORE_DEFAULT_ON
+  restore_mode_relay2: RESTORE_DEFAULT_ON
+  restore_mode_relay3: RESTORE_DEFAULT_ON
+  project_name: "Teckin.BR40_ESP8266_1M_Wall_Outlet_with_USB"
+  project_version: "0.0.1"
+  hardware_info: "Teckin BR40 ESP8266 1M Wall Outlet with USB"
+
+esp8266:
+  board: esp01_1m
+  restore_from_flash: true
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+
+switch:
+  - platform: gpio
+    name: Top Outlet
+    pin:
+      number: GPIO13
+      inverted: false
+    restore_mode: ${restore_mode_relay1}
+    id: relay1
+    on_turn_on:
+      - light.turn_on: relay1_led
+    on_turn_off:
+      - light.turn_off: relay1_led
+  - platform: gpio
+    name: Bottom Outlet
+    pin:
+      number: GPIO12
+      inverted: false
+    restore_mode: ${restore_mode_relay2}
+    id: relay2
+    on_turn_on:
+      - light.turn_on: relay2_led
+    on_turn_off:
+      - light.turn_off: relay2_led
+  - platform: gpio
+    name: USB
+    pin: GPIO15
+    restore_mode: ${restore_mode_relay3}
+
+output:
+  - platform: gpio
+    pin: GPIO4
+    inverted: True
+    id: relay1_led_gpio
+  - platform: gpio
+    pin: GPIO14
+    inverted: True
+    id: relay2_led_gpio
+
+light:
+  - platform: binary
+    name: Relay1 LED
+    id: relay1_led
+    restore_mode: ${restore_mode_relay1}
+    internal: true    
+    output: relay1_led_gpio
+  - platform: binary
+    name: Relay2 LED
+    id: relay2_led
+    internal: true
+    output: relay2_led_gpio
+    restore_mode: ${restore_mode_relay2}
+
+binary_sensor:
+  - platform: gpio
+    id: button_top
+    pin: GPIO3
+    on_press:
+      - switch.toggle: relay1
+  - platform: gpio
+    id: button_bottom
+    pin: GPIO5
+    on_press:
+      - switch.toggle: relay2
+
+status_led:
+  pin: GPIO0

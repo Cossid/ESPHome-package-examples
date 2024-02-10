@@ -1,0 +1,16 @@
+substitutions:
+  device_name: switch-half-bathroom
+  friendly_name: Half Bathroom Light
+  device_group_name: group-half-bathroom-lights
+  detach_relay: "true"
+  status_light_follows_primary_light_state: "false"
+  status_inverted: "false"
+  restore_mode_relay: ALWAYS_ON
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  area: Half Bathroom
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  device: !include common/devices/switches/ultrapro.yaml
+  device_groups: !include common/device-groups/device-groups-light.yaml

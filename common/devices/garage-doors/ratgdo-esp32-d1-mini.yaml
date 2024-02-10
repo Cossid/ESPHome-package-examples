@@ -1,0 +1,38 @@
+substitutions:
+  device_name: garage-door
+  id_prefix: garage_door
+  friendly_name: "Garage Door"
+  use_mac_address: "false"
+  uart_tx_pin: D4
+  uart_rx_pin: D2
+  input_obst_pin: D7
+  status_door_pin: D0
+  status_obstruction_pin: D8
+  dry_contact_open_pin: D5
+  dry_contact_close_pin: D6
+  dry_contact_light_pin: D3
+  project_name: "ratgdo.D1_Mini_ESP32"
+  project_version: "2.0"
+  hardware_info: "ratgdo D1 Mini ESP32"
+
+esp32:
+  board: wemos_d1_mini32
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  name_add_mac_suffix: ${use_mac_address}
+
+# dashboard_import:
+#   package_import_url: github://ratgdo/esphome-ratgdo/v2board_esp32_d1_mini.yaml@main
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  remote_package:
+    url: https://github.com/ratgdo/esphome-ratgdo
+    files: [base.yaml]
+    refresh: 1s
+
+web_server:
+
+improv_serial:

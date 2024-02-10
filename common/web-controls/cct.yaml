@@ -1,0 +1,26 @@
+esphome:
+  on_boot:
+    - if:
+        condition:
+          lambda: return 1;
+        then:
+          lambda: |-
+            id(light_primary).add_new_remote_values_callback([]() {
+              id(number_color_temperature).publish_state((id(light_primary).remote_values.get_color_temperature() - id(light_primary).get_traits().get_min_mireds()) / (id(light_primary).get_traits().get_max_mireds() - id(light_primary).get_traits().get_min_mireds()));
+            }); return;
+
+number:
+  - platform: template
+    name: Color Temperature
+    id: number_color_temperature
+    #internal: true
+    disabled_by_default: true
+    mode: slider
+    min_value: 0.0
+    max_value: 1.0
+    step: 0.01
+    update_interval: never
+    set_action:
+      - light.control:
+          id: light_primary
+          color_temperature: !lambda return id(light_primary).get_traits().get_min_mireds() + (x * (id(light_primary).get_traits().get_max_mireds() - id(light_primary).get_traits().get_min_mireds()));

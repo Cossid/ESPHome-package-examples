@@ -1,0 +1,37 @@
+substitutions:
+  use_mac_address: "false"
+  area: ""
+
+logger:
+api:
+ota:
+web_server:
+  #include_internal: true
+captive_portal:
+mdns:
+
+wifi:
+  domain: !secret wifi_domain
+  ap:
+    ssid: ${device_name}
+    password: !secret wifi_ap_password
+
+# packages:
+#   wifi: !include wifi-mid-upper-lower.yaml
+
+time:
+  - platform: sntp
+    id: time_sntp
+    timezone: "America/Chicago"
+    servers:
+     - time.lan
+
+sun:
+  latitude: !secret latitude
+  longitude: !secret longitude
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  name_add_mac_suffix: ${use_mac_address}
+  area: ${area}

@@ -1,0 +1,29 @@
+substitutions:
+  project_name: "Crestin.A19_WB2L_PWM_RGBWW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Crestin A19 WB2L PWM RGBWW Bulb"
+
+bk72xx:
+  board: wb2l
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  rgbww_light: !include ../../light/rgbww.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+output:
+  - platform: libretiny_pwm
+    id: output_red
+    pin: GPIOWM0
+  - platform: libretiny_pwm
+    id: output_green
+    pin: GPIOWM5
+  - platform: libretiny_pwm
+    id: output_blue
+    pin: GPIOWM4
+  - platform: libretiny_pwm
+    id: output_cold_white
+    pin: GPIOWM1
+  - platform: libretiny_pwm
+    id: output_warm_white
+    pin: GPIOWM2

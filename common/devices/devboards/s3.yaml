@@ -1,0 +1,16 @@
+substitutions:
+  project_name: DevBoard.ESP32-S3
+  project_version: "0.0.1"
+  hardware_info: ESP32-S3 Dev Board
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+    #type: esp-idf2
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+
+logger:
+  level: VERBOSE

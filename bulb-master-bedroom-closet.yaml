@@ -1,0 +1,19 @@
+substitutions:
+  device_name: bulb-master-bedroom-closet # hostname & entity_id
+  friendly_name: Master Bedroom Closet Bulb
+  device_group_name: group-master-bedroom-closet-light
+  area: Master Bedroom Closet
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  device: !include common/devices/bulbs/lampsero-ceiling.yaml
+  #device_groups: !include common/device-groups/device-groups-light-receive-only.yaml
+  #device_groups: !include common/device-groups/device-groups-light.yaml
+  device_groups: !include common/device-groups/device-groups-base.yaml
+
+device_groups:
+  - group_name: ${device_group_name}
+    receive_mask: 0x01
+    lights:
+      - light_primary

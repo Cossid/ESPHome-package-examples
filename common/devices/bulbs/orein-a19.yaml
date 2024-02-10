@@ -1,0 +1,46 @@
+substitutions:
+  project_name: "Orein.A19_ESP32-C3_BP1658CJ_RGBWW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Orein A19 ESP32-C3 BP1658CJ RGBWW Bulb"
+
+esp32:
+  board: esp32dev
+  variant: ESP32C3
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_BT_BLE_50_FEATURES_SUPPORTED: y
+      CONFIG_BT_BLE_42_FEATURES_SUPPORTED: y
+
+esphome:
+  platformio_options:
+    board_build.mcu: esp32c3
+    board_build.variant: esp32c3
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  rgbww_light: !include ../../light/rgbww.yaml
+
+bp1658cj:
+  data_pin: GPIO6
+  clock_pin: GPIO7
+  max_power_color_channels: 10 # Valid values 0-15
+  max_power_white_channels: 10 # Valid values 0-15
+
+# Individual outputs
+output:
+  - platform: bp1658cj
+    id: output_red
+    channel: 1
+  - platform: bp1658cj
+    id: output_green
+    channel: 2
+  - platform: bp1658cj
+    id: output_blue
+    channel: 0
+  - platform: bp1658cj
+    id: output_cold_white
+    channel: 3
+  - platform: bp1658cj
+    id: output_warm_white
+    channel: 4

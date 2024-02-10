@@ -1,0 +1,16 @@
+substitutions:
+  device_name: switch-dining-room
+  friendly_name: Dining Room Light
+  device_group_name: group-dining-room-lights
+  detach_relay: "true"
+  status_light_follows_primary_light_state: "false"
+  status_inverted: "false"
+  restore_mode_relay: ALWAYS_ON
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  area: Dining Room
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  device: !include common/devices/switches/ultrapro.yaml
+  device_groups: !include common/device-groups/device-groups-light.yaml

@@ -1,0 +1,15 @@
+substitutions:
+  device_name: ir-repeater-s18
+  friendly_name: S18 IR Repeater
+  #device_group_name: group-master-bedroom-lamp
+  #use_mac_address: "true"
+  #area: #
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  device: !include common/devices/ir-repeaters/tuya-generic-s18.yaml
+  #device_groups: !include common/device-groups/device-groups-light.yaml
+
+wifi:
+  use_address: 10.4.99.7

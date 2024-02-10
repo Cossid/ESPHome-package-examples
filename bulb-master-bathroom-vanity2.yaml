@@ -1,0 +1,11 @@
+substitutions:
+  device_name: bulb-master-bathroom-vanity2
+  friendly_name: Master Bathroom Vanity Bulb 2
+  device_group_name: group-master-bathroom-vanity-lights
+  area: Master Bathroom
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  device: !include common/devices/bulbs/daybetter-t-a19.yaml
+  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml

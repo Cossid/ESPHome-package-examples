@@ -1,0 +1,13 @@
+substitutions:
+  device_name: switch-basement-hallway2
+  friendly_name: Basement Hallway Light 2
+  device_group_name: group-basement-hallway-lights
+  restore_mode_relay: ALWAYS_OFF
+  area: Basement Hallway
+  ignore_sun: "true"
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  device: !include common/devices/switches/motion-single.yaml
+  device_groups: !include common/device-groups/device-groups-light.yaml

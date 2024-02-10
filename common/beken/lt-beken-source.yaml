@@ -1,0 +1,5 @@
+bk72xx:
+  framework:
+    version: "0.0.0"
+    #source: "https://github.com/Cossid/libretiny#bk72xx-wifi-sta-adv"
+    source: "https://github.com/libretiny-eu/libretiny"

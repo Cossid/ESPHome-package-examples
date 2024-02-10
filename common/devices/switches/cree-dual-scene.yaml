@@ -1,0 +1,69 @@
+substitutions:
+  restore_mode_relay1: ALWAYS_OFF
+  restore_mode_relay2: ALWAYS_OFF
+  restore_mode_relay3: ALWAYS_OFF
+  restore_mode_relay4: ALWAYS_OFF
+  project_name: "Cree.CBU_Dual_Scene_Switch"
+  project_version: "0.0.1"
+  hardware_info: "Cree CBU Dual Scene Switch"
+
+bk72xx:
+  board: cbu
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+light:
+  - platform: status_led
+    id: led_status
+    pin: GPIO14
+
+binary_sensor:
+  - platform: gpio
+    id: binary_sensor_lu
+    name: Left - Up
+    pin:
+      number: GPIO7
+      mode: INPUT_PULLDOWN
+  - platform: gpio
+    id: binary_switch_ld
+    name: Left - Down
+    pin:
+      number: GPIO6
+      mode: INPUT_PULLDOWN
+  - platform: gpio
+    id: binary_switch_ru
+    name: Right - Up
+    pin:
+      number: GPIO26
+      mode: INPUT_PULLDOWN
+  - platform: gpio
+    id: binary_switch_rd
+    name: Right - Down
+    pin:
+      number: GPIO17
+      mode: INPUT_PULLDOWN
+
+switch:
+  - platform: gpio
+    id: switch_gpio8
+    name: switch GPIO8
+    pin:
+      number: GPIO8
+      mode: INPUT_PULLUP
+    restore_mode: ALWAYS_ON
+  - platform: gpio
+    id: switch_gpio15
+    name: switch GPIO15
+    pin:
+      number: GPIO15
+      mode: INPUT_PULLUP
+    restore_mode: ALWAYS_ON
+
+# sensor:
+#   - platform: adc
+#     id: adc_p23
+#     name: ADC
+#     pin: GPIO23
+#     update_interval: 1s

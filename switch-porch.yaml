@@ -1,0 +1,18 @@
+substitutions:
+  device_name: switch-porch
+  friendly_name: Porch Light
+  device_group_name: group-porch-lights
+  detach_relay: "true"
+  status_light_follows_primary_light_state: "true"
+  status_inverted: "false"
+  restore_mode_relay: ALWAYS_ON
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  area: Porch
+  warm_white_color_temperature: "2200 K"
+  default_white_color_temperature: "2200 K"
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  device: !include common/devices/switches/ultrapro.yaml
+  device_groups: !include common/device-groups/device-groups-light-with-status.yaml

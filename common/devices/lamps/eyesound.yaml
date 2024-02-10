@@ -1,0 +1,48 @@
+substitutions:
+  project_name: "Eyesound.CBU_TuyaMCU_Lamp"
+  project_version: "0.0.1"
+  hardware_info: "Eyesound CBU TuyaMCU Lamp"
+
+bk72xx:
+  board: cbu
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+  web_controls_rgb: !include ../../web-controls/rgb.yaml
+  web_controls_cct: !include ../../web-controls/cct.yaml
+
+logger:
+  baud_rate: 0
+
+uart:
+  rx_pin: RX1 # GPIO10
+  tx_pin: TX1 # GPIO11
+  baud_rate: 9600
+
+tuya:
+  time_id: time_sntp
+
+# Tuya:
+# Datapoint 20: switch (value: OFF)
+# Datapoint 21: enum (value: 0)
+# Datapoint 26: int value (value: 0)
+# Datapoint 33: raw (value: 00.00.00.B2.00.F1.03.E8.00.00.00.00 (12))
+# Datapoint 34: switch (value: OFF)
+# Datapoint 23: int value (value: 0)
+# Datapoint 22: int value (value: 255)
+# Datapoint 24: string value (value: 000003E803D4)
+# Product: '{"p":"zyogagzvhgdkbbdm","v":"1.0.0","m":2}'
+
+light:
+  - platform: "tuya"
+    id: light_primary
+    name: ""
+    switch_datapoint: 20
+    dimmer_datapoint: 22
+    color_temperature_datapoint: 23
+    color_type: hsv
+    color_datapoint: 24
+    color_interlock: true
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K

@@ -1,0 +1,47 @@
+substitutions:
+  project_name: "Moes.CB2S_Toggle_Switch"
+  project_version: "0.0.1"
+  hardware_info: "Moes CBU 4 Button Scene Switch"
+
+bk72xx:
+  board: cbu
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+output:
+  - platform: gpio
+    id: output_led
+    pin:
+      number: GPIO10
+      inverted: true
+
+light:
+  - platform: binary
+    id: light_switch
+    output: output_led
+
+binary_sensor:
+  - platform: gpio
+    id: binary_sensor_p7
+    name: Sensor P7
+    pin:
+      number: GPIO7
+      mode: INPUT_PULLUP
+  - platform: gpio
+    id: binary_sensor_gpio24
+    name: Sensor GPIO24
+    pin:
+      number: GPIO24
+      mode: INPUT_PULLUP
+
+switch:
+  - platform: gpio
+    id: relay
+    name: Relay
+    pin: GPIO6
+    on_turn_on:
+      - light.turn_on: light_switch
+    on_turn_off:
+      - light.turn_off: light_switch

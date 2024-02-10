@@ -1,0 +1,15 @@
+substitutions:
+  device_name: outlet-garage
+  friendly_name: Garage Outlet
+  restore_mode_relay: RESTORE_DEFAULT_ON
+  # current_resistor: 0.0011
+  # voltage_divider: 1450
+  # device_group_name: group-ouetlet-
+  area: Garage
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  device: !include common/devices/outlets/switchbot.yaml
+  btproxy: !include common/btproxy/btproxy.yaml
+  # device_groups: !include common/device-groups/device-groups-switch.yaml

@@ -1,0 +1,35 @@
+substitutions:
+  project_name: "Lampsero.Ceiling_Light_CBLC5_SM2135_RGBWW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Lampsero Ceiling Light CBLC5 SM2135 RGBWW Bulb"
+
+bk72xx:
+  board: generic-bk7231n-qfn32-tuya #actually CBLC5
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  rgbww_light: !include ../../light/rgbww.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+sm2135:
+  data_pin: GPIO24
+  clock_pin: GPIO26
+  rgb_current: 20mA
+  cw_current: 55mA
+
+output:
+  - platform: sm2135
+    id: output_red
+    channel: 2
+  - platform: sm2135
+    id: output_green
+    channel: 0
+  - platform: sm2135
+    id: output_blue
+    channel: 1
+  - platform: sm2135
+    id: output_cold_white
+    channel: 3
+  - platform: sm2135
+    id: output_warm_white
+    channel: 4

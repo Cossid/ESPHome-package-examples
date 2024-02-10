@@ -1,0 +1,42 @@
+substitutions:
+  project_name: "Qiachip.CBU_Relay_Switch"
+  project_version: "0.0.1"
+  hardware_info: "Qiachip CBU Relay Switch"
+
+bk72xx:
+  board: generic-bk7231n-qfn32-tuya
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+binary_sensor:
+  - platform: gpio
+    id: button_toggle
+    pin:
+      number: GPIO7
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: relay
+
+switch:
+  - platform: gpio
+    id: relay
+    name: ""
+    pin: GPIO8
+    on_turn_on:
+      switch.turn_on: led_status
+    on_turn_off:
+      switch.turn_off: led_status
+  - platform: gpio
+    id: led_status
+    pin:
+      number: GPIO10
+      inverted: true
+
+# status_led:
+#   pin:
+#     number: GPIO10
+#     inverted: true

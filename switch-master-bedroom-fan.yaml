@@ -1,0 +1,12 @@
+substitutions:
+  device_name: switch-master-bedroom-fan
+  friendly_name: Master Bedroom Ceiling Fan
+  #device_group_name: group-master-bedroom-fan
+  restore_mode_fan: RESTORE_DEFAULT_OFF
+  area: Master Bedroom
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  device: !include common/devices/switches/treatlife-ds02f.yaml
+  #device_groups: !include common/device-groups/device-groups-light.yaml

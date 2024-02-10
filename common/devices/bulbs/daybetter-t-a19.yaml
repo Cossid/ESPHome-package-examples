@@ -1,0 +1,39 @@
+substitutions:
+  project_name: "Daybetter.A19_WB2L_BP5758D_RGBWW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Daybetter A19 WB2L BP5758D RGBWW Bulb"
+
+bk72xx:
+  board: wb2l
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  rgbww_light: !include ../../light/rgbww.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+bp5758d:
+  data_pin: GPIO7
+  clock_pin: GPIO8
+
+# Individual outputs
+output:
+  - platform: bp5758d
+    id: output_red
+    channel: 3 # Valid channels are 1-5
+    current: 28 # In mA, valid values are 0-90, default is 10.
+  - platform: bp5758d
+    id: output_green
+    channel: 2 # Valid channels are 1-5
+    current: 28 # In mA, valid values are 0-90, default is 10.
+  - platform: bp5758d
+    id: output_blue
+    channel: 1 # Valid channels are 1-5
+    current: 28 # In mA, valid values are 0-90, default is 10.
+  - platform: bp5758d
+    id: output_cold_white
+    channel: 5 # Valid channels are 1-5
+    current: 50 # In mA, valid values are 0-90, default is 10.
+  - platform: bp5758d
+    id: output_warm_white
+    channel: 4 # Valid channels are 1-5
+    current: 50 # In mA, valid values are 0-90, default is 10.

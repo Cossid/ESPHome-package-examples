@@ -1,0 +1,71 @@
+substitutions:
+  restore_mode_relay1: RESTORE_DEFAULT_ON
+  restore_mode_relay2: RESTORE_DEFAULT_ON
+  restore_mode_relay3: RESTORE_DEFAULT_ON
+  restore_mode_relay4: RESTORE_DEFAULT_ON
+  restore_mode_usb: RESTORE_DEFAULT_ON
+  project_name: "Tuya_Generic.YPS11_TYWE3S_Power_Strip"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic YPS11 TYWE3S Power Strip"
+
+esp8266:
+  board: esp_wroom_02
+  restore_from_flash: true
+  early_pin_init: false
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+switch:
+  - platform: gpio
+    id: relayusb
+    name: "Relay USB"
+    pin:
+      number: GPIO16
+    restore_mode: ${restore_mode_usb}
+  - platform: gpio
+    id: relay1
+    name: "Relay 1"
+    pin:
+      number: GPIO4
+      inverted: true
+    restore_mode: ${restore_mode_relay1}
+  - platform: gpio
+    id: relay2
+    name: "Relay 2"
+    pin:
+      number: GPIO13
+      inverted: true
+    restore_mode: ${restore_mode_relay2}
+  - platform: gpio
+    id: relay3
+    name: "Relay 3"
+    pin:
+      number: GPIO12
+      inverted: true
+    restore_mode: ${restore_mode_relay3}
+  - platform: gpio
+    id: relay4
+    name: "Relay 4"
+    pin:
+      number: GPIO14
+      inverted: true
+    restore_mode: ${restore_mode_relay4}
+
+binary_sensor:
+  - platform: gpio
+    id: button_toggle
+    pin: GPIO5
+    on_press:
+      - switch.toggle: relay1
+      - switch.toggle: relay2
+      - switch.toggle: relay3
+      - switch.toggle: relay4
+      #- switch.toggle: relayusb
+
+status_led:
+  id: statusled
+  pin:
+    number: GPIO0
+    inverted: true

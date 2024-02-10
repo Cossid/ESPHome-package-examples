@@ -1,0 +1,38 @@
+substitutions:
+  project_name: "Tuya_Generic.A19_BK7231N_BP5758D_RGBWW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic A19 BK7231N BP5758D RGBWW Bulb"
+
+bk72xx:
+  board: generic-bk7231n-qfn32-tuya
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  rgbww_light: !include ../../light/rgbww.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+bp5758d:
+  clock_pin: GPIO8
+  data_pin: GPIO7
+
+output:
+- platform: bp5758d
+  id: output_red
+  channel: 3
+  current: 15
+- platform: bp5758d
+  id: output_green
+  channel: 2
+  current: 15
+- platform: bp5758d
+  id: output_blue
+  channel: 1
+  current: 15
+- platform: bp5758d
+  id: output_cold_white
+  channel: 5
+  current: 51
+- platform: bp5758d
+  id: output_warm_white
+  channel: 4
+  current: 51

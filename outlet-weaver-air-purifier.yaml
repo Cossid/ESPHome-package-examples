@@ -1,0 +1,15 @@
+substitutions:
+  device_name: outlet-weaver-air-purifier
+  friendly_name: Outlet Weaver Air Purifier
+  restore_mode_relay: ALWAYS_ON
+  # current_resistor: "0.0011"
+  # voltage_divider: "1450"
+  # device_group_name: group-ouetlet-
+  area: Weaver's Room
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  device: !include common/devices/outlets/switchbot.yaml
+  btproxy: !include common/btproxy/btproxy.yaml
+  # device_groups: !include common/device-groups/device-groups-switch.yaml
