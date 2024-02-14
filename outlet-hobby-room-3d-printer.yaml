@@ -9,6 +9,6 @@ substitutions:
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-upper-mid-lower.yaml
-  device: !include common/devices/outlets/sonoff.yaml
+  device: !include common/devices/outlets/sonoff-s31.yaml
   #btproxy: !include common/btproxy/btproxy.yaml
   #device_groups: !include common/device-groups/device-groups-switch.yaml
