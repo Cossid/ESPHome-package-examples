@@ -3,7 +3,7 @@ esphome:
   name_add_mac_suffix: true
 
 rtl87xx:
-  board: generic-rtl8710bn-2mb-788k
+  board: generic-rtl8710bn-2mb-788k # T103_V1.0 ESP12S layout clone
   # framework:
   #   version: dev
 

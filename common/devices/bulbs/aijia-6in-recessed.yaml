@@ -5,7 +5,7 @@ substitutions:
   restore_mode_light: RESTORE_DEFAULT_OFF
 
 bk72xx:
-  board: generic-bk7231n-qfn32-tuya
+  board: cbu
 
 packages:
   device_diagnostics: !include ../device-diagnostics.yaml

@@ -8,7 +8,7 @@ substitutions:
   hardware_info: "Cree CMA21 100W CB8P BP5758D RGBWW Bulb"
 
 bk72xx:
-  board: generic-bk7231n-qfn32-tuya
+  board: generic-bk7231n-qfn32-tuya # CB8P
 
 packages:
   device_diagnostics: !include ../device-diagnostics.yaml

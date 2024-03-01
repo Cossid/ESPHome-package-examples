@@ -4,7 +4,7 @@ substitutions:
   hardware_info: "Tuya Generic A19 BK7231N BP5758D RGBWW Bulb"
 
 bk72xx:
-  board: generic-bk7231n-qfn32-tuya
+  board: generic-bk7231n-qfn32-tuya # UAW025-A0-V1.1 (CB3L/S clone)
 
 packages:
   device_diagnostics: !include ../device-diagnostics.yaml
@@ -19,15 +19,15 @@ output:
 - platform: bp5758d
   id: output_red
   channel: 3
-  current: 15
+  current: 15 # Can do 28
 - platform: bp5758d
   id: output_green
   channel: 2
-  current: 15
+  current: 15 # Can do 28
 - platform: bp5758d
   id: output_blue
   channel: 1
-  current: 15
+  current: 15 # Can do 28
 - platform: bp5758d
   id: output_cold_white
   channel: 5

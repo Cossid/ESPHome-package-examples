@@ -4,7 +4,7 @@ substitutions:
   hardware_info: "Qiachip CBU Relay Switch"
 
 bk72xx:
-  board: generic-bk7231n-qfn32-tuya
+  board: cb2s
 
 packages:
   device_diagnostics: !include ../device-diagnostics.yaml

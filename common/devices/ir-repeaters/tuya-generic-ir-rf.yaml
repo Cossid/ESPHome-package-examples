@@ -1,0 +1,30 @@
+substitutions:
+  project_name: "Tuya_Generic.IR_RF_Repeater"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic CBU IR/RF Repeater"
+
+# SH4 RF module
+# https://developer.tuya.com/en/docs/iot/sh4-module-datasheet?id=Ka04qyuydvubw
+
+bk72xx:
+  board: cbu
+
+packages:
+  device_diagnostics: !include ../device-diagnostics.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+status_led:
+  pin: P9
+
+remote_receiver:
+  - id: irrx
+    pin:
+      number: P8
+      inverted: true
+      mode: INPUT_PULLUP
+    dump: all
+
+remote_transmitter:
+  - id: irtx
+    pin: P7
+    carrier_duty_percent: 50%
