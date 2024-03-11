@@ -17,6 +17,7 @@ number:
     id: number_red
     #internal: true
     disabled_by_default: true
+    entity_category: config
     mode: slider
     min_value: 0.0
     max_value: 1.0
@@ -31,6 +32,7 @@ number:
     id: number_green
     #internal: true
     disabled_by_default: true
+    entity_category: config
     mode: slider
     min_value: 0.0
     max_value: 1.0
@@ -45,6 +47,7 @@ number:
     id: number_blue
     #internal: true
     disabled_by_default: true
+    entity_category: config
     mode: slider
     min_value: 0.0
     max_value: 1.0

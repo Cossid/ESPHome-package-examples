@@ -1,4 +1,7 @@
 substitutions:
+  project_name: "Wyze.ESP32_HLW8012_Dual_Outdoor_Plug"
+  project_version: "0.0.1"
+  hardware_info: "Wyze ESP32 HLW8012 Dual Outdoor Plug"
   restore_mode_relay1: RESTORE_DEFAULT_OFF
   restore_mode_relay2: RESTORE_DEFAULT_OFF
   # Higher value gives lower watt readout
@@ -6,9 +9,6 @@ substitutions:
   # Lower value gives lower voltage readout
   voltage_div: "770"
   update_time: 10s
-  project_name: "Wyze.ESP32_HLW8012_Dual_Outdoor_Plug"
-  project_version: "0.0.1"
-  hardware_info: "Wyze ESP32 HLW8012 Dual Outdoor Plug"
 
 esp32:
   board: esp32dev

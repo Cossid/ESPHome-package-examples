@@ -1,11 +1,11 @@
 substitutions:
+  project_name: "Tuya-Generic.M04_CB2S_Wall_Outlet_with_Dual-USB"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic M04 CB2S Wall Outlet with Dual USB"
   restore_mode_relay1: RESTORE_DEFAULT_ON
   restore_mode_relay2: RESTORE_DEFAULT_ON
   restore_mode_usb_a: RESTORE_DEFAULT_ON
   restore_mode_usb_c: RESTORE_DEFAULT_ON
-  project_name: "Tuya-Generic.M04_CB2S_Wall_Outlet_with_Dual-USB"
-  project_version: "0.0.1"
-  hardware_info: "Tuya Generic M04 CB2S Wall Outlet with Dual USB"
 
 bk72xx:
   board: cb2s

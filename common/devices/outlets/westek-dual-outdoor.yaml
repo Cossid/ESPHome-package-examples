@@ -1,8 +1,8 @@
 substitutions:
-  restore_mode_outlet: RESTORE_DEFAULT_OFF
   project_name: "Westek.ESP8266_1M_Dual_Outdoor_Plug"
   project_version: "0.0.1"
   hardware_info: "Westek ESP8266 1M Dual Outdoor Plug"
+  restore_mode_outlet: RESTORE_DEFAULT_OFF
 
 esp8266:
   board: esp01_1m

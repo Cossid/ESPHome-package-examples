@@ -1,4 +1,7 @@
 substitutions:
+  project_name: "Dewenwils.WB3S_BL0937_Energy_Monitoring_Plug"
+  project_version: "0.0.1"
+  hardware_info: "Dewenwils WB2S BL0937 Energy Monitoring Plug"
   restore_mode_relay: RESTORE_DEFAULT_ON
   current_res: "0.00255"
   voltage_div: "785"
@@ -6,9 +9,6 @@ substitutions:
   # place a known entity and set the calibration data here.
   calibration_pre_cal_power_value: "27.25"
   calibration_expected_correct_value: "60.0"
-  project_name: "Dewenwils.WB3S_BL0937_Energy_Monitoring_Plug"
-  project_version: "0.0.1"
-  hardware_info: "Dewenwils WB2S BL0937 Energy Monitoring Plug"
 
 bk72xx:
   board: wb2s

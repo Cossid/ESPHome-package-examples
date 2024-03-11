@@ -1,8 +1,8 @@
 substitutions:
-  restore_mode_fan: RESTORE_DEFAULT_OFF
   project_name: "Treatlife.DS02F_WB3S_TuyaMCU_Fan_Switch"
   project_version: "0.0.1"
   hardware_info: "Treatlife DS02F WB3S TuyaMCU Fan Switch"
+  restore_mode_fan: RESTORE_DEFAULT_OFF
 
 bk72xx:
   board: wb3s

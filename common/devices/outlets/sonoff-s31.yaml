@@ -1,8 +1,8 @@
 substitutions:
-  restore_mode_relay: RESTORE_DEFAULT_ON
-  project_name: "Sonoff.S31_ESP8266_1M_CSE7766"
+  project_name: "Sonoff.S31_ESP8266_1M_CSE7766_Energy_Monitoring_Plug"
   project_version: "0.0.1"
-  hardware_info: "Sonoff S31 ESP8266 1M CSE7766"
+  hardware_info: "Sonoff S31 ESP8266 1M CSE7766 Energy Monitoring Plug"
+  restore_mode_relay: RESTORE_DEFAULT_ON
 
 esp8266:
   board: esp01_1m

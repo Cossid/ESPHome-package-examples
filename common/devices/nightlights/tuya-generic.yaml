@@ -1,8 +1,8 @@
 substitutions:
-  restore_mode_light: RESTORE_DEFAULT_OFF
   project_name: "Tuya_Generic.CBU_PWM_RGBWW_Night_Light"
   project_version: "0.0.1"
   hardware_info: "Tuya Generic CBU PWM RGBWW Night Light"
+  restore_mode_light: RESTORE_DEFAULT_OFF
 
 bk72xx:
   board: cbu

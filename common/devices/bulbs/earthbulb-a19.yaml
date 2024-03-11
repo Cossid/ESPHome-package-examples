@@ -1,5 +1,5 @@
 substitutions:
-  project_name: "EarthBulb.A19_SM2135_RGBWW_Bulb"
+  project_name: "EarthBulb.A19_WB8P_SM2135_RGBWW_Bulb"
   project_version: "0.0.1"
   hardware_info: "EarthBulb WB8P SM2135 RGBWW Bulb"
 

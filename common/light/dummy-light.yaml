@@ -1,8 +1,5 @@
 substitutions:
   restore_mode_light: RESTORE_AND_OFF
-  project_name: ""
-  project_version: "0.0.1"
-  hardware_info: ""
   cold_white_color_temperature: "6500 K"
   warm_white_color_temperature: "2700 K"
   default_white_color_temperature: "2700 K"

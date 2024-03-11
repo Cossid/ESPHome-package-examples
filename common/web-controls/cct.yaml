@@ -15,6 +15,7 @@ number:
     id: number_color_temperature
     #internal: true
     disabled_by_default: true
+    entity_category: config
     mode: slider
     min_value: 0.0
     max_value: 1.0

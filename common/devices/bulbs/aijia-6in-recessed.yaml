@@ -1,7 +1,7 @@
 substitutions:
-  project_name: "Aijia.6in_Recessed_RGBWW_Bulb"
+  project_name: "Aijia.6in_Recessed_CBU_PWM_RGBWW_Bulb"
   project_version: "0.0.1"
-  hardware_info: "Aijia 6in Recessed RGBWW Bulb"
+  hardware_info: "Aijia 6in Recessed CBU PWM RGBWW Bulb"
   restore_mode_light: RESTORE_DEFAULT_OFF
 
 bk72xx:

@@ -1,4 +1,7 @@
 substitutions:
+  project_name: "KMC.ESP8266_2M_HLW8012_Outlet_Extender"
+  project_version: "0.0.1"
+  hardware_info: "KMC ESP8266 2M HLW8012 Outlet Extender"
   restore_mode_relay1: RESTORE_DEFAULT_ON
   restore_mode_relay2: RESTORE_DEFAULT_ON
   restore_mode_relay3: RESTORE_DEFAULT_ON
@@ -8,9 +11,6 @@ substitutions:
   calibration_power_expected_value: "60"
   calibration_current_uncalibrated_value: "1.39"
   calibration_current_expected_value: "0.5"
-  project_name: "KMC.ESP8266_2M_HLW8012_4-Outlet-Extender"
-  project_version: "0.0.1"
-  hardware_info: "KMC ESP8266 2M HLW8012 4-Outlet Extender"
 
 esp8266:
   board: esp_wroom_02

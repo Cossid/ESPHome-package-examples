@@ -24,7 +24,7 @@ binary_sensor:
 switch:
   - platform: gpio
     id: relay
-    name: ""
+    name: "Relay"
     pin: GPIO8
     on_turn_on:
       switch.turn_on: led_status

@@ -1,9 +1,9 @@
 substitutions:
+  project_name: "Supernight.ESP8285_1M_Energy_Monitoring_Dual_Plug"
+  project_version: "0.0.1"
+  hardware_info: "Supernight ESP8285 1M Energy Monitoring Dual Plug"
   restore_mode_outlet1: RESTORE_DEFAULT_OFF
   restore_mode_outlet2: RESTORE_DEFAULT_OFF
-  project_name: "Westek.ESP8266_1M_Dual_Outdoor_Plug"
-  project_version: "0.0.1"
-  hardware_info: "Westek ESP8266 1M Dual Outdoor Plug"
   # These values may need to be calibrated per device to correct displayed values
   # for amperage, voltage, and power.
 

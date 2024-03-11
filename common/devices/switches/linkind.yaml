@@ -1,11 +1,11 @@
 substitutions:
+  project_name: "Linkind.WS240010008_ESP32-Solo1_2_Button_Switch"
+  project_version: "0.0.1"
+  hardware_info: "Linkind WS240010008 ESP32-Solo1 2 Button Switch"
   detach_relay: "false"
   status_light_follows_primary_light_state: "false"
   status_inverted: "false"
   restore_mode_relay: RESTORE_DEFAULT_OFF
-  project_name: "Linkind.WS240010008_ESP32-Solo1_2_Button_Switch"
-  project_version: "0.0.1"
-  hardware_info: "Linkind WS240010008 ESP32-Solo1 2 Button Switch"
 
 globals:
 - id: detach_relay_value
@@ -30,7 +30,7 @@ switch:
   - platform: gpio
     name: "Load Power"
     id: relay
-    disabled_by_default: true
+    entity_category: config
     pin: GPIO5 # Relay
     restore_mode: ${restore_mode_relay}
 

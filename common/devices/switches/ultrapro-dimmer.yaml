@@ -1,13 +1,13 @@
 substitutions:
+  project_name: "UltraPro.WFD3001_CB3S_Serial_PWM_Dimmer_Switch"
+  project_version: "0.0.1"
+  hardware_info: "UltraPro WFD3001 CB3S Serial PWM Dimmer Switch"
   detach_relay: "false"
   status_light_follows_primary_light_state: "false"
   status_inverted: "false"
   min_power: "0.1"
   max_power: "1.0"
   restore_mode_light: RESTORE_DEFAULT_OFF
-  project_name: "UltraPro.WFD3001_CB3S_Serial_PWM_Dimmer_Switch"
-  project_version: "0.0.1"
-  hardware_info: "UltraPro WFD3001 CB3S Serial PWM Dimmer Switch"
 
 globals:
 - id: detach_relay_value

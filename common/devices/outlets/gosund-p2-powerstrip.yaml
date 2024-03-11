@@ -1,4 +1,7 @@
 substitutions:
+  project_name: "Gosund.ESP8285_Outlet_Extender"
+  project_version: "0.0.1"
+  hardware_info: "Gosund ESP8285 Outlet Extender"
   restore_mode_relay1: RESTORE_DEFAULT_ON
   restore_mode_relay2: RESTORE_DEFAULT_ON
   restore_mode_relay3: RESTORE_DEFAULT_ON

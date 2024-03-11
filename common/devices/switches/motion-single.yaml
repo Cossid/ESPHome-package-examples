@@ -1,4 +1,7 @@
 substitutions:
+  project_name: "CloudFree/Milfra.SWM1/MFA05_ESP8266_1_Button_Motion_Switch"
+  project_version: "0.0.1"
+  hardware_info: "CloudFree/Milfra SWM1/MFA05 ESP8266 1 Button Motion Switch"
   motion_on_time: '10' # time (in seconds) to leave the relay on after motion is sensed 
   motion_off_holdoff: '0'  # how long (in seconds) to ignore motion if turned off via button or motion ending
   button_hold_for_hold_on_time: '1s'  # how long to press and hold the button to switch to hold-on mode
@@ -6,9 +9,6 @@ substitutions:
   restore_mode_motion: RESTORE_DEFAULT_ON
   detach_relay: "true"
   status_light_follows_primary_light_state: "false"
-  project_name: "CloudFree/Milfra.SWM1/MFA05_ESP8266_1_Button_Motion_Switch"
-  project_version: "0.0.1"
-  hardware_info: "CloudFree/Milfra SWM1/MFA05 ESP8266 1 Button Motion Switch"
   ignore_sun: "false"
 
 globals:
@@ -59,12 +59,13 @@ switch:
   - platform: gpio
     name: "Load Power"
     id: load_power
-    disabled_by_default: true
+    entity_category: config
     restore_mode: ${restore_mode_relay}
     pin: GPIO12
   - platform: template
     id: motion_enabled
     name: "Motion Enabled"
+    entity_category: config
     optimistic: true
     restore_mode: ${restore_mode_motion}
 

@@ -1,7 +1,7 @@
 substitutions:
-  project_name: "Onforu.25W_PWM_RGBWW_Spotlight"
+  project_name: "Tuya_Generic.WB8_RGBIC_Fairy_Light_Strip"
   project_version: "0.0.1"
-  hardware_info: "Onforu 25W PWM RGBWW Spotlight"
+  hardware_info: "Tuya Generic WB8 RGBIC Fairy Light Strip"
 
 bk72xx:
   board: wb3s # WB8, looks just like WB3S
@@ -10,56 +10,4 @@ packages:
   device_diagnostics: !include ../device-diagnostics.yaml
   #rgbww_light: !include ../../light/rgbww.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
-  ddp: !include ../../ddp/ddp.yaml
-
-output:
-  # Specify the two pins of the h-bridge as PWM pins
-  - platform: libretiny_pwm
-    id: pina
-    pin: GPIO12
-  - platform: libretiny_pwm
-    id: pinb
-    pin: GPIO14
-
-  # Specify the pin for the button LED
-  # - platform: gpio
-  #   id: status_led
-  #   pin: GPIO4
-
-light:
-  # Create a light using the hbridge
-  - platform: hbridge
-    id: mainlight
-    name: "Fairy Lights"
-    pin_a: pina
-    pin_b: pinb
-
-  # Create a light using the LED
-  # - platform: binary
-  #   name: "LED"
-  #   internal: true
-  #   output: status_led
-
-#Flash the LED Light until WiFi is connected.
-interval:
-  - interval: 1s
-    then:
-      if:
-        condition:
-          wifi.connected:
-        then:
-          - output.turn_on: status_led
-        else:
-          - output.turn_off: status_led
-          - delay: 500ms
-          - output.turn_on: status_led
-
-# Use the button as a sensor.
-binary_sensor:
-  - platform: gpio
-    pin:
-      number: GPIO5
-      mode: INPUT_PULLUP
-      inverted: true
-    name: "Button"
-    #internal: true
+  #ddp: !include ../../ddp/ddp.yaml

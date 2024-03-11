@@ -1,8 +1,7 @@
 substitutions:
-  project_name: "Motion_Security.CT_Bulb"
+  project_name: "Motion_Security.WB3S_PWM_CT_Bulb"
   project_version: "0.0.1"
-  hardware_info: "Motion Security CT Bulb"
-  restore_mode_light: RESTORE_DEFAULT_OFF
+  hardware_info: "Motion Security WB3S PWM CT Bulb"
 
 bk72xx:
   board: wb3s

@@ -1,8 +1,7 @@
 substitutions:
-  project_name: "Loyal.6in_Recessed_RGBWW_Bulb"
+  project_name: "Loyal.6in_Recessed_CBU_PWM_RGBWW_Bulb"
   project_version: "0.0.1"
-  hardware_info: "Loyal 6in Recessed RGBWW Bulb"
-  restore_mode_light: RESTORE_DEFAULT_OFF
+  hardware_info: "Loyal 6in Recessed CBU PWM RGBWW Bulb"
 
 bk72xx:
   board: cbu

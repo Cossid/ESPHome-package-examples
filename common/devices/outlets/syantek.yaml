@@ -1,10 +1,10 @@
 substitutions:
+  project_name: "Syantek.CB2S_Outlet_Extender"
+  project_version: "0.0.1"
+  hardware_info: "Syantek CB2S Outlet Extender"
   restore_mode_relay1: RESTORE_DEFAULT_ON
   restore_mode_relay2: RESTORE_DEFAULT_ON
   restore_mode_relay3: RESTORE_DEFAULT_ON
-  project_name: "Syantek.CB2S_Power_Extender"
-  project_version: "0.0.1"
-  hardware_info: "Syantek Power Extender CB2S"
 
 bk72xx:
   board: cb2s

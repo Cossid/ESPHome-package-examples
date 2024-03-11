@@ -1,8 +1,7 @@
 substitutions:
-  project_name: "Dogain.4in_Recessed_RGBWW_Bulb"
+  project_name: "Dogain.4in_Recessed_WB2S_PWM_RGBWW_Bulb"
   project_version: "0.0.1"
-  hardware_info: "Dogain 4in Recessed RGBWW Bulb"
-  restore_mode_light: RESTORE_DEFAULT_OFF
+  hardware_info: "Dogain 4in Recessed WB2S PWM RGBWW Bulb"
 
 bk72xx:
   board: wb2s

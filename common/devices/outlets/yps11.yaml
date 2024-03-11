@@ -1,12 +1,12 @@
 substitutions:
+  project_name: "Tuya_Generic.YPS11_TYWE3S_Power_Strip"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic YPS11 TYWE3S Power Strip"
   restore_mode_relay1: RESTORE_DEFAULT_ON
   restore_mode_relay2: RESTORE_DEFAULT_ON
   restore_mode_relay3: RESTORE_DEFAULT_ON
   restore_mode_relay4: RESTORE_DEFAULT_ON
   restore_mode_usb: RESTORE_DEFAULT_ON
-  project_name: "Tuya_Generic.YPS11_TYWE3S_Power_Strip"
-  project_version: "0.0.1"
-  hardware_info: "Tuya Generic YPS11 TYWE3S Power Strip"
 
 esp8266:
   board: esp_wroom_02

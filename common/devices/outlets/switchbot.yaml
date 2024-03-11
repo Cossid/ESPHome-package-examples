@@ -1,10 +1,10 @@
 substitutions:
+  project_name: "SwitchBot.ESP32-C3_BL0937_Energy_Monitoring_Plug"
+  project_version: "0.0.1"
+  hardware_info: "Switchbot ESP32-C3 BL0937 Energy Monitoring Plug"
   restore_mode_relay: RESTORE_DEFAULT_ON
   current_resistor: "0.0011"
   voltage_divider: "1450"
-  project_name: "SwitchBot.ESP32-C3_BL0937"
-  project_version: "0.0.1"
-  hardware_info: "Switchbot ESP32-C3 BL0937"
 
 esp32:
   variant: ESP32C3

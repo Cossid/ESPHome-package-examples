@@ -1,13 +1,13 @@
 substitutions:
+  project_name: "Milfra.MFA06_ESP8266_2_Button_Motion_Switch"
+  project_version: "0.0.1"
+  hardware_info: "Milfra MFA06 ESP8266 2 Button Motion Switch"
   restore_mode_relay1: ALWAYS_ON
   restore_mode_relay2: ALWAYS_OFF
   restore_mode_motion: RESTORE_DEFAULT_ON
   motion_on_time: '10' # time (in seconds) to leave the relay on after motion is sensed 
   detach_relay: "true"
   status_light_follows_primary_light_state: "false"
-  project_name: "Milfra.MFA06_ESP8266_2_Button_Motion_Switch"
-  project_version: "0.0.1"
-  hardware_info: "Milfra MFA06 ESP8266 2 Button Motion Switch"
   ignore_sun: "false"
 
 globals:
@@ -58,7 +58,7 @@ switch:
   - platform: gpio
     name: "Load Power"
     id: load_power
-    disabled_by_default: true
+    entity_category: config
     restore_mode: ${restore_mode_relay1}
     pin: GPIO12
   - platform: gpio
@@ -68,6 +68,7 @@ switch:
   - platform: template
     id: motion_enabled
     name: "Motion Enabled"
+    entity_category: config
     optimistic: true
     restore_mode: ${restore_mode_motion}
 

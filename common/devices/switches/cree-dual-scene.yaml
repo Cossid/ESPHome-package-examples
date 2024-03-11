@@ -1,8 +1,4 @@
 substitutions:
-  restore_mode_relay1: ALWAYS_OFF
-  restore_mode_relay2: ALWAYS_OFF
-  restore_mode_relay3: ALWAYS_OFF
-  restore_mode_relay4: ALWAYS_OFF
   project_name: "Cree.CBU_Dual_Scene_Switch"
   project_version: "0.0.1"
   hardware_info: "Cree CBU Dual Scene Switch"
@@ -45,6 +41,7 @@ binary_sensor:
       number: GPIO17
       mode: INPUT_PULLDOWN
 
+# LEDs yet to be properly configured
 switch:
   - platform: gpio
     id: switch_gpio8
@@ -60,10 +57,3 @@ switch:
       number: GPIO15
       mode: INPUT_PULLUP
     restore_mode: ALWAYS_ON
-
-# sensor:
-#   - platform: adc
-#     id: adc_p23
-#     name: ADC
-#     pin: GPIO23
-#     update_interval: 1s

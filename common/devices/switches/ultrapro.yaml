@@ -1,11 +1,11 @@
 substitutions:
+  project_name: "UltraPro.WFD4001_WB3S_On/Off_Switch"
+  project_version: "0.0.1"
+  hardware_info: "UltraPro WFD4001 WB3S On/Off Switch"
   detach_relay: "false"
   status_light_follows_primary_light_state: "false"
   status_inverted: "false"
   restore_mode_relay: RESTORE_DEFAULT_OFF
-  project_name: "UltraPro.WFD4001_WB3S_On/Off_Switch"
-  project_version: "0.0.1"
-  hardware_info: "UltraPro WFD4001 WB3S On/Off Switch"
 
 globals:
 - id: detach_relay_value
@@ -33,7 +33,7 @@ switch:
   - platform: gpio
     name: "Load Power"
     id: relay
-    disabled_by_default: true
+    entity_category: config
     pin: GPIO26 # Relay
     restore_mode: ${restore_mode_relay}
 

@@ -1,10 +1,10 @@
 substitutions:
-  restore_mode_relay1: ALWAYS_OFF
-  restore_mode_relay2: ALWAYS_OFF
-  restore_mode_relay3: ALWAYS_OFF
   project_name: "Tuya_Generic.YX-WS003_CBU_3_Button_Switch"
   project_version: "0.0.1"
   hardware_info: "Tuya Generic YX-WS003 CBU 3 Button Switch"
+  restore_mode_relay1: ALWAYS_OFF
+  restore_mode_relay2: ALWAYS_OFF
+  restore_mode_relay3: ALWAYS_OFF
 
 bk72xx:
   board: cbu

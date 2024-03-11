@@ -1,11 +1,11 @@
 substitutions:
+  project_name: "Moes.CBU_4_Button_Scene_Switch"
+  project_version: "0.0.1"
+  hardware_info: "Moes CB2S Toggle Switch"
   restore_mode_relay1: ALWAYS_OFF
   restore_mode_relay2: ALWAYS_OFF
   restore_mode_relay3: ALWAYS_OFF
   restore_mode_relay4: ALWAYS_OFF
-  project_name: "Moes.CBU_4_Button_Scene_Switch"
-  project_version: "0.0.1"
-  hardware_info: "Moes CB2S Toggle Switch"
 
 bk72xx:
   board: cbu
