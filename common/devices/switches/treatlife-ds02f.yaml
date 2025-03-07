@@ -8,7 +8,6 @@ bk72xx:
   board: wb3s
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
 
 uart:
@@ -20,7 +19,7 @@ tuya:
 
 fan:
   - platform: "tuya"
-    name: ""
+    name: None
     switch_datapoint: 1
     speed_datapoint: 3
     speed_count: 4

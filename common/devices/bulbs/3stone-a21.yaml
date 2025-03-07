@@ -1,0 +1,29 @@
+substitutions:
+  project_name: "3Stone.EBE-BAW550_CB2L_16W_RGBW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "3Stone EBE-BAW550 CB2L 16W RGBW Bulb"
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  #cold_white_color_temperature: "6500 K"
+  warm_white_color_temperature: "2700 K"
+  default_white_color_temperature: "2700 K"
+
+bk72xx:
+  board: cb2l
+
+packages:
+  rgbct_light: !include ../../light/rgbw-warm.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+output:
+  - platform: libretiny_pwm
+    id: output_red
+    pin: P6
+  - platform: libretiny_pwm
+    id: output_green
+    pin: P26
+  - platform: libretiny_pwm
+    id: output_blue
+    pin: P24
+  - platform: libretiny_pwm
+    id: output_warm_white
+    pin: P8

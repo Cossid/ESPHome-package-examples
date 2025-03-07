@@ -1,24 +1,33 @@
 substitutions:
-  device_name: "switch-lower-bathroom-vanity"
+  device_name: !secret device-name-switch-lower-bathroom-vanity
   friendly_name: Lower Bathroom Vanity Light
-  device_group_name_primary: group-lower-bathroom-vanity-lights
-  device_group_name_secondary: group-lower-bathroom-overhead-light
+  #device_group_name_secondary: group-lower-bathroom-overhead-light
   restore_mode_relay1: ALWAYS_ON
   restore_mode_relay2: ALWAYS_OFF
   restore_mode_motion: RESTORE_DEFAULT_ON
   motion_on_time: '120' # time (in seconds) to leave the relay on after motion is sensed
+  warm_white_color_temperature: "2200 K"
+  default_white_color_temperature: "3000 K"
   area: Lower Bathroom
+  wifi_static_ip: !secret ip-switch-lower-bathroom-vanity
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/switches/motion-double-detached.yaml
-  device_groups: !include common/device-groups/device-groups-base.yaml
+  #device_groups: !include common/device-groups/device-groups-base.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender6.yaml
+    vars:
+      address1: !secret ip-bulb-lower-bathroom-vanity1
+      address2: !secret ip-bulb-lower-bathroom-vanity2
+      address3: !secret ip-bulb-lower-bathroom-vanity3
+      address4: !secret ip-bulb-lower-bathroom-vanity4
+      address5: !secret ip-bulb-lower-bathroom-vanity5
+      address6: !secret ip-bulb-lower-bathroom-vanity6
 
-device_groups:
-  - group_name: ${device_group_name_primary}
-    lights:
-      - light_primary
-  - group_name: ${device_group_name_secondary}
-    lights:
-      - light_secondary
+# device_groups:
+#   - group_name: ${device_group_name_secondary}
+#     lights:
+#       - light_secondary

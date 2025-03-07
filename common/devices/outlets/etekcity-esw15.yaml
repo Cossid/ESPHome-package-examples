@@ -1,0 +1,81 @@
+substitutions:
+  project_name: "Etekcity.ESW15_ESP8266_1M_CSE7766_Energy_Monitoring_Plug"
+  project_version: "0.0.1"
+  hardware_info: "Sonoff S31 ESP8266 1M CSE7766 Energy Monitoring Plug"
+  restore_mode_relay: RESTORE_DEFAULT_ON
+  current_res: "0.00095"
+  # Lower value gives lower voltage readout
+  voltage_div: "2040"
+
+esp8266:
+  board: esp01_1m
+  restore_from_flash: true
+  early_pin_init: false
+
+binary_sensor:
+  - platform: gpio
+    id: button_toggle
+    pin:
+      number: GPIO14
+      inverted: True
+    on_press:
+      then:
+        - switch.toggle: relay
+        - switch.toggle: led_blue
+switch:
+- platform: gpio
+  name: "Outlet"
+  id: relay
+  pin: GPIO05
+  restore_mode: ${restore_mode_relay}
+- platform: gpio
+  id: led_blue
+  pin: GPIO16
+  inverted: False
+  restore_mode: ${restore_mode_relay}
+
+sensor:
+  - platform: hlw8012
+    sel_pin:
+      number: GPIO15
+      inverted: False
+    cf_pin: GPIO13
+    cf1_pin: GPIO12
+    current_resistor: ${current_res}
+    voltage_divider: ${voltage_div}
+    change_mode_every: 3
+    update_interval: 3s 
+    current:
+      name: "Amps"
+      unit_of_measurement: A
+      accuracy_decimals: 3
+      filters:
+      - calibrate_linear:
+          - 0.000 -> 0.0
+          - 5.069 -> 6.69   
+      # Make everything below 0.01A appear as just 0A.
+      # Furthermore it corrects 0.013A for the power usage of the plug.
+      - lambda: if (x < (0.01 - 0.013)) return 0; else return (x - 0.013);
+    voltage:
+      name: Voltage
+      unit_of_measurement: V
+      accuracy_decimals: 1
+    power:
+      name: Watts
+      unit_of_measurement: W
+      accuracy_decimals: 0
+
+  - platform: adc
+    pin: GPIO17
+    name: "Lux"
+    update_interval: 5s
+
+light:
+  - platform: monochromatic
+    name: Night Light
+    output: pwm_night_light
+
+output:
+  - platform: esp8266_pwm
+    id: pwm_night_light
+    pin: GPIO4

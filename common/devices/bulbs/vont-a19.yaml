@@ -18,7 +18,6 @@ esphome:
     board_build.variant: esp32c3
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbww_light: !include ../../light/rgbww.yaml
 
 output:

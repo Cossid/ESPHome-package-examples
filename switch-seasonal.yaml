@@ -1,0 +1,16 @@
+substitutions:
+  device_name: !secret device-name-switch-seasonal
+  friendly_name: Seasonal Switch
+  detach_relay: "false"
+  status_light_follows_primary_light_state: "true"
+  status_inverted: "false"
+  restore_mode_relay: RESTORE_DEFAULT_OFF
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  area: Seasonal
+  wifi_static_ip: !secret ip-switch-seasonal
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/switches/ultrapro.yaml

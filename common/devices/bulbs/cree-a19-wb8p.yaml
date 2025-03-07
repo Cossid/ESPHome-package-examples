@@ -1,0 +1,45 @@
+substitutions:
+  project_name: "Cree.CMA19_A19_WB8P_PWM_RGBCT_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Cree CMA19 A19 WB8P PWM RGBCT Bulb"
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  cold_white_color_temperature: "6500 K"
+  warm_white_color_temperature: "2200 K"
+  default_white_color_temperature: "2700 K"
+
+bk72xx:
+  board: generic-bk7231t-qfn32-tuya # WB8P
+
+packages:
+  rgbct_light: !include ../../light/rgbct.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+output:
+  - platform: libretiny_pwm
+    id: output_red
+    frequency: 2000 Hz
+    min_power: 0.000489
+    zero_means_zero: true
+    pin: P24
+  - platform: libretiny_pwm
+    id: output_green
+    frequency: 2000 Hz
+    min_power: 0.000489
+    zero_means_zero: true
+    pin: P9
+  - platform: libretiny_pwm
+    id: output_blue
+    frequency: 2000 Hz
+    min_power: 0.000489
+    zero_means_zero: true
+    pin: P26
+  - platform: libretiny_pwm
+    id: output_brightness
+    frequency: 2000 Hz
+    min_power: 0.003425
+    zero_means_zero: true
+    pin: P7
+  - platform: libretiny_pwm
+    id: output_temperature
+    frequency: 2000 Hz
+    pin: P8

@@ -1,7 +1,6 @@
 substitutions:
-  device_name: switch-3-season-room-light
+  device_name: !secret device-name-switch-3-season-room-light
   friendly_name: 3 Season Room Light
-  device_group_name: group-3-season-room-lights
   detach_relay: "true"
   status_light_follows_primary_light_state: "false"
   status_inverted: "false"
@@ -10,9 +9,14 @@ substitutions:
   area: 3 Season Room
   warm_white_color_temperature: "2200 K"
   default_white_color_temperature: "2200 K"
+  wifi_static_ip: !secret ip-switch-3-season-room-light
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/switches/ultrapro.yaml
-  device_groups: !include common/device-groups/device-groups-light-with-status.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender1.yaml
+    vars:
+      address1: !secret ip-bulb-3-season-room-light

@@ -1,0 +1,118 @@
+substitutions:
+  project_name: "Tuya_Generic.CBU-VT-14IN1-Air-Quality-Sensor"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic CBU VT-14IN1 Air Quality Sensor"
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+bk72xx:
+  board: cbu
+
+uart:
+  rx_pin: RX1
+  tx_pin: TX1
+  baud_rate: 115200
+
+tuya:
+  time_id: time_sntp
+
+sensor:
+  - platform: "tuya"
+    name: "Air Quality Index"
+    sensor_datapoint: 1
+    #device_class: "enum"
+    # enum
+    #step: 1
+    #min_value: 1
+    #max_value: 6
+  - platform: "tuya"
+    name: "Temperature"
+    device_class: "temperature"
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    sensor_datapoint: 2
+    
+    #step: 1
+    # scale 1
+    #min_value: -400
+    #max_value: 2000
+    filters:
+      - multiply: 0.1
+  - platform: "tuya"
+    name: "Humidity"
+    device_class: "humidity"
+    unit_of_measurement: "%"
+    sensor_datapoint: 3
+    #step: 1
+    # scale 0
+    #min_value: 0
+    #max_value: 100
+  - platform: "tuya"
+    name: "CO2"
+    device_class: "carbon_dioxide"
+    unit_of_measurement: "ppm"
+    sensor_datapoint: 4
+    #step: 1
+    # scale 0
+    #min_value: 0
+    #max_value: 5000
+  - platform: "tuya"
+    name: "Formaldahyde"
+    #device_class: "" # Formaldehyde - ozone?
+    #device_class: "ozone"
+    unit_of_measurement: "µg/m³"
+    sensor_datapoint: 5
+    #step: 1
+    # scale 3
+    #min_value: 0
+    #max_value: 2000
+    # filters:
+    #   - multiply: 0.001
+  - platform: "tuya"
+    name: "VOC"
+    device_class: "volatile_organic_compounds_parts"
+    unit_of_measurement: "ppb"
+    sensor_datapoint: 6
+    #step: 1
+    # scale 3
+    #min_value: 0
+    #max_value: 9999
+    # filters:
+    #   - multiply: 0.001
+  - platform: "tuya"
+    name: "PM2.5"
+    device_class: "pm25"
+    unit_of_measurement: "µg/m³"
+    sensor_datapoint: 7
+    #step: 1
+    # scale 0
+    #min_value: 0
+    #max_value: 999
+  - platform: "tuya"
+    name: "PM10"
+    device_class: "pm10"
+    unit_of_measurement: "µg/m³"
+    sensor_datapoint: 9
+    #step: 1
+    # scale 0
+    #min_value: 0
+    #max_value: 999
+  - platform: "tuya"
+    name: "Battery"
+    device_class: "battery"
+    unit_of_measurement: "%"
+    sensor_datapoint: 22
+    #step: 1
+    # scale 0
+    #min_value: 0
+    #max_value: 100
+  - platform: "tuya"
+    name: "CO"
+    device_class: "carbon_monoxide"
+    unit_of_measurement: "ppm"
+    sensor_datapoint: 101
+    #step: 1
+    # scale 0
+    #min_value: 0
+    #max_value: 1000

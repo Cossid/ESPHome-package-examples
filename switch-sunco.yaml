@@ -1,0 +1,16 @@
+substitutions:
+  device_name: switch-sunco
+  friendly_name: Sunco Switch
+  #detach_relay: "true"
+  #status_light_follows_primary_light_state: "false"
+  #status_inverted: "false"
+  #restore_mode_relay: ALWAYS_OFF
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  area: Master Bedroom
+  #wifi_static_ip: !secret ip-switch-master-bedroom-scene
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  #wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/switches/sunco-dimmer.yaml

@@ -1,7 +1,6 @@
 substitutions:
-  device_name: switch-porch
+  device_name: !secret device-name-switch-porch
   friendly_name: Porch Light
-  device_group_name: group-porch-lights
   detach_relay: "true"
   status_light_follows_primary_light_state: "true"
   status_inverted: "false"
@@ -10,9 +9,41 @@ substitutions:
   area: Porch
   warm_white_color_temperature: "2200 K"
   default_white_color_temperature: "2200 K"
+  wifi_static_ip: !secret ip-switch-porch
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/switches/ultrapro.yaml
-  device_groups: !include common/device-groups/device-groups-light-with-status.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender2.yaml
+    vars:
+      address1: !secret ip-bulb-porch1
+      address2: !secret ip-bulb-porch2
+
+binary_sensor:
+  - id: !extend button_on
+    on_double_click:
+      then:
+        - event.trigger:
+            id: event_scene_on
+            event_type: "scene_on"
+  - id: !extend button_off
+    on_double_click:
+      then:
+        - event.trigger:
+            id: event_scene_off
+            event_type: "scene_off"
+
+event:
+  - platform: template
+    id: event_scene_on
+    name: Scene On
+    event_types:
+      - "scene_on"
+  - platform: template
+    id: event_scene_off
+    name: Scene Off
+    event_types:
+      - "scene_off"

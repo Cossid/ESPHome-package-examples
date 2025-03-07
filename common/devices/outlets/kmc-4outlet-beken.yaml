@@ -2,31 +2,32 @@ substitutions:
   project_name: "KMC.WB2S_4-Outlet_Extender"
   project_version: "0.0.1"
   hardware_info: "KMC WB2S 4-Outlet Extender"
+  restore_mode_relay1: RESTORE_DEFAULT_ON
+  restore_mode_relay2: RESTORE_DEFAULT_ON
+  restore_mode_relay3: RESTORE_DEFAULT_ON
 
 bk72xx:
   board: wb2s
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
 
 switch:
   - platform: gpio
-    name: "Outlet 3"
-    id: relay3
-    pin: GPIO8
+    name: "Outlet 1"
+    id: relay1
+    pin: GPIO26
+    restore_mode: ${restore_mode_relay1}
   - platform: gpio
     name: "Outlet 2"
     id: relay2
     pin: GPIO24
+    restore_mode: ${restore_mode_relay2}
   - platform: gpio
-    name: "Outlet 1"
-    id: relay1
-    pin: GPIO26
-  - platform: gpio
-    id: light_status
-    pin: GPIO11
-    inverted: yes
+    name: "Outlet 3"
+    id: relay3
+    pin: GPIO8
+    restore_mode: ${restore_mode_relay3}
 
 binary_sensor:
   - platform: gpio
@@ -37,7 +38,22 @@ binary_sensor:
     id: "masterpowerbutton"
     on_press:
       then:
-        - switch.toggle: relay1
-        - switch.toggle: relay2
-        - switch.toggle: relay3
-        - switch.toggle: light_status
+        - if:
+            condition:
+              or:
+                - switch.is_on: relay1
+                - switch.is_on: relay2
+                - switch.is_on: relay3
+            then:
+              - switch.turn_off: relay1
+              - switch.turn_off: relay2
+              - switch.turn_off: relay3
+            else:
+              - switch.turn_on: relay1
+              - switch.turn_on: relay2
+              - switch.turn_on: relay3
+
+status_led:
+  pin:
+    number: GPIO11
+    inverted: true

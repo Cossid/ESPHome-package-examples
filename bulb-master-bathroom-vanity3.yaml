@@ -1,11 +1,16 @@
 substitutions:
-  device_name: bulb-master-bathroom-vanity3
+  device_name: !secret device-name-bulb-master-bathroom-vanity3
   friendly_name: Master Bathroom Vanity Bulb 3
-  device_group_name: group-master-bathroom-vanity-lights
+  default_white_color_temperature: "2550 K"
   area: Master Bathroom
+  wifi_static_ip: !secret ip-bulb-master-bathroom-vanity3
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-upper-mid-lower.yaml
-  device: !include common/devices/bulbs/daybetter-t-a19.yaml
-  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/bulbs/cree-a19-cb8p.yaml
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_switch_id: !secret device-name-bulb-master-bathroom-vanity1

@@ -1,0 +1,32 @@
+udp:
+  - id: udp_send_group
+    binary_sensors:
+      - light_primary_state
+    sensors:
+      - light_primary_brightness
+
+binary_sensor:
+  - platform: template
+    id: light_primary_state
+    lambda: "return id(light_primary).remote_values.get_state();"
+
+sensor:
+  - platform: template
+    id: light_primary_brightness
+    lambda: "return id(light_primary).remote_values.get_brightness();"
+    filters:
+      - delta: 0.5% # Don't allow a feedback loop when the value isn't changing.
+
+light:
+  - id: !extend light_primary
+    on_state:
+      - globals.set:
+          id: ignore_remote_brightness_set
+          value: 'true'
+      - sensor.template.publish:
+          id: light_primary_brightness
+          state: !lambda return id(light_primary).remote_values.get_brightness();
+      - delay: 0.25s
+      - globals.set:
+          id: ignore_remote_brightness_set
+          value: 'false'

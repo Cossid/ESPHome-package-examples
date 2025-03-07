@@ -1,0 +1,2 @@
+wifi:
+  domain: !secret wifi_domain

@@ -1,15 +1,15 @@
 substitutions:
-  device_name: outlet-subwoofer-left
+  device_name: !secret device-name-outlet-subwoofer-left
   friendly_name: Subwoofer Left Outlet
   restore_mode_relay: RESTORE_DEFAULT_OFF
   # current_resistor: "0.0011"
   # voltage_divider: "1450"
-  # device_group_name: group-ouetlet-
   area: Family Room
+  wifi_static_ip: !secret ip-outlet-subwoofer-left
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/outlets/switchbot.yaml
   btproxy: !include common/btproxy/btproxy.yaml
-  # device_groups: !include common/device-groups/device-groups-switch.yaml

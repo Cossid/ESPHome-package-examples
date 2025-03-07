@@ -10,7 +10,6 @@ esp32:
     type: esp-idf
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbww_light: !include ../../light/rgbww.yaml
 
 bp5758d:
@@ -18,24 +17,25 @@ bp5758d:
   clock_pin: GPIO5
 
 # Individual outputs
+# Currents below are best guesses
 output:
   - platform: bp5758d
     id: output_red
     channel: 2 # Valid channels are 1-5
-    current: 10 # In mA, valid values are 0-90, default is 10.
+    current: 15 # In mA, valid values are 0-90, default is 10.
   - platform: bp5758d
     id: output_green
     channel: 3 # Valid channels are 1-5
-    current: 10 # In mA, valid values are 0-90, default is 10.
+    current: 15 # In mA, valid values are 0-90, default is 10.
   - platform: bp5758d
     id: output_blue
     channel: 1 # Valid channels are 1-5
-    current: 10 # In mA, valid values are 0-90, default is 10.
+    current: 15 # In mA, valid values are 0-90, default is 10.
   - platform: bp5758d
     id: output_cold_white
     channel: 5 # Valid channels are 1-5
-    current: 10 # In mA, valid values are 0-90, default is 10.
+    current: 50 # In mA, valid values are 0-90, default is 10.
   - platform: bp5758d
     id: output_warm_white
     channel: 4 # Valid channels are 1-5
-    current: 10 # In mA, valid values are 0-90, default is 10.
+    current: 50 # In mA, valid values are 0-90, default is 10.

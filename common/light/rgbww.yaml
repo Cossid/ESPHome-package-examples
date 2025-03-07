@@ -3,16 +3,19 @@ substitutions:
   cold_white_color_temperature: "6500 K"
   warm_white_color_temperature: "2700 K"
   default_white_color_temperature: "2700 K"
+  transition_length: "0.5s"
 
 packages:
   web_controls_rgb: !include ../web-controls/rgb.yaml
   web_controls_cct: !include ../web-controls/cct.yaml
+  light_effects: !include effects.yaml
 
 light:
   - platform: rgbww
     restore_mode: ${restore_mode_light}
     id: light_primary
-    name: ""
+    name: None
+    icon: "mdi:lightbulb"
     color_interlock: true
     cold_white_color_temperature: ${cold_white_color_temperature}
     warm_white_color_temperature: ${warm_white_color_temperature}
@@ -21,6 +24,7 @@ light:
     blue: output_blue
     cold_white: output_cold_white
     warm_white: output_warm_white
+    default_transition_length: ${transition_length}
 
 # On boot, if all colors and whites are set to full (defult unset), set default to warm white
 esphome:
@@ -39,4 +43,3 @@ esphome:
           brightness: 100%
           # cold_white: 0%
           # warm_white: 100%
-

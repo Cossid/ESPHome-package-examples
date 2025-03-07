@@ -1,0 +1,63 @@
+substitutions:
+  project_name: "Frankever.CB3S_Water_Valve"
+  project_version: "0.0.1"
+  hardware_info: "Frankever CB3S Water Valve"
+
+bk72xx:
+  board: cb3s
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+uart:
+  rx_pin: RX1
+  tx_pin: TX1
+  baud_rate: 9600
+
+# DPIDs
+# 1 - Switch off/on
+# 9 - Timer countdown 0-86400, unused
+# 38 - Restore position enum off/on/memroy
+# 101 - Desired Valve Position 0-100
+# 102 - Actual Valve Position 0-100
+
+tuya:
+
+# switch:
+#   - platform: "tuya"
+#     name: "Switch"
+#     switch_datapoint: 1
+
+cover:
+  - platform: "tuya"
+    name: "Valve Position"
+    device_class: damper
+    #control_datapoint: 101
+    position_datapoint: 101
+    position_report_datapoint: 102
+    max_value: 100
+    #step: 10
+    invert_position: true
+    invert_position_report: true
+
+# number:
+#   - platform: "tuya"
+#     name: "Restore Value"
+#     number_datapoint: 38
+#     min_value: 0
+#     max_value: 2
+#     step: 1
+#     datapoint_hidden:
+#       datapoint_type: int
+#       initial_value: 2
+#       restore_value: yes
+
+select:
+  - platform: "tuya"
+    name: "Sensor selection"
+    enum_datapoint: 38
+    optimistic: true
+    options:
+      0: "Off"
+      1: "On"
+      2: "Memory"

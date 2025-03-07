@@ -7,7 +7,6 @@ bk72xx:
   board: cbu
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
   web_controls_rgb: !include ../../web-controls/rgb.yaml
   web_controls_cct: !include ../../web-controls/cct.yaml
@@ -24,25 +23,54 @@ tuya:
   time_id: time_sntp
 
 # Tuya:
-# Datapoint 20: switch (value: OFF)
-# Datapoint 21: enum (value: 0)
-# Datapoint 26: int value (value: 0)
-# Datapoint 33: raw (value: 00.00.00.B2.00.F1.03.E8.00.00.00.00 (12))
-# Datapoint 34: switch (value: OFF)
-# Datapoint 23: int value (value: 0)
-# Datapoint 22: int value (value: 255)
-# Datapoint 24: string value (value: 000003E803D4)
+# Datapoint 20: switch (value: OFF) # switch_led
+# Datapoint 21: enum (value: 0) # work_mode # 0 = White, 1 = Color, 2 = Scene, 3 = Music
+# Datapoint 22: int value (value: 255) # bright_value # 0-1000, 10-1000
+# Datapoint 23: int value (value: 0) # temp_value # 0-1000, but gets distorted on cold white, limiting to 500
+# Datapoint 24: string value (value: 000003E803D4) # colour_data # Type: string; Value: 000011112222; 0000: H (hue: 0-360, 0X0000-0X0168); 1111: S (saturation: 0-1000, 0X0000-0X03E8); 2222: V (brightness: 0-1000, 0X0000-0X03E8)
+# Datapoint 25: not detected # scene_data # Type: string; Value: 0011223344445555666677778888;00: scene number;11: unit switching interval (0-100);22: unit change time (0-100);33: unit change mode (0 static 1 jump 2 gradient);4444: H (color: 0-360, 0X0000-0X0168);5555: S (saturation: 0-1000, 0X0000-0X03E8);6666: V (Brightness: 0-1000, 0X0000-0X03E8);7777: White light brightness (0-1000);8888: Color temperature (0-1000);Note: The numbers 1-8 correspond to as many groups as there are units
+# Datapoint 26: int value (value: 0) # countdown # Timer, unused
+# Datapoint 28: not detected # control_data # Type: string; Value: 011112222333344445555; 0: Change mode, 0 means direct output, 1 means gradient; 1111: H (chroma: 0-360, 0X0000-0X0168); 2222: S (saturation: 0-1000, 0X0000-0X03E8); 3333: V (brightness: 0-1000, 0X0000-0X03E8); 4444: White light brightness (0-1000); 5555: Color temperature value (0-1000)
+# Datapoint 29: not detected # debug_data # raw/string maxlen 255 # Used for gamma debugging, and must be used with a panel that supports gamma debugging
+# Datapoint 30: not detected # rhythm_mode # Color temperature and brightness at different time periods are automatically adjusted according to human body rhythm
+# Datapoint 33: raw (value: 00.00.00.B2.00.F1.03.E8.00.00.00.00 (12)) # power_memory # Used to set the state of the light on after power off (does not remember the APP light off action)
+# Datapoint 34: switch (value: OFF) # Do Not Disturb
 # Product: '{"p":"zyogagzvhgdkbbdm","v":"1.0.0","m":2}'
 
 light:
   - platform: "tuya"
     id: light_primary
-    name: ""
+    name: None
     switch_datapoint: 20
     dimmer_datapoint: 22
     color_temperature_datapoint: 23
     color_type: hsv
     color_datapoint: 24
     color_interlock: true
-    cold_white_color_temperature: 6500 K
     warm_white_color_temperature: 2700 K
+    cold_white_color_temperature: 4000 K # Just a guess, anything higher isn't really white anymore
+    min_value: 10
+    max_value: 1000
+    color_temperature_invert: true
+    color_temperature_max_value: 1000 # 500 # goes to 1000, but looks terrible, more red/blue than white
+    on_turn_on:
+      - light.control:
+          id: light_primary
+          color_temperature: 2700 K
+
+select:
+  - platform: tuya
+    name: "Light Mode"
+    enum_datapoint: 21
+    optimistic: true
+    options:
+      0: White
+      1: Color
+      2: Scene
+      3: Music
+
+switch:
+  - platform: tuya
+    name: "Do Not Disturb"
+    switch_datapoint: 34
+    restore_mode: RESTORE_DEFAULT_OFF

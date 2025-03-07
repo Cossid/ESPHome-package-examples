@@ -1,15 +1,24 @@
 substitutions:
-  device_name: switch-garage2
+  device_name: !secret device-name-switch-garage2
   friendly_name: Garage Light 2
-  device_group_name: group-garage-lights
   restore_mode_relay1: ALWAYS_OFF
   restore_mode_relay2: ALWAYS_OFF
   detach_relay: "true"
   motion_on_time: "120"
   area: Garage
+  wifi_static_ip: !secret ip-switch-garage2
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/switches/motion-double.yaml
-  device_groups: !include common/device-groups/device-groups-light-with-status.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender1.yaml
+    vars:
+      remote_id: 2
+      address1: !secret ip-switch-garage1
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_switch_id: !secret device-name-switch-garage1

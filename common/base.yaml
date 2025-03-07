@@ -1,37 +1,110 @@
 substitutions:
-  use_mac_address: "false"
+  id_by_mac: "false"
   area: ""
+  hardware_info: Undefined Hardware
+  project_name: Undefined.Project
+  project_version: "0.0.1"
+  brightness_transition_time: 0.1s
 
 logger:
 api:
 ota:
+  - platform: esphome
+safe_mode:
 web_server:
-  #include_internal: true
+  version: 3
 captive_portal:
 mdns:
-
-wifi:
-  domain: !secret wifi_domain
-  ap:
-    ssid: ${device_name}
-    password: !secret wifi_ap_password
-
-# packages:
-#   wifi: !include wifi-mid-upper-lower.yaml
 
 time:
   - platform: sntp
     id: time_sntp
     timezone: "America/Chicago"
     servers:
-     - time.lan
+     - !secret time_server1
 
 sun:
+  id: sun_home
   latitude: !secret latitude
   longitude: !secret longitude
 
 esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
-  name_add_mac_suffix: ${use_mac_address}
+  name_add_mac_suffix: ${id_by_mac}
   area: ${area}
+  project:
+    name: ${project_name}
+    version: ${project_version}
+
+debug:
+  #update_interval: 10min # default 60 seconds
+
+text_sensor:
+  - platform: template
+    id: sensor_hardware_info
+    name: Hardware Info
+    entity_category: diagnostic
+    update_interval: 24h
+    lambda: return {"$hardware_info"};
+    icon: "mdi:chip"
+  - platform: debug
+    device:
+      id: sensor_device_info
+      name: Device Info
+    reset_reason:
+      id: sensor_reset_reason
+      name: Reset Reason
+  - platform: version
+    id: sensor_esphome_version
+    name: ESPHome Version
+  - platform: wifi_info
+    ip_address:
+      id: sensor_wifi_ip_address
+      name: Wifi IP Address
+      icon: "mdi:ip"
+    mac_address:
+      id: sensor_wifi_mac_address
+      name: Wifi MAC Address
+      icon: "mdi:wifi-cog"
+    bssid:
+      id: sensor_wifi_connected_bssid
+      name: Wifi Connected BSSID
+      icon: "mdi:wifi-cog"
+    # scan_results:
+    #   id: sensor_wifi_latest_scan_results
+    #   name: Wifi Latest Scan Results
+
+sensor:
+  - platform: uptime
+    id: sensor_uptime
+    type: timestamp
+    name: Uptime
+  - platform: wifi_signal
+    id: sensor_wifi_signal
+    name: WiFi Signal
+    icon: "mdi:signal-variant"
+  - platform: debug
+    free:
+      id: sensor_heap_free
+      name: "Heap Free"
+    loop_time:
+      id: sensor_longest_loop_time
+      name: "Longest Loop Time"
+
+button:
+  - platform: safe_mode
+    id: button_safe_mode
+    name: "Safe Mode"
+    entity_category: diagnostic
+  - platform: restart
+    id: button_restart
+    name: Restart
+    entity_category: diagnostic
+  - platform: template
+    id: button_save_preferences
+    name: "Save Preferences"
+    entity_category: diagnostic
+    icon: "mdi:format-list-checks"
+    on_press:
+      - lambda: global_preferences->sync();

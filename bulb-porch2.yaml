@@ -1,11 +1,15 @@
 substitutions:
-  device_name: bulb-porch2
+  device_name: !secret device-name-bulb-porch2
   friendly_name: Porch Bulb 2
-  device_group_name: group-porch-lights
   area: Porch
+  wifi_static_ip: !secret ip-bulb-porch2
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-mid-upper-lower.yaml
-  device: !include common/devices/bulbs/cree-100w-n.yaml
-  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/bulbs/cree-a21-n.yaml
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_switch_id: !secret device-name-switch-porch

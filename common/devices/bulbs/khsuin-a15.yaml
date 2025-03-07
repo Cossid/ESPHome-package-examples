@@ -7,7 +7,6 @@ bk72xx:
   board: generic-bk7231n-qfn32-tuya # LMA45-BKN-V1.0 CoB module
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbww_light: !include ../../light/rgbww.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
 

@@ -1,0 +1,12 @@
+substitutions:
+  device_name: !secret device-name-outlet-weaver-right
+  friendly_name: Weaver's Room Right Outlet
+  #id_by_mac: "true"
+  area: Weaver's Room
+  wifi_static_ip: !secret ip-outlet-weaver-right
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/outlets/gosund-wo1-in-wall.yaml

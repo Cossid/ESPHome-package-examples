@@ -3,22 +3,16 @@ substitutions:
   project_version: "0.0.1"
   hardware_info: "SwitchBot A19 ESP32-C3 SM2335 RGBWW Bulb"
 
-esp32:
-  variant: ESP32C3
-  board: esp32dev
-  framework:
-    type: esp-idf
-    sdkconfig_options:
-      CONFIG_BT_BLE_50_FEATURES_SUPPORTED: y
-      CONFIG_BT_BLE_42_FEATURES_SUPPORTED: y
-
 esphome:
   platformio_options:
-    board_build.mcu: esp32c3
-    board_build.variant: esp32c3
+    board_build.flash_mode: dio
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbww_light: !include ../../light/rgbww.yaml
 
 sm2335:

@@ -7,7 +7,6 @@ bk72xx:
   board: wb2l
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbww_light: !include ../../light/rgbww.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
 

@@ -3,22 +3,16 @@ substitutions:
   project_version: "0.0.1"
   hardware_info: "Orein A19 ESP32-C3 BP1658CJ RGBWW Bulb"
 
-esp32:
-  board: esp32dev
-  variant: ESP32C3
-  framework:
-    type: esp-idf
-    sdkconfig_options:
-      CONFIG_BT_BLE_50_FEATURES_SUPPORTED: y
-      CONFIG_BT_BLE_42_FEATURES_SUPPORTED: y
-
 esphome:
   platformio_options:
-    board_build.mcu: esp32c3
-    board_build.variant: esp32c3
+    board_build.flash_mode: dio
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbww_light: !include ../../light/rgbww.yaml
 
 bp1658cj:

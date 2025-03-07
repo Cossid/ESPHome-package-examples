@@ -1,0 +1,15 @@
+substitutions:
+  device_name: !secret device-name-outlet-basement-proxy
+  friendly_name: Basement Proxy Outlet
+  restore_mode_relay: RESTORE_DEFAULT_ON
+  # current_resistor: 0.0011
+  # voltage_divider: 1450
+  area: Utility Room
+  wifi_static_ip: !secret ip-outlet-basement-proxy
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/outlets/switchbot.yaml
+  btproxy: !include common/btproxy/btproxy.yaml

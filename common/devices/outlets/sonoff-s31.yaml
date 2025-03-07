@@ -5,12 +5,9 @@ substitutions:
   restore_mode_relay: RESTORE_DEFAULT_ON
 
 esp8266:
-  board: esp01_1m
+  board: esp12e # 4MiB Flash
   restore_from_flash: true
   early_pin_init: false
-
-packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
 
 logger:
   baud_rate: 0
@@ -18,6 +15,7 @@ logger:
 uart:
   rx_pin: RX
   baud_rate: 4800
+  parity: EVEN
 
 binary_sensor:
   - platform: gpio
@@ -34,19 +32,33 @@ sensor:
     current:
       name: Current
       accuracy_decimals: 1
+      filters:
+        - throttle_average: 5s
     voltage:
       name: Voltage
       accuracy_decimals: 1
+      filters:
+        - throttle_average: 5s
     power:
       name: Power
-      accuracy_decimals: 1
       id: power
-  - platform: integration
-    name: Energy
-    sensor: power
-    time_unit: h
-    unit_of_measurement: kWh
+      accuracy_decimals: 1
+      filters:
+        - throttle_average: 5s
+    energy:
+      name: Total Energy
+      accuracy_decimals: 3
+      filters:
+        - throttle_average: 5s
+  - platform: total_daily_energy
+    name: 'Total Daily Energy'
+    power_id: power
+    unit_of_measurement: 'kWh'
+    state_class: total_increasing
+    device_class: energy
+    accuracy_decimals: 3
     filters:
+      # Multiplication factor from W to kW is 0.001
       - multiply: 0.001
 
 switch:

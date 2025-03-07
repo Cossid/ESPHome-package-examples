@@ -1,12 +1,11 @@
 substitutions:
-  device_name: lamp-master-bedroom
+  device_name: !secret device-name-lamp-master-bedroom
   friendly_name: Master Bedroom Lamp
-  #device_group_name: group-master-bedroom-lamp
-  #use_mac_address: "true"
   area: Master Bedroom Lamp
+  wifi_static_ip: !secret ip-lamp-master-bedroom
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/lamps/eyesound.yaml
-  #device_groups: !include common/device-groups/device-groups-light.yaml

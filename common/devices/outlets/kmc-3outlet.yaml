@@ -1,0 +1,59 @@
+substitutions:
+  project_name: "KMC.CB2S_3-Outlet_Strip"
+  project_version: "0.0.1"
+  hardware_info: "KMC CB2S 3-Outlet Strip"
+  restore_mode_relay1: RESTORE_DEFAULT_ON
+  restore_mode_relay2: RESTORE_DEFAULT_ON
+  restore_mode_relay3: RESTORE_DEFAULT_ON
+
+bk72xx:
+  board: cb2s
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+switch:
+  - platform: gpio
+    id: relay1
+    name: Outlet 1
+    pin: GPIO24
+    restore_mode: ${restore_mode_relay1}
+  - platform: gpio
+    id: relay2
+    name: Outlet 2
+    pin: GPIO26
+    restore_mode: ${restore_mode_relay2}
+  - platform: gpio
+    id: relay3
+    name: Outlet 3
+    pin: GPIO6
+    restore_mode: ${restore_mode_relay3}
+
+binary_sensor:
+  - platform: gpio
+    id: binary_switch_all
+    pin:
+      number: GPIO10
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - if:
+            condition:
+              or:
+                - switch.is_on: relay1
+                - switch.is_on: relay2
+                - switch.is_on: relay3
+            then:
+              - switch.turn_off: relay1
+              - switch.turn_off: relay2
+              - switch.turn_off: relay3
+            else:
+              - switch.turn_on: relay1
+              - switch.turn_on: relay2
+              - switch.turn_on: relay3
+
+status_led:
+  pin:
+    number: GPIO11
+    inverted: true

@@ -9,8 +9,5 @@ esp32:
     type: arduino
     #type: esp-idf2
 
-packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
-
 logger:
   level: VERBOSE

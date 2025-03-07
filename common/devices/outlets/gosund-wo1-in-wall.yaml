@@ -24,9 +24,6 @@ esp8266:
   restore_from_flash: true
   early_pin_init: false
 
-packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
-
 status_led:
   pin:
     number: GPIO2
@@ -100,7 +97,7 @@ sensor:
   # There may be other ways to handle this, but this was the method I was
   # most comfortable with.
   - platform: adc
-    pin: A0
+    pin: GPIO17 # ADC A0
     id: analog_buttons
     raw: true
     # This needs to be short enough for the buttons to appear responsive.

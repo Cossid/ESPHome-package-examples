@@ -1,11 +1,37 @@
 substitutions:
-  device_name: switch-upper-hallway1
+  device_name: !secret device-name-switch-upper-hallway1
   friendly_name: Upper Hallway Light
-  device_group_name: group-upper-hallway-lights
+  warm_white_color_temperature: "2200 K"
+  default_white_color_temperature: "2550 K"
   area: Upper Hallway
+  wifi_static_ip: !secret ip-switch-upper-hallway1
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-upper-mid-lower.yaml
-  device: !include common/devices/switches/motion-double.yaml
-  device_groups: !include common/device-groups/device-groups-light.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/switches/motion-double-with-remote-motion.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender6.yaml
+    vars:
+      address1: !secret ip-bulb-upper-hallway1
+      address2: !secret ip-bulb-upper-hallway2
+      address3: !secret ip-bulb-upper-hallway3
+      address4: !secret ip-bulb-upper-hallway4
+      address5: !secret ip-switch-upper-hallway2
+      address6: !secret ip-switch-upper-hallway3
+  udp_groups_receive2: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_id: 2
+      remote_switch_id: !secret device-name-switch-upper-hallway2
+  udp_groups_receive3: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_id: 3
+      remote_switch_id: !secret device-name-switch-upper-hallway3
+  udp_groups_motion_receiver: !include
+    file: common/udp-groups/udp-groups-motion-receiver.yaml
+    vars:
+      remote_id: 3
+      remote_motion_id: !secret device-name-switch-upper-hallway3

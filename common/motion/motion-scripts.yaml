@@ -1,0 +1,91 @@
+substitutions:
+  motion_on_time: "10"
+  detach_relay: "true"
+  status_light_follows_primary_light_state: "false"
+  ignore_sun: "false"
+  motion_elevation_cutoff: "10"
+
+globals:
+  - id: motion_activated
+    type: bool
+    restore_value: no
+    initial_value: '0'
+  - id: motion_keep_on_seconds_remaining
+    type: int
+    restore_value: no
+    initial_value: '0'
+  - id: detach_relay_value
+    type: bool
+    initial_value: ${detach_relay}
+  - id: status_light_follows_primary_light_state_value
+    type: bool
+    initial_value: ${status_light_follows_primary_light_state}
+  - id: global_ignore_sun
+    type: bool
+    restore_value: no
+    initial_value: ${ignore_sun}
+
+script:
+  - id: motion_triggered
+    mode: restart
+    then:
+      #- logger.log: "motion_triggered"
+      - if:
+          condition:
+            - light.is_off: ${target_light}
+          then:
+            - lambda: id(motion_activated) = 1;
+            - light.turn_on: ${target_light}
+
+  - id: motion_stopped
+    mode: restart
+    then:
+      #- logger.log: "motion_stopped"
+      - lambda: id(motion_keep_on_seconds_remaining) = ${motion_on_time};
+      - while: 
+          condition:
+            - lambda: return(id(motion_keep_on_seconds_remaining) > 0);
+          then:
+            - logger.log:
+                format: "Motion ended, light remaining: %d seconds"
+                args: [ 'id(motion_keep_on_seconds_remaining)' ]
+            - lambda: id(motion_keep_on_seconds_remaining) -= 1;
+            - delay: 1s
+      - lambda: id(motion_activated) = 0;
+      - light.turn_off: ${target_light}
+
+  - id: update_status
+    then:
+      - if:
+          condition:
+            lambda: return id(${target_light}).remote_values.get_state() > 0;
+          then:
+            - if:
+                condition:
+                  lambda: return id(status_light_follows_primary_light_state_value) == true;
+                then:
+                  light.turn_on: light_status
+          else:
+            - if:
+                condition:
+                  lambda: return id(status_light_follows_primary_light_state_value) == true;
+                then:
+                  light.turn_off: light_status
+
+  - id: update_relay
+    then:
+      - if:
+          condition:
+            lambda: return id(${target_light}).remote_values.get_state() > 0;
+          then:
+            - if:
+                condition:
+                  lambda: return id(detach_relay_value) == false;
+                then:
+                  - switch.turn_on: load_power
+          else:
+            - if:
+                condition:
+                  lambda: return id(detach_relay_value) == false;
+                then:
+                  - switch.turn_off: load_power

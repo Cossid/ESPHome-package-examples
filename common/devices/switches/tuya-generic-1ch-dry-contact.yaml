@@ -1,0 +1,40 @@
+substitutions:
+  project_name: "Tuya_Generic.CB3S_1CH_Dry_Contact_Relay"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic CB3S 1CH Dry Contact Relay"
+  restore_mode_relay: RESTORE_DEFAULT_OFF
+
+bk72xx:
+  board: cb3s
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+binary_sensor:
+  - platform: gpio
+    id: binary_onoff_1
+    pin:
+      number: P8
+      inverted: true
+      mode: INPUT_PULLUP
+    on_state:
+      then:
+        - switch.toggle: switch_1
+  - platform: gpio
+    id: binary_switch_all
+    pin:
+      number: P26
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: switch_1
+
+switch:
+  - platform: gpio
+    id: switch_1
+    name: None
+    pin: P6
+
+status_led:
+  pin: P9

@@ -1,16 +1,27 @@
 substitutions:
-  device_name: switch-rear-garage1
+  device_name: !secret device-name-switch-rear-garage1
   friendly_name: Rear Garage Light
-  device_group_name: group-rear-garage-lights
-  detach_relay: "false"
+  detach_relay: "true"
   status_light_follows_primary_light_state: "true"
   status_inverted: "false"
-  restore_mode_relay: RESTORE_DEFAULT_OFF
+  restore_mode_relay: ALWAYS_ON
   restore_mode_light: RESTORE_DEFAULT_OFF
   area: Rear Garage
+  wifi_static_ip: !secret ip-switch-rear-garage1
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/switches/ultrapro.yaml
-  device_groups: !include common/device-groups/device-groups-light-with-status.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender3.yaml
+    vars:
+      address1: !secret ip-bulb-rear-garage1
+      address2: !secret ip-bulb-rear-garage2
+      address3: !secret ip-switch-rear-garage2
+  udp_groups_receive2: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_id: 2
+      remote_switch_id: !secret device-name-switch-rear-garage2

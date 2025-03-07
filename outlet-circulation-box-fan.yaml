@@ -1,0 +1,14 @@
+substitutions:
+  device_name: !secret device-name-outlet-circulation-box-fan
+  friendly_name: Circulation Box Fan Outlet
+  restore_mode_relay: RESTORE_DEFAULT_OFF
+  #id_by_mac: "true"
+  #area: Portable
+  wifi_static_ip: !secret ip-outlet-circulation-box-fan
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/outlets/dewenwils.yaml
+  #btproxy: !include common/btproxy/btproxy.yaml

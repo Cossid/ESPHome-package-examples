@@ -1,0 +1,43 @@
+substitutions:
+  project_name: "Sunco.CBU_Dimmer_Switch"
+  project_version: "0.0.1"
+  hardware_info: "Sunco CBU Dimmer Switch"
+  restore_mode_light: RESTORE_DEFAULT_OFF
+
+bk72xx:
+  board: cbu
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+binary_sensor:
+  - { platform: gpio, id: button_toggle, pin: { number: GPIO15, inverted: true, mode: INPUT_PULLUP }, on_press: { light.toggle: light_dimmer } }
+  - { platform: gpio, id: button_increase, pin: { number: GPIO17, inverted: true, mode: INPUT_PULLUP }, on_press: { light.dim_relative: { id: light_dimmer, relative_brightness: 14.28% } } }
+  - { platform: gpio, id: button_decrease, pin: { number: GPIO9, inverted: true, mode: INPUT_PULLUP }, on_press: { light.dim_relative: { id: light_dimmer, relative_brightness: -14.28% } } }
+
+output:
+  - { platform: libretiny_pwm, id: output_dimmer, pin: GPIO24 }
+  - { platform: gpio, id: output_bar_2, pin: { number: GPIO7, inverted: true } }
+  - { platform: gpio, id: output_bar_3, pin: { number: GPIO8, inverted: true } }
+  - { platform: gpio, id: output_bar_4, pin: { number: GPIO22, inverted: true } }
+  - { platform: gpio, id: output_bar_5, pin: { number: GPIO20, inverted: true } }
+  - { platform: gpio, id: output_bar_6, pin: { number: GPIO16, inverted: true } }
+  - { platform: gpio, id: output_bar_7, pin: { number: GPIO14, inverted: true } }
+
+light:
+  - platform: monochromatic
+    id: light_dimmer
+    name: Light
+    output: output_dimmer
+    default_transition_length: 0s # Has some hardware fading, might as well not amplify it with ESPHome's transitions
+    on_state:
+      - lambda: if (id(light_dimmer).remote_values.get_state() && id(light_dimmer).remote_values.get_brightness() / 0.1428 >= 1) { id(output_bar_1).turn_on(); } else { id(output_bar_1).turn_off(); };
+      - lambda: if (id(light_dimmer).remote_values.get_state() && id(light_dimmer).remote_values.get_brightness() / 0.1428 >= 2) { id(output_bar_2).turn_on(); } else { id(output_bar_2).turn_off(); };
+      - lambda: if (id(light_dimmer).remote_values.get_state() && id(light_dimmer).remote_values.get_brightness() / 0.1428 >= 3) { id(output_bar_3).turn_on(); } else { id(output_bar_3).turn_off(); };
+      - lambda: if (id(light_dimmer).remote_values.get_state() && id(light_dimmer).remote_values.get_brightness() / 0.1428 >= 4) { id(output_bar_4).turn_on(); } else { id(output_bar_4).turn_off(); };
+      - lambda: if (id(light_dimmer).remote_values.get_state() && id(light_dimmer).remote_values.get_brightness() / 0.1428 >= 5) { id(output_bar_5).turn_on(); } else { id(output_bar_5).turn_off(); };
+      - lambda: if (id(light_dimmer).remote_values.get_state() && id(light_dimmer).remote_values.get_brightness() / 0.1428 >= 6) { id(output_bar_6).turn_on(); } else { id(output_bar_6).turn_off(); };
+      - lambda: if (id(light_dimmer).remote_values.get_state() && id(light_dimmer).remote_values.get_brightness() / 0.1428 >= 7) { id(output_bar_7).turn_on(); } else { id(output_bar_7).turn_off(); };
+  - platform: status_led
+    id: output_bar_1
+    pin: { number: GPIO6, inverted: true }

@@ -1,0 +1,7 @@
+light:
+  - id: !extend light_primary
+    effects:
+      - flicker:
+      - random:
+      - pulse:
+      - strobe:

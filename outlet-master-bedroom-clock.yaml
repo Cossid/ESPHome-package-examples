@@ -1,0 +1,12 @@
+substitutions:
+  device_name: !secret device-name-outlet-master-bedroom-clock
+  friendly_name: Master Bedroom Clock Outlet
+  restore_mode_relay: RESTORE_DEFAULT_ON
+  area: Master Bedroom
+  wifi_static_ip: !secret ip-outlet-master-bedroom-clock
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/outlets/sonoff-s31.yaml

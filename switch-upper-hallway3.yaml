@@ -1,12 +1,34 @@
 substitutions:
-  device_name: switch-upper-hallway3
+  device_name: !secret device-name-switch-upper-hallway3
   friendly_name: Upper Hallway Light 3
-  device_group_name: group-upper-hallway-lights
   restore_mode_relay1: ALWAYS_OFF
+  warm_white_color_temperature: "2200 K"
+  default_white_color_temperature: "2550 K"
   area: Upper Hallway
+  wifi_static_ip: !secret ip-switch-upper-hallway3
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-upper-mid-lower.yaml
-  device: !include common/devices/switches/motion-double.yaml
-  device_groups: !include common/device-groups/device-groups-light.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/switches/motion-double-with-remote-motion.yaml
+  udp_groups_light_state_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_switch_id: !secret device-name-switch-upper-hallway1
+  udp_groups_light_state_sender: !include
+    file: common/udp-groups/udp-groups-light-sender1.yaml
+    vars:
+      remote_id: 3
+      address1: !secret ip-switch-upper-hallway1
+  udp_groups_motion_state_sender: !include
+    file: common/udp-groups/udp-groups-motion-sender.yaml
+    vars:
+      remote_id: 3
+      #address: !secret ip-switch-upper-hallway1
+
+sensor:
+  - platform: sun
+    name: Sun Elevation
+    type: elevation
+    entity_category: diagnostic

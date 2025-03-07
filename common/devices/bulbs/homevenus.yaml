@@ -1,0 +1,22 @@
+substitutions:
+  project_name: "Homevenus.CBLC5_PWM_CT_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Homevenus CBLC5 PWM CT Bulb"
+  cold_white_color_temperature: "5000 K"
+  warm_white_color_temperature: "2100 K"
+  default_white_color_temperature: "2100 K"
+
+bk72xx:
+  board: generic-bk7231n-qfn32-tuya #CBLC5
+
+packages:
+  rgbww_light: !include ../../light/cwww.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+output:
+  - platform: libretiny_pwm
+    id: output_cold
+    pin: GPIO26
+  - platform: libretiny_pwm
+    id: output_warm
+    pin: GPIO24

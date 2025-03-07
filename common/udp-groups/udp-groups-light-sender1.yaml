@@ -1,0 +1,11 @@
+packages:
+  primary_light_sensor: !include udp-groups-light-sender-primary-light-sensor.yaml
+
+substitutions:
+  remote_id: "1" # Only needed for single senders, as they send to devices that may need multiple listens
+
+udp:
+  - id: !extend udp_send_group
+    port: 1851${remote_id}
+    addresses:
+      - ${address1}

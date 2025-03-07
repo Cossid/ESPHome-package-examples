@@ -11,7 +11,6 @@ bk72xx:
   board: generic-bk7231t-qfn32-tuya # WB8P
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbct_light: !include ../../light/rgbct.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
 

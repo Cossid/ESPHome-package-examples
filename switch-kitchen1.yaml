@@ -1,16 +1,30 @@
 substitutions:
-  device_name: switch-kitchen1
+  device_name: !secret device-name-switch-kitchen1
   friendly_name: Kitchen Light
-  device_group_name: group-kitchen-lights
   detach_relay: "true"
   status_light_follows_primary_light_state: "false"
   status_inverted: "false"
   restore_mode_relay: ALWAYS_ON
   restore_mode_light: RESTORE_DEFAULT_OFF
   area: Kitchen
+  wifi_static_ip: !secret ip-switch-kitchen1
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/switches/ultrapro.yaml
-  device_groups: !include common/device-groups/device-groups-light.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender6.yaml
+    vars:
+      address1: !secret ip-bulb-kitchen1
+      address2: !secret ip-bulb-kitchen2
+      address3: !secret ip-bulb-kitchen3
+      address4: !secret ip-bulb-kitchen4
+      address5: !secret ip-bulb-kitchen5
+      address6: !secret ip-switch-kitchen2
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_id: 2
+      remote_switch_id: !secret device-name-switch-kitchen2

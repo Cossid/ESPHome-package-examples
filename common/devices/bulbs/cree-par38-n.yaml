@@ -1,0 +1,38 @@
+substitutions:
+  project_name: "Cree.PAR38_CB8P_PWM_RGBCT_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Cree PAR38 CB8P PWM RGBCT Bulb"
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  cold_white_color_temperature: "6500 K"
+  warm_white_color_temperature: "2200 K"
+  default_white_color_temperature: "2200 K"
+
+bk72xx:
+  board: generic-bk7231n-qfn32-tuya # CB8P
+
+packages:
+  rgbct_light: !include ../../light/rgbct.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+output:
+  - platform: libretiny_pwm
+    id: output_red
+    pin: GPIO24
+    frequency: 2000 Hz
+  - platform: libretiny_pwm
+    id: output_green
+    pin: GPIO9
+    frequency: 2000 Hz
+  - platform: libretiny_pwm
+    id: output_blue
+    pin: GPIO26
+    frequency: 2000 Hz
+  - platform: libretiny_pwm
+    id: output_brightness
+    pin: GPIO7
+    frequency: 2000 Hz
+  - platform: libretiny_pwm
+    id: output_temperature
+    inverted: true
+    pin: GPIO8
+    frequency: 2000 Hz

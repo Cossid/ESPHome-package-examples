@@ -1,11 +1,15 @@
 substitutions:
-  device_name: bulb-driveway1
+  device_name: !secret device-name-bulb-driveway1
   friendly_name: Driveway Bulb 1
-  device_group_name: group-driveway-lights
   area: Driveway
+  wifi_static_ip: !secret ip-bulb-driveway1
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-lower-mid-upper.yaml
-  device: !include common/devices/bulbs/cree-100w-n.yaml
-  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/bulbs/cree-a21-n.yaml
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_switch_id: !secret device-name-switch-driveway1

@@ -1,0 +1,7 @@
+packages:
+  wifi_domain: !include wifi-domain.yaml
+  wifi_ap_protected: !include wifi-ap-protected.yaml
+
+wifi:
+  ssid: !secret legacy_wifi_ssid
+  password: !secret legacy_wifi_password

@@ -21,7 +21,6 @@ bk72xx:
   board: cb3s
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
 
 uart:
@@ -34,7 +33,7 @@ uart:
   #   after:
   #     delimiter: "\n"
   #   sequence:
-  #     - lambda: UARTDebug::log_string(direction, bytes);
+  #     - lambda: UARTDebug::log_hex(direction, bytes, ' ');
 
 output:
   - platform: template
@@ -52,7 +51,7 @@ output:
 light:
   - platform: monochromatic
     id: light_primary
-    name: ""
+    name: None
     output: output_template
     #gamma_correct: 1.0
     #default_transition_length: 0s

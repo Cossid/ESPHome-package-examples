@@ -1,0 +1,46 @@
+substitutions:
+  project_name: "Avatto.WSM16-DC_CBU_1CH_DC_Dry_Contact_Relay"
+  project_version: "0.0.1"
+  hardware_info: "Avatto WSM16-DC CBU 1CH DC Dry Contact Relay"
+  restore_mode_relay: ALWAYS_OFF
+
+bk72xx:
+  board: cbu
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+binary_sensor:
+  - platform: gpio
+    id: remote_switch
+    pin:
+      number: P14
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.turn_on: relay
+    on_release:
+      then:
+        - switch.turn_off: relay
+  - platform: gpio
+    id: button_toggle
+    pin:
+      number: P8
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: relay
+
+switch:
+  - platform: gpio
+    id: relay
+    name: None
+    pin: P20
+    restore_mode: ${restore_mode_relay}
+
+status_led:
+  pin:
+    number: P6
+    inverted: true

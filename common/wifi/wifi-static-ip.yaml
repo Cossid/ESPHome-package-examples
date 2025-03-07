@@ -1,0 +1,10 @@
+substitutions:
+  wifi_static_ip: "REPLACEME"
+  
+wifi:
+  manual_ip:
+    static_ip: ${wifi_static_ip}
+    subnet: !secret wifi_subnet
+    gateway: !secret wifi_gateway
+    dns1: !secret wifi_dns1
+    dns2: !secret wifi_dns2

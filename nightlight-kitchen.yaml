@@ -1,13 +1,13 @@
 substitutions:
-  device_name: nightlight-kitchen
+  device_name: !secret device-name-nightlight-kitchen
   friendly_name: Kitchen Nightlight
-  #use_mac_address: "true"
   #restore_mode_light: ALWAYS_ON
-  #device_group_name: group-nightlight-
-  #area: 
+  area: Kitchen
+  wifi_static_ip: !secret ip-nightlight-kitchen
 
 packages:
   base: !include common/base.yaml
-  wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/nightlights/tuya-generic.yaml
   #device_groups: !include common/device-groups/device-groups-switch.yaml

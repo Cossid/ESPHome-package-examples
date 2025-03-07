@@ -7,42 +7,163 @@ bk72xx:
   board: cbu
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
-  #web_controls_rgb: !include ../../web-controls/rgb.yaml
-  #web_controls_cct: !include ../../web-controls/cct.yaml
 
-logger:
-  baud_rate: 0
+# logger:
+#   baud_rate: 0
 
 uart:
   rx_pin: RX1 # GPIO10
   tx_pin: TX1 # GPIO11
   baud_rate: 9600
+  #debug:
 
 tuya:
   time_id: time_sntp
 
-# Tuya:
-# Datapoint 20: switch (value: OFF)
-# Datapoint 21: enum (value: 0)
-# Datapoint 26: int value (value: 0)
-# Datapoint 33: raw (value: 00.00.00.B2.00.F1.03.E8.00.00.00.00 (12))
-# Datapoint 34: switch (value: OFF)
-# Datapoint 23: int value (value: 0)
-# Datapoint 22: int value (value: 255)
-# Datapoint 24: string value (value: 000003E803D4)
-# Product: '{"p":"zyogagzvhgdkbbdm","v":"1.0.0","m":2}'
+sensor:
+  # 1 - enum - none/presence - presence_state
+  - platform: tuya
+    name: presence_state
+    sensor_datapoint: 1
+  # 101 - 0-10000 step 1 - illuminance_value
+  - platform: tuya
+    name: illuminance_value
+    sensor_datapoint: 101
+  # 116 - enum - none/large_move/small_move/breathe - mov_status
+  - platform: tuya
+    name: mov_status
+    sensor_datapoint: 116
 
-# light:
-#   - platform: "tuya"
-#     id: light_primary
-#     name: ""
-#     switch_datapoint: 20
-#     dimmer_datapoint: 22
-#     color_temperature_datapoint: 23
-#     color_type: hsv
-#     color_datapoint: 24
-#     color_interlock: true
-#     cold_white_color_temperature: 6500 K
-#     warm_white_color_temperature: 2700 K
+number:
+  # 2 - 0-10 step 1 - sensitivity
+  - platform: tuya
+    name: sensitivity
+    number_datapoint: 2
+    min_value: 0
+    max_value: 10
+    step: 1
+  # 3 - 0-1000 step 10 - near_detection
+  - platform: tuya
+    name: near_detection
+    number_datapoint: 3
+    min_value: 0
+    max_value: 1000
+    step: 10
+  # 4 - 0-600 step 10 - far_detection
+  - platform: tuya
+    name: far_detection
+    number_datapoint: 4
+    min_value: 0
+    max_value: 600
+    step: 10
+  # 102 - 0-10 step 1 - sensitivity_cz
+  - platform: tuya
+    name: sensitivity_cz
+    number_datapoint: 102
+    min_value: 0
+    max_value: 10
+    step: 1
+  # 104 - enum - arm/disarm/sos/doorbell - mode
+  - platform: tuya
+    name: mode
+    number_datapoint: 104
+    min_value: 0
+    max_value: 3
+    step: 1
+  # 105 - 0-600 step 10 - wd_detection
+  - platform: tuya
+    name: wd_detction
+    number_datapoint: 105
+    min_value: 0
+    max_value: 600
+    step: 10
+  # 106 - 0-10 step 1 - sensitivity_wd
+  - platform: tuya
+    name: sensitivity_wd
+    number_datapoint: 106
+    min_value: 0
+    max_value: 10
+    step: 1
+  # 107 - enum - low/middle/high/mute - alarm_volume
+  - platform: tuya
+    name: alarm_volume
+    number_datapoint: 107
+    min_value: 0
+    max_value: 3
+    step: 1
+  # 108 - 0-28800 step 1 - pir_delay
+  - platform: tuya
+    name: pir_delay
+    number_datapoint: 108
+    min_value: 0
+    max_value: 28800
+    step: 1
+  # 109 - 1-60 step 1 - alarm_time
+  - platform: tuya
+    name: alarm_time
+    number_datapoint: 109
+    min_value: 1
+    max_value: 60
+    step: 1
+  # 110 - 0-1000 step 1 - mov_min_detection
+  - platform: tuya
+    name: mov_min_detection
+    number_datapoint: 110
+    min_value: 0
+    max_value: 1000
+    step: 1
+  # 111 - 0-1000 step 1 - micro_min_detection
+  - platform: tuya
+    name: micro_min_detection
+    number_datapoint: 111
+    min_value: 0
+    max_value: 1000
+    step: 1
+  # 112 - 0-1000 step 1 - bre_min_detection
+  - platform: tuya
+    name: bre_min_detection
+    number_datapoint: 112
+    min_value: 0
+    max_value: 1000
+    step: 1
+  # 113 - 0-300 step 1 - study_timer
+  - platform: tuya
+    name: study_timer
+    number_datapoint: 113
+    min_value: 0
+    max_value: 300
+    step: 1
+  # 119 - 0-20 step 1 - false_alarm
+  - platform: tuya
+    name: false_alarm
+    number_datapoint: 119
+    min_value: 0
+    max_value: 20
+    step: 1
+
+switch:
+  # 103 - bool - led_onoff
+  - platform: tuya
+    name: led_onoff
+    switch_datapoint: 103
+  # 114 - bool - start_study
+  - platform: tuya
+    name: start_study
+    switch_datapoint: 114
+  # 115 - bool - reset_setting
+  - platform: tuya
+    name: reset_setting
+    switch_datapoint: 115
+  # 117 - bool - small_mov_start
+  - platform: tuya
+    name: small_mov_start
+    switch_datapoint: 117
+  # 118 - bool - breathe_start
+  - platform: tuya
+    name: breathe_start
+    switch_datapoint: 118
+  # 120 - bool - false_breath
+  - platform: tuya
+    name: false_breath
+    switch_datapoint: 120

@@ -1,0 +1,34 @@
+substitutions:
+  project_name: "Helloify.A19_WB3L_SM2135_RGBWW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Helloify A19 WB3L SM2135 RGBWW Bulb"
+
+bk72xx:
+  board: wb3l
+
+packages:
+  rgbww_light: !include ../../light/rgbww.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+sm2135:
+  data_pin: GPIO6
+  clock_pin: GPIO7
+  rgb_current: 45mA
+  cw_current: 60mA
+
+output:
+  - platform: sm2135
+    id: output_red
+    channel: 2
+  - platform: sm2135
+    id: output_green
+    channel: 1
+  - platform: sm2135
+    id: output_blue
+    channel: 0
+  - platform: sm2135
+    id: output_cold_white
+    channel: 4
+  - platform: sm2135
+    id: output_warm_white
+    channel: 3

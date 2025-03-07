@@ -19,7 +19,6 @@ bk72xx:
   board: wb3s
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   dummy_light: !include ../../light/dummy-light.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
 
@@ -54,8 +53,8 @@ binary_sensor:
             - light.dim_relative:
                 id: light_primary
                 relative_brightness: 5%
-                transition_length: 0.1s
-            - delay: 0.1s
+                transition_length: ${brightness_transition_time}
+            - delay: ${brightness_transition_time}
   - platform: gpio
     id: button_off
     pin:
@@ -72,8 +71,8 @@ binary_sensor:
             - light.dim_relative:
                 id: light_primary
                 relative_brightness: -5%
-                transition_length: 0.1s
-            - delay: 0.1s
+                transition_length: ${brightness_transition_time}
+            - delay: ${brightness_transition_time}
   - platform: gpio
     id: button_reset
     pin:

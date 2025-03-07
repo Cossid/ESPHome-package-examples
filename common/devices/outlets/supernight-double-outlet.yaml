@@ -17,14 +17,10 @@ substitutions:
   calibration_pre_cal_power_value: '129.1'
   calibration_expected_correct_value: '60.0'
 
-
 esp8266:
   board: esp8285
   early_pin_init: false
   restore_from_flash: true
-
-packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
 
 esphome:
   # Because the right button is analog, its value will change to unpredictable
@@ -116,7 +112,7 @@ sensor:
   # The right button is analog, and has a value of 4 when pressed and 1024
   # when not pressed.
   - platform: adc
-    pin: A0
+    pin: GPIO17 # ADC A0
     id: analog_button
     raw: true
     # This needs to be short enough for the buttons to appear responsive.

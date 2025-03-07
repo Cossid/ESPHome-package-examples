@@ -3,6 +3,12 @@ substitutions:
   cold_white_color_temperature: "6500 K"
   warm_white_color_temperature: "2700 K"
   default_white_color_temperature: "2700 K"
+  transition_length: "0.5s"
+
+# packages:
+#   web_controls_rgb: !include ../web-controls/rgb.yaml
+#   web_controls_cct: !include ../web-controls/cct.yaml
+#   light_effects: !include effects.yaml
 
 output:
   - platform: template
@@ -14,7 +20,8 @@ output:
 light:
   - platform: rgbww
     id: light_secondary
-    #name: ""
+    #name: None
+    icon: "mdi:lightbulb"
     restore_mode: ${restore_mode_light_secondary}
     color_interlock: true
     cold_white_color_temperature: ${cold_white_color_temperature}
@@ -24,6 +31,7 @@ light:
     blue: output_dummy_secondary
     cold_white: output_dummy_secondary
     warm_white: output_dummy_secondary
+    default_transition_length: ${transition_length}
 
 esphome:
   on_boot:

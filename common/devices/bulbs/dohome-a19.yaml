@@ -9,7 +9,6 @@ esp8266:
   
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbww_light: !include ../../light/rgbww.yaml
 
 output:

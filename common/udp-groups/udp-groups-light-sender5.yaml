@@ -1,0 +1,11 @@
+packages:
+  primary_light_sensor: !include udp-groups-light-sender-primary-light-sensor.yaml
+
+udp:
+  - id: !extend udp_send_group
+    addresses:
+      - ${address1}
+      - ${address2}
+      - ${address3}
+      - ${address4}
+      - ${address5}

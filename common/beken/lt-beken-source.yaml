@@ -1,5 +1,29 @@
 bk72xx:
   framework:
-    version: "dev"
+    #version: "dev"
     #version: "0.0.0"
+    #version: "1.7.0"
+    version: 1.8.0
+    #source: "https://github.com/cossid/libretiny#wifi-improvements-combined"
+    #source: "https://github.com/devgs/libretiny#feature/psk_as_wifi_password"
+    #source: "https://github.com/devgs/libretiny#test/devgs"
     #source: "https://github.com/libretiny-eu/libretiny"
+    #source: "https://github.com/szupi-ipuzs/libretiny#mdns_more_fixes"
+    ###refresh: 1s
+    # sdk_silent: "none"
+    # loglevel: VERBOSE
+    # options:
+    #   LT_DEBUG_ALL: 1
+    #   LT_DEBUG_WIFI: 1
+    #   LT_DEBUG_MDNS: 1
+    #   LT_DEBUG_LWIP: 1
+    #   LT_DEBUG_OTA: 1
+    #   LT_DEBUG_LWIP_ASSERT: 1
+    #   LT_DEBUG_CLIENT: 1
+    #   LT_DEBUG_SERVER: 1
+    #   #LT_LOGGER_CALLER: 1
+    #   #LT_LOGGER_TASK: 1
+    #   LT_LOGGER_TIMESTAMP: 0
+    #   LT_LOGGER_CALLER: 0
+    #   LT_LOGGER_TASK: 0
+    #   #LT_LOG_HEAP: 1

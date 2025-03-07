@@ -1,0 +1,133 @@
+substitutions:
+  project_name: "Linkind.CC8000_Switch"
+  project_version: "0.0.1"
+  hardware_info: "Linkind CC8000 Switch"
+  # detach_relay: "false"
+  # status_light_follows_primary_light_state: "false"
+  # status_inverted: "false"
+  # restore_mode_relay: RESTORE_DEFAULT_OFF
+
+# globals:
+# - id: detach_relay_value
+#   type: bool
+#   initial_value: ${detach_relay}
+# - id: status_light_follows_primary_light_state_value
+#   type: bool
+#   initial_value: ${status_light_follows_primary_light_state}
+
+bk72xx:
+  board: generic-bk7231t-qfn32-tuya
+
+esphome:
+  platformio_options:
+    board_build.bkcrypt_coeffs: "00000000000000000000000000000000"
+    board_build.bkota.key: "0123456789ABCDEF0123456789ABCDEF"
+    board_build.bkota.iv: "0123456789ABCDEF"
+    board_flash.download: "0x132000+0xAE000"
+
+packages:
+  #dummy_light: !include ../../light/dummy-light.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+# GPIO26 = Relay
+# GPIO24 = LED
+# GPIO6 = Reset Button
+# GPIO9 = Off Button
+# GPIO8 = On Button
+
+# switch:
+#   - platform: gpio
+#     name: "Load Power"
+#     id: relay
+#     entity_category: config
+#     pin: GPIO26 # Relay
+#     restore_mode: ${restore_mode_relay}
+
+# binary_sensor:
+#   - platform: gpio
+#     id: button_on
+#     pin:
+#       number: GPIO8 # On Button
+#       inverted: true
+#     on_click:
+#       - light.turn_on: light_primary
+#     on_press:
+#       - delay: 0.35s
+#       - while:
+#           condition:
+#             binary_sensor.is_on: button_on
+#           then:
+#             - light.dim_relative:
+#                 id: light_primary
+#                 relative_brightness: 5%
+#                 transition_length: 0.1s
+#             - delay: 0.1s
+#   - platform: gpio
+#     id: button_off
+#     pin:
+#       number: GPIO9 # Off Button
+#       inverted: true
+#     on_click:
+#       - light.turn_off: light_primary
+#     on_press:
+#       - delay: 0.35s
+#       - while:
+#           condition:
+#             binary_sensor.is_on: button_off
+#           then:
+#             - light.dim_relative:
+#                 id: light_primary
+#                 relative_brightness: -5%
+#                 transition_length: 0.1s
+#             - delay: 0.1s
+#   - platform: gpio
+#     id: button_reset
+#     pin:
+#       number: GPIO6 # Reset Button
+#       inverted: true
+#     #on_click:
+#     #- TODO
+
+# light:
+#   - platform: status_led
+#     id: light_status
+#     pin:
+#       number: GPIO24
+#       inverted: ${status_inverted}
+#     restore_mode: RESTORE_DEFAULT_OFF
+
+# script:
+#   - id: update_status
+#     then:
+#       - if:
+#           condition:
+#             lambda: return id(light_primary).remote_values.get_state() > 0;
+#           then:
+#             - if:
+#                 condition:
+#                   lambda: return id(status_light_follows_primary_light_state_value) == true;
+#                 then:
+#                   light.turn_on: light_status
+#           else:
+#             - if:
+#                 condition:
+#                   lambda: return id(status_light_follows_primary_light_state_value) == true;
+#                 then:
+#                   light.turn_off: light_status
+#   - id: update_relay
+#     then:
+#       - if:
+#           condition:
+#             lambda: return id(light_primary).remote_values.get_state() > 0;
+#           then:
+#             - if:
+#                 condition:
+#                   lambda: return id(detach_relay_value) == false;
+#                 then:
+#                   - switch.turn_on: relay
+#           else:
+#             - if:
+#                 condition:
+#                   lambda: return id(detach_relay_value) == false;
+#                 then:
+#                   - switch.turn_off: relay

@@ -1,0 +1,13 @@
+substitutions:
+  device_name: !secret device-name-nightlight-garage
+  friendly_name: Garage Nightlight
+  #id_by_mac: "true"
+  #restore_mode_light: ALWAYS_ON
+  area: Garage
+  wifi_static_ip: !secret ip-nightlight-garage
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/nightlights/tuya-generic.yaml

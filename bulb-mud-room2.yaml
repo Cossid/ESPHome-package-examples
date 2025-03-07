@@ -1,11 +1,16 @@
 substitutions:
-  device_name: bulb-mud-room2
+  device_name: !secret device-name-bulb-mud-room2
   friendly_name: Mud Room Bulb 2
-  device_group_name: group-mud-room-lights
+  default_white_color_temperature: "2550 K"
   area: Mud Room
+  wifi_static_ip: !secret ip-bulb-mud-room2
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-lower-mid-upper.yaml
-  device: !include common/devices/bulbs/crestin-a19.yaml
-  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/bulbs/cree-a19-cb8p.yaml
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_switch_id: !secret device-name-switch-mud-room1

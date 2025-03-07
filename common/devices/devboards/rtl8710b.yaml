@@ -1,0 +1,25 @@
+substitutions:
+  project_name: "DevBoard.RTL8710B"
+  project_version: "0.0.1"
+  hardware_info: "RTL8710B Dev Board"
+
+esphome:
+  project:
+    name: ${project_name}
+    version: ${project_version}
+
+#bk72xx:
+  #board: cbu
+  #board: generic-bk7231n-qfn32-tuya
+rtl87xx:
+  board: generic-rtl8710bx-4mb-980k
+
+#packages:
+  #lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+logger:
+  level: VERY_VERBOSE
+  logs:
+    json: DEBUG
+    ota: DEBUG
+    scheduler: DEBUG

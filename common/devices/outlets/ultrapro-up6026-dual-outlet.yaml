@@ -1,0 +1,55 @@
+substitutions:
+  project_name: "UltraPro.CB3S_UP6026_60343_Dual_Outlet_Plug_with_tether_button"
+  project_version: "0.0.1"
+  hardware_info: "UltraPro CB3s UP6026 60343 Dual Outlet Plug with tether button"
+  restore_mode_relay1: RESTORE_DEFAULT_ON
+  restore_mode_relay2: RESTORE_DEFAULT_ON
+
+bk72xx:
+  board: cb3s
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+switch:
+  - platform: gpio
+    id: relay1
+    name: Outlet 1
+    pin: GPIO6
+    restore_mode: ${restore_mode_relay1}
+  - platform: gpio
+    id: relay2
+    name: Outlet 2
+    pin: GPIO7
+    restore_mode: ${restore_mode_relay2}
+
+binary_sensor:
+  - platform: gpio
+    id: binary_switch_all
+    pin:
+      number: GPIO23
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - if:
+            condition:
+              or:
+                - switch.is_on: relay1
+                - switch.is_on: relay2
+            then:
+              - switch.turn_off: relay1
+              - switch.turn_off: relay2
+              - light.turn_off: led_status
+            else:
+              - switch.turn_on: relay1
+              - switch.turn_on: relay2
+              - light.turn_on: led_status
+
+light:
+  platform: status_led
+  id: led_status
+  pin:
+    number: GPIO26
+    inverted: true
+    mode: INPUT_PULLUP

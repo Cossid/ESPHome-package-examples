@@ -1,11 +1,11 @@
 substitutions:
-  device_name: bulb-master-bathroom-shower
+  device_name: !secret device-name-bulb-master-bathroom-shower
   friendly_name: Master Bathroom Shower Bulb
-  device_group_name: group-master-bathroom-shower-lights
   area: Master Bathroom
+  wifi_static_ip: !secret ip-bulb-master-bathroom-shower
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/bulbs/lohas-a21.yaml
-  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml

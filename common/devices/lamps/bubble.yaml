@@ -8,9 +8,7 @@ esp8266:
   restore_from_flash: true
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   web_controls_rgb: !include ../../web-controls/rgb.yaml
-  web_controls_cct: !include ../../web-controls/cct.yaml
 
 logger:
   baud_rate: 0
@@ -22,8 +20,8 @@ logger:
 
 light:
   - platform: rgb
-    id: rgb_light
-    name: ${friendly_name}
+    id: light_primary
+    name: None
     red: output_red
     green: output_green
     blue: output_blue
@@ -50,11 +48,11 @@ binary_sensor:
       mode: INPUT_PULLUP
     id: power_button
     on_press:
-      light.toggle: rgb_light
+      light.toggle: light_primary
   - platform: gpio
     pin:
       number: GPIO2
       inverted: true
     id: wifi_button
     on_press:
-      light.toggle: rgb_light
+      light.toggle: light_primary

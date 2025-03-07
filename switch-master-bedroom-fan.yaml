@@ -1,12 +1,12 @@
 substitutions:
-  device_name: switch-master-bedroom-fan
+  device_name: !secret device-name-switch-master-bedroom-fan
   friendly_name: Master Bedroom Ceiling Fan
-  #device_group_name: group-master-bedroom-fan
   restore_mode_fan: RESTORE_DEFAULT_OFF
   area: Master Bedroom
+  wifi_static_ip: !secret ip-switch-master-bedroom-fan
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/switches/treatlife-ds02f.yaml
-  #device_groups: !include common/device-groups/device-groups-light.yaml

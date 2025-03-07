@@ -3,79 +3,59 @@ substitutions:
   project_version: "0.0.1"
   hardware_info: "Tuya Generic CBU PIR Lux Sensor"
 
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
 bk72xx:
   board: cbu
 
-packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
-  lt_beken_source: !include ../../beken/lt-beken-source.yaml
-
-# GPIO24 - Reset Button (inverted)
+# Note: does not operate properly with 2xAAA 1.2V NiMH batteries, works great on USB
+# GPIO14 - Reset Button (inverted)
+# GPIO16 must be high for button to work?
 # GPIO8 - PIR Motion Sense State
+# GPIO20 - Red LED
+# GPIO22 - Changes ADC value (2.048V when off, 1.338-1.348 when on) (activate battery check?)
+# GPIO23 ADC - 2.048V when P22 is Off, monitors voltage when P22 on (1.33-1.34V when USB, 1.00V when 2xAAA NiMH (not stable))
 
 binary_sensor:
   - platform: gpio
     name: Reset Button
     pin:
-      number: GPIO24
+      number: GPIO14
       inverted: true
-  - platform: gpio
-    name: GPIO26
-    pin:
-      number: GPIO26
-      mode: INPUT_PULLUP
-  - platform: gpio
-    name: GPIO14
-    pin: GPIO14
-  - platform: gpio
-    name: GPIO16
-    pin: GPIO16
-  - platform: gpio
-    name: GPIO20
-    pin: GPIO20
-  - platform: gpio
-    name: GPIO22
-    pin: GPIO22
-  - platform: gpio
-    name: GPIO1
-    pin: GPIO1
-  - platform: gpio
-    name: GPIO0
-    pin: GPIO0
-  - platform: gpio
-    name: GPIO6
-    pin:
-      number: GPIO6
-      mode: INPUT_PULLUP
-  - platform: gpio
-    name: GPIO7
-    pin:
-      number: GPIO7
-      mode: INPUT_PULLUP
   - platform: gpio
     name: Motion Sense
     pin: GPIO8
+
+switch:
   - platform: gpio
-    name: GPIO10
-    pin: GPIO10
+    name: Battery Monitoring ADC Switch
+    pin: GPIO22
   - platform: gpio
-    name: GPIO11
-    pin: GPIO11
-  - platform: gpio
-    name: GPIO28
-    pin: GPIO28
-  - platform: gpio
-    name: GPIO9
-    pin: GPIO9
-  - platform: gpio
-    name: GPIO17
-    pin: GPIO17
-  - platform: gpio
-    name: GPIO15
-    pin: GPIO15
+    id: GPIO16
+    pin: GPIO16
+    restore_mode: ALWAYS_ON
+  # - platform: gpio
+  #   name: GPIO6
+  #   pin:
+  #     number: GPIO6
+  #     mode: INPUT_PULLUP
+  # - platform: gpio
+  #   name: GPIO7
+  #   pin:
+  #     number: GPIO7
+  #     mode: INPUT_PULLUP
+  # - platform: gpio
+  #   name: GPIO26
+  #   pin:
+  #     number: GPIO26
+  #     mode: INPUT_PULLUP
+
+status_led:
+  pin: P16
 
 sensor:
   - platform: adc
-    pin: ADC3
+    pin: GPIO23
     name: ADC
-    update_interval: 30min
+    update_interval: 2s

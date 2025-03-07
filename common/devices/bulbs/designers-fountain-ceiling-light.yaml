@@ -1,0 +1,31 @@
+substitutions:
+  project_name: "Designers_Fountain.Solo1_PWM_Ceiling_Light"
+  project_version: "0.0.1"
+  hardware_info: "Designers Fountain Solo1 PWM Ceiling Light"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: y
+
+packages:
+  rgbww_light: !include ../../light/rgbww.yaml
+
+output:
+  - platform: ledc
+    id: output_red
+    pin: GPIO25
+  - platform: ledc
+    id: output_green
+    pin: GPIO26
+  - platform: ledc
+    id: output_blue
+    pin: GPIO27
+  - platform: ledc
+    id: output_cold_white
+    pin: GPIO4
+  - platform: ledc
+    id: output_warm_white
+    pin: GPIO2

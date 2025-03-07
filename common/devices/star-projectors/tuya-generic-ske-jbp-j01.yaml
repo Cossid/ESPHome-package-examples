@@ -1,0 +1,57 @@
+substitutions:
+  project_name: "Tuya_Generic.CBU_SKE-JBP-J01_Star_Projector"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic CBU SKE-JBP-J01 Star Projector"
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+bk72xx:
+  board: cbu
+
+# P6 Blue
+# P7 Red
+# P8 Red but weaker?
+# P9 Lasers
+# P14 Vol Down inverted
+# P15 Motor
+# P16 Vol Press inverted
+# P17 BT mode
+# P20 Vol Up inverted
+# P21 Microphone
+# P24 Green
+# P28 Button 2-4
+
+output:
+  - platform: libretiny_pwm
+    id: output_red
+    pin: GPIO8
+  - platform: libretiny_pwm
+    id: output_green
+    pin: GPIO24
+  - platform: libretiny_pwm
+    id: output_blue
+    pin: GPIO6
+  # - platform: libretiny_pwm
+  #   id: output_white
+  #   pin: GPIO7
+
+switch:
+  - platform: gpio
+    pin: GPIO15
+    name: Motor
+  - platform: gpio
+    pin: GPIO9
+    name: Laser
+  - platform: gpio
+    pin: GPIO7
+    name: Accent Light
+
+light:
+  - platform: rgb
+    id: light_rgb
+    name: Light
+    red: output_red
+    green: output_green
+    blue: output_blue
+    #white: output_white

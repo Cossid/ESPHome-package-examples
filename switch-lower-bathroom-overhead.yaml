@@ -1,16 +1,20 @@
 substitutions:
-  device_name: switch-lower-bathroom-overhead
+  device_name: !secret device-name-switch-lower-bathroom-overhead
   friendly_name: Lower Bathroom Overhead Light
-  device_group_name: group-lower-bathroom-overhead-light
   detach_relay: "true"
   status_light_follows_primary_light_state: "false"
   status_inverted: "false"
   restore_mode_relay: ALWAYS_ON
   restore_mode_light: RESTORE_DEFAULT_OFF
   area: Lower Bathroom
+  wifi_static_ip: !secret ip-switch-lower-bathroom-overhead
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/switches/ultrapro.yaml
-  device_groups: !include common/device-groups/device-groups-light.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender1.yaml
+    vars:
+      address1: !secret ip-bulb-lower-bathroom-overhead

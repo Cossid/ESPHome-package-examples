@@ -1,11 +1,12 @@
 substitutions:
-  device_name: bulb-upper-bathroom-overhead
-  friendly_name: Upper Bathroom Overhead Light
-  device_group_name: group-upper-bathroom-overhead-light
+  device_name: !secret device-name-bulb-upper-bathroom-overhead
+  friendly_name: Upper Bathroom Overhead Bulb
+  default_white_color_temperature: "2550 K"
   area: Upper Bathroom
+  wifi_static_ip: !secret ip-bulb-upper-bathroom-overhead
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-upper-mid-lower.yaml
-  device: !include common/devices/bulbs/earthbulb-a19.yaml
-  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/bulbs/cree-a19-cb8p.yaml

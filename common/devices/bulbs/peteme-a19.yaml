@@ -7,23 +7,22 @@ bk72xx:
   board: wb3l
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbww_light: !include ../../light/rgbww.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
 
 output:
   - platform: libretiny_pwm
     id: output_red
-    pin: GPIO8 #GPIO8 #PWM2
+    pin: GPIO8
   - platform: libretiny_pwm
     id: output_green
-    pin: GPIO24 #GPIO24 #PWM4
+    pin: GPIO24
   - platform: libretiny_pwm
     id: output_blue
-    pin: GPIO26 #GPIO26 #PWM5
+    pin: GPIO26
   - platform: libretiny_pwm
     id: output_cold_white
-    pin: GPIO7 #GPIO7 #PWM1
+    pin: GPIO7
   - platform: libretiny_pwm
     id: output_warm_white
-    pin: GPIO6 #GPIO6 #PWM0
+    pin: GPIO6

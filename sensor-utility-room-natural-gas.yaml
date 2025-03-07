@@ -1,0 +1,11 @@
+substitutions:
+  device_name: !secret device-name-sensor-utility-room-natural-gas
+  friendly_name: Utility Room Natural Gas Sensor
+  area: Utility Room
+  wifi_static_ip: !secret ip-sensor-utility-room-natural-gas
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/sensors/natural-gas-sensor-120v.yaml

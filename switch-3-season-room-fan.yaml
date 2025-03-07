@@ -1,12 +1,12 @@
 substitutions:
-  device_name: switch-3-season-room-fan
+  device_name: !secret device-name-switch-3-season-room-fan
   friendly_name: 3 Season Room Ceiling Fan
-  #device_group_name: group-3-season-room-fan
   restore_mode_fan: RESTORE_DEFAULT_OFF
   area: 3 Season Room
+  wifi_static_ip: !secret ip-switch-3-season-room-fan
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/switches/treatlife-ds02f.yaml
-  #device_groups: !include common/device-groups/device-groups-light.yaml

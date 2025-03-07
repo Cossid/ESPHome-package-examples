@@ -1,0 +1,82 @@
+substitutions:
+  project_name: "Milfra.MFA06_ESP8266_2_Button_Motion_Switch"
+  project_version: "0.0.1"
+  hardware_info: "Milfra MFA06 ESP8266 2 Button Motion Switch"
+  restore_mode_relay1: ALWAYS_ON
+  restore_mode_relay2: ALWAYS_OFF
+  restore_mode_motion: RESTORE_DEFAULT_ON
+
+esp8266:
+  board: esp8285
+  restore_from_flash: true
+  early_pin_init: false
+
+packages:
+  dummy_light: !include ../../light/dummy-light.yaml
+  motion_scripts: !include
+    file: ../../motion/motion-scripts.yaml
+    vars:
+      target_light: light_primary
+
+# The green LED appears to mask the blue 
+# It also appears to be overridden by the relay
+light: 
+  - platform: status_led
+    id: light_status
+    pin:
+      # Blue LED
+      number: GPIO13
+      inverted: true
+        
+switch:
+  - platform: gpio
+    name: "Load Power"
+    id: load_power
+    entity_category: config
+    restore_mode: ${restore_mode_relay1}
+    pin: GPIO12
+  - platform: gpio
+    id: relay2
+    restore_mode: ${restore_mode_relay2}
+    pin: GPIO16
+  - platform: template
+    id: motion_enabled
+    name: "Motion Enabled"
+    entity_category: config
+    icon: "mdi:motion-sensor"
+    optimistic: true
+    restore_mode: ${restore_mode_motion}
+
+binary_sensor:
+  - platform: gpio
+    id: top_button
+    pin: GPIO4
+    on_press:
+      - light.turn_on: light_primary
+      - lambda: id(motion_activated) = 0;
+  - platform: gpio
+    id: bottom_button
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: true
+    on_press:
+      - light.turn_off: light_primary
+      - lambda: id(motion_activated) = 0;
+  - platform: gpio
+    id: motion_primary
+    name: "Motion Sense"
+    device_class: "motion"
+    icon: "mdi:motion-sensor"
+    pin:
+      number: GPIO5
+      inverted: true
+      mode: INPUT_PULLUP
+  - platform: gpio
+    id: light_sense_state
+    name: "Light Sense"
+    device_class: "light"
+    icon: "mdi:theme-light-dark"
+    pin:
+      number: GPIO14
+      mode: INPUT

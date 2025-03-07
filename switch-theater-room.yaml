@@ -1,16 +1,16 @@
 substitutions:
-  device_name: switch-theater-room
+  device_name: !secret device-name-switch-theater-room
   friendly_name: Theater Room Light
-  device_group_name: group-theater-room-lights
   detach_relay: "false"
   status_light_follows_primary_light_state: "false"
   status_inverted: "false"
   restore_mode_relay: RESTORE_DEFAULT_OFF
   restore_mode_light: RESTORE_DEFAULT_OFF
   area: Theater Room
+  wifi_static_ip: !secret ip-switch-theater-room
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/switches/ultrapro.yaml
-  device_groups: !include common/device-groups/device-groups-light.yaml

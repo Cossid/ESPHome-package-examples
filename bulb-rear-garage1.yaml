@@ -1,0 +1,15 @@
+substitutions:
+  device_name: !secret device-name-bulb-rear-garage1
+  friendly_name: Rear Garage Bulb 1
+  area: Rear Garage
+  wifi_static_ip: !secret ip-bulb-rear-garage1
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/bulbs/cree-par38-t.yaml
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_switch_id: !secret device-name-switch-rear-garage1

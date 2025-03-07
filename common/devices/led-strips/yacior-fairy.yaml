@@ -1,0 +1,50 @@
+substitutions:
+  project_name: "Yacior.CBU_RGBIC_Fairy_Light_Strip"
+  project_version: "0.0.1"
+  hardware_info: "Yacior CBU RGBIC Fairy Light Strip"
+
+bk72xx:
+  board: cbu
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+  #ddp: !include ../../ddp/ddp.yaml
+
+light:
+  - platform: beken_spi_led_strip
+    rgb_order: BGR
+    pin: GPIO16
+    num_leds: 100
+    #chipset: ws2812 # works, but transition flicker of wrong colors
+    chipset: sk6812
+    #chipset: apa106
+    #chipset: sm16703
+    name: None
+
+# {"prod_ic_type":185,"prod_ic_nums":100,"prod_ic_order":136,"prod_music_seg":0,"prod_w_offset":4,"prod_c_offset":3,"prod_is_two":0,"prod_ic_rgbcw":0,"prod_ic_pixles":3,"prod_ir_type":0,"prod_button_type":2,"prod_ir_power":260,"prod_ir_low":0,"prod_gamma":0}
+
+remote_receiver:
+  pin: GPIO26
+  dump: all
+
+# GPIO23 is MIC?
+
+binary_sensor:
+  - platform: gpio
+    id: button_color
+    pin: 
+      number: GPIO20
+      inverted: true
+      mode: INPUT_PULLUP
+  - platform: gpio
+    id: button_speed
+    pin: 
+      number: GPIO28
+      inverted: true
+      mode: INPUT_PULLUP
+  - platform: gpio
+    id: button_mode
+    pin: 
+      number: GPIO22
+      inverted: true
+      mode: INPUT_PULLUP

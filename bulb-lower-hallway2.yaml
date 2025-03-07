@@ -1,11 +1,16 @@
 substitutions:
-  device_name: bulb-lower-hallway2
+  device_name: !secret device-name-bulb-lower-hallway2
   friendly_name: Lower Hallway Bulb 2
-  device_group_name: group-lower-hallway-lights
+  default_white_color_temperature: "2550 K"
   area: Lower Hallway
+  wifi_static_ip: !secret ip-bulb-lower-hallway2
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-mid-upper-lower.yaml
-  device: !include common/devices/bulbs/helloify-beken-a19.yaml
-  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/bulbs/cree-a19-cb8p.yaml
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_switch_id: !secret device-name-switch-lower-hallway1

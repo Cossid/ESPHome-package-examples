@@ -1,11 +1,15 @@
 substitutions:
-  device_name: bulb-utility-room
+  device_name: !secret device-name-bulb-utility-room
   friendly_name: Utility Room Bulb
-  device_group_name: group-utility-room-lights
   area: Utility Room
+  wifi_static_ip: !secret ip-bulb-utility-room
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-mid-upper-lower.yaml
-  device: !include common/devices/bulbs/cree-100w-t.yaml
-  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/bulbs/cree-a21-t.yaml
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_switch_id: !secret device-name-switch-utility-room

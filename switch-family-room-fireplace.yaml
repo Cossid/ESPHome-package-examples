@@ -1,0 +1,11 @@
+substitutions:
+  device_name: !secret device-name-switch-family-room-fireplace
+  friendly_name: Fireplace
+  area: Family Room Fireplace
+  wifi_static_ip: !secret ip-switch-family-room-fireplace
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/switches/avatto-1ch-dc-dry-contact.yaml

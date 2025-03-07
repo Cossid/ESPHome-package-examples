@@ -10,7 +10,6 @@ bk72xx:
   board: cbu
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
 
 status_led:

@@ -1,0 +1,15 @@
+substitutions:
+  device_name: !secret device-name-bulb-lower-bathroom-overhead
+  friendly_name: Lower Bathroom Overhead Bulb
+  area: Lower Bathroom
+  wifi_static_ip: !secret ip-bulb-lower-bathroom-overhead
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/bulbs/designers-fountain-ceiling-light.yaml
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_switch_id: !secret device-name-switch-lower-bathroom-overhead

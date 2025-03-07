@@ -1,13 +1,12 @@
 substitutions:
-  project_name: "Tuya_Generic.A19_CB3L_BP5758D_RGBWW_Bulb"
+  project_name: "Tuya_Generic.A19_CBUL_BP5758D_RGBWW_Bulb"
   project_version: "0.0.1"
-  hardware_info: "Tuya Generic A19 CB3L BP5758D RGBWW Bulb"
+  hardware_info: "Tuya Generic A19 CBU BP5758D RGBWW Bulb"
 
 bk72xx:
-  board: cb3l # UAW025-A0-V1.1 (CB3L/S clone)
+  board: cbu # UAscent UAW025-A0-V1.1 (CBU clone)
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbww_light: !include ../../light/rgbww.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
 

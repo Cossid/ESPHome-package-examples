@@ -1,0 +1,21 @@
+substitutions:
+  device_name: !secret device-name-switch-fireplace-light
+  friendly_name: Fireplace Light
+  detach_relay: "true"
+  status_light_follows_primary_light_state: "false"
+  status_inverted: "false"
+  restore_mode_relay: ALWAYS_ON
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  area: Fireplace Lights
+  wifi_static_ip: !secret ip-switch-fireplace-light
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/switches/ultrapro.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender2.yaml
+    vars:
+      address1: !secret ip-bulb-fireplace1
+      address2: !secret ip-bulb-fireplace2

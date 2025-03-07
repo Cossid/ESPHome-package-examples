@@ -1,0 +1,12 @@
+substitutions:
+  device_name: !secret device-name-outlet-bar-clock
+  friendly_name: Bar Clock Outlet
+  restore_mode_relay: ALWAYS_ON
+  area: Bar
+  wifi_static_ip: !secret ip-outlet-bar-clock
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/outlets/sonoff-s31.yaml

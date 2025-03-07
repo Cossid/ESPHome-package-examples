@@ -1,0 +1,29 @@
+substitutions:
+  project_name: "Sylvania.75820_RGBW_Floor_Light_Bar"
+  project_version: "0.0.1"
+  hardware_info: "Sylvania 75820 RGBW Floor Light Bar"
+
+bk72xx:
+  board: wb3l
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+  rgbw_light: !include ../../light/rgbw-warm.yaml
+
+output:
+  - platform: libretiny_pwm
+    id: output_red
+    pin: GPIO6
+    frequency: 20000 Hz
+  - platform: libretiny_pwm
+    id: output_green
+    pin: GPIO8
+    frequency: 20000 Hz
+  - platform: libretiny_pwm
+    id: output_blue
+    pin: GPIO24
+    frequency: 20000 Hz
+  - platform: libretiny_pwm
+    id: output_warm_white
+    pin: GPIO26
+    frequency: 20000 Hz

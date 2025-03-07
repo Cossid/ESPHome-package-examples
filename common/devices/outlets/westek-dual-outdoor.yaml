@@ -10,7 +10,6 @@ esp8266:
   early_pin_init: false
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
 
 # wifi, logger, ota all in the yaml that calls this

@@ -1,0 +1,24 @@
+substitutions:
+  device_name: !secret device-name-switch-half-bathroom
+  friendly_name: Half Bathroom Light
+  detach_relay: "true"
+  status_light_follows_primary_light_state: "false"
+  status_inverted: "false"
+  restore_mode_relay: ALWAYS_ON
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  warm_white_color_temperature: "2200 K"
+  default_white_color_temperature: "2500 K"
+  area: Half Bathroom
+  wifi_static_ip: !secret ip-switch-half-bathroom
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/switches/ultrapro.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender3.yaml
+    vars:
+      address1: !secret ip-bulb-half-bathroom1
+      address2: !secret ip-bulb-half-bathroom2
+      address3: !secret ip-bulb-half-bathroom3

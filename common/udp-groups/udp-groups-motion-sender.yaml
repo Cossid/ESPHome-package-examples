@@ -1,0 +1,14 @@
+substitutions:
+  remote_id: "1" # Only needed for single senders, as they send to devices that may need multiple listens
+
+udp:
+  - id: !extend udp_send_group
+    binary_sensors:
+      - motion_state
+    # addresses:
+    #   - ${address}
+
+binary_sensor:
+  - platform: template
+    id: motion_state
+    lambda: "return id(motion_primary).state;"

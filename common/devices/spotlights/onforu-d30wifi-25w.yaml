@@ -7,7 +7,6 @@ bk72xx:
   board: cbu
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbww_light: !include ../../light/rgbww.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
   ddp: !include ../../ddp/ddp.yaml
@@ -15,19 +14,19 @@ packages:
 output:
   - platform: libretiny_pwm
     id: output_red
-    pin: GPIOWM4
+    pin: GPIO24
   - platform: libretiny_pwm
     id: output_green
-    pin: GPIOWM2
+    pin: GPIO8
   - platform: libretiny_pwm
     id: output_blue
-    pin: GPIOWM1
+    pin: GPIO7
   - platform: libretiny_pwm
     id: output_warm_white
-    pin: GPIOWM0
+    pin: GPIO6
   - platform: libretiny_pwm
     id: output_cold_white
-    pin: GPIOWM5
+    pin: GPIO26
 
 light:
   - id: !extend light_primary

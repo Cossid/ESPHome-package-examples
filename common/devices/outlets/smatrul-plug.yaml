@@ -1,0 +1,41 @@
+substitutions:
+  project_name: "Smatrul.CB2S_Plug"
+  project_version: "0.0.1"
+  hardware_info: "Smatrul CB2S Plug"
+  restore_mode_relay: RESTORE_DEFAULT_ON
+
+bk72xx:
+  board: cb2s
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+# non-controllable USB-C
+# 433 receiver
+
+binary_sensor:
+  - platform: gpio
+    id: button1
+    pin:
+      number: P24
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: relay
+
+switch:
+  - platform: gpio
+    id: relay
+    name: Relay
+    restore_mode: ${restore_mode_relay}
+    pin: P8
+    on_turn_on:
+      - light.turn_on: light_status
+    on_turn_off:
+      - light.turn_off: light_status
+
+light:
+  - platform: status_led
+    id: light_status
+    pin: P23

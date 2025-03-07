@@ -9,7 +9,6 @@ esp8266:
   restore_from_flash: true
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbct_light: !include ../../light/rgbct.yaml
 
 output:

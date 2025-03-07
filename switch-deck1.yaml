@@ -1,7 +1,6 @@
 substitutions:
-  device_name: switch-deck1
+  device_name: !secret device-name-switch-deck1
   friendly_name: Deck Light
-  device_group_name: group-deck-lights
   detach_relay: "true"
   status_light_follows_primary_light_state: "true"
   status_inverted: "false"
@@ -10,9 +9,21 @@ substitutions:
   area: Deck
   warm_white_color_temperature: "2200 K"
   default_white_color_temperature: "2200 K"
+  wifi_static_ip: !secret ip-switch-deck1
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/switches/ultrapro.yaml
-  device_groups: !include common/device-groups/device-groups-light-with-status.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender3.yaml
+    vars:
+      address1: !secret ip-bulb-deck1
+      address2: !secret ip-bulb-deck2
+      address3: !secret ip-switch-deck2
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_id: 2
+      remote_switch_id: !secret device-name-switch-deck2

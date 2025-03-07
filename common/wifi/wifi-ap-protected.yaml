@@ -1,0 +1,3 @@
+wifi:
+  ap:
+    password: !secret wifi_ap_password

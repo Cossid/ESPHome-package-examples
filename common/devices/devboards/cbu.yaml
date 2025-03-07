@@ -3,12 +3,21 @@ substitutions:
   project_version: "0.0.1"
   hardware_info: "Tuya CBU Dev Board"
 
+esphome:
+  project:
+    name: ${project_name}
+    version: ${project_version}
+
 bk72xx:
   board: cbu
+  #board: generic-bk7231n-qfn32-tuya
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
 
-logger:
-  level: VERBOSE
+# logger:
+#   level: VERY_VERBOSE
+#   logs:
+#     json: DEBUG
+#     ota: DEBUG
+#     scheduler: DEBUG

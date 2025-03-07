@@ -17,9 +17,6 @@ esp8266:
   restore_from_flash: true
   early_pin_init: false
 
-packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
-
 switch:
   - platform: gpio
     id: relay1
@@ -43,9 +40,20 @@ binary_sensor:
     pin: GPIO16
     on_press:
       then:
-        - switch.toggle: relay1
-        - switch.toggle: relay2
-        - switch.toggle: relay3
+        - if:
+            condition:
+              or:
+                - switch.is_on: relay1
+                - switch.is_on: relay2
+                - switch.is_on: relay3
+            then:
+              - switch.turn_off: relay1
+              - switch.turn_off: relay2
+              - switch.turn_off: relay3
+            else:
+              - switch.turn_on: relay1
+              - switch.turn_on: relay2
+              - switch.turn_on: relay3
 
 status_led:
   pin:

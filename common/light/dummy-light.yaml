@@ -3,10 +3,12 @@ substitutions:
   cold_white_color_temperature: "6500 K"
   warm_white_color_temperature: "2700 K"
   default_white_color_temperature: "2700 K"
+  transition_length: "0.5s"
 
-# packages:
-#   web_controls_rgb: !include ../web-controls/rgb.yaml
-#   web_controls_cct: !include ../web-controls/cct.yaml
+packages:
+  web_controls_rgb: !include ../web-controls/rgb.yaml
+  web_controls_cct: !include ../web-controls/cct.yaml
+  light_effects: !include effects.yaml
 
 output:
   - platform: template
@@ -38,7 +40,8 @@ output:
 light:
   - platform: rgbww
     id: light_primary
-    name: ""
+    name: None
+    icon: "mdi:lightbulb"
     restore_mode: ${restore_mode_light}
     color_interlock: true
     cold_white_color_temperature: ${cold_white_color_temperature}
@@ -51,32 +54,22 @@ light:
     on_state:
       - script.execute: update_relay
       - script.execute: update_status
+    default_transition_length: ${transition_length}
 
+# On boot, if all colors and whites are set to full (defult unset), set default to warm white
 esphome:
   on_boot:
-    - if:
-        condition:
-          lambda: return id(light_primary).current_values.get_red() == 1.0f && id(light_primary).current_values.get_green() == 1.0f && id(light_primary).current_values.get_blue() == 1.0f && (id(light_primary).current_values.get_cold_white() == 1.0f || id(light_primary).current_values.get_warm_white() == 1.0f);
-        then:
-          light.control:
-            id: light_primary
-            red: 0%
-            green: 0%
-            blue: 0%
-            color_brightness: 0%
-            color_temperature: ${default_white_color_temperature}
-            brightness: 100%
-            # cold_white: 0%
-            # warm_white: 100%
-
-# button:
-#   - platform: template
-#     name: Dump Config
-#     on_press:
-#       lambda: return ESP_LOGCONFIG("LIGHT CONFIG", "Config - red %f green %f blue %f cold_white %f warm_white %f mode %u", id(light_primary).current_values.get_red(), id(light_primary).current_values.get_green(), id(light_primary).current_values.get_blue(), id(light_primary).current_values.get_cold_white(), id(light_primary).current_values.get_warm_white(), id(light_primary).current_values.get_color_mode());
-
-# script:
-#   - id: update_relay
-#     then:
-#   - id: update_status
-#     then:
+    if:
+      condition:
+        lambda: return id(light_primary).current_values.get_red() == 1.0f && id(light_primary).current_values.get_green() == 1.0f && id(light_primary).current_values.get_blue() == 1.0f && (id(light_primary).current_values.get_cold_white() == 1.0f || id(light_primary).current_values.get_warm_white() == 1.0f);
+      then:
+        light.control:
+          id: light_primary
+          red: 0%
+          green: 0%
+          blue: 0%
+          color_brightness: 0%
+          color_temperature: ${default_white_color_temperature}
+          brightness: 100%
+          # cold_white: 0%
+          # warm_white: 100%

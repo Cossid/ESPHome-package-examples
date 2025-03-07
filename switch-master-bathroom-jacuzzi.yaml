@@ -1,0 +1,23 @@
+substitutions:
+  device_name: !secret device-name-switch-master-bathroom-jacuzzi
+  friendly_name: Master Bathroom Jacuzzi Light
+  detach_relay: "true"
+  status_light_follows_primary_light_state: "false"
+  status_inverted: "false"
+  restore_mode_relay: ALWAYS_ON
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  warm_white_color_temperature: "2200 K"
+  default_white_color_temperature: "2550 K"
+  area: Master Bathroom
+  wifi_static_ip: !secret ip-switch-master-bathroom-jacuzzi
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/switches/ultrapro.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender2.yaml
+    vars:
+      address1: !secret ip-bulb-master-bathroom-jacuzzi1
+      address2: !secret ip-bulb-master-bathroom-jacuzzi2

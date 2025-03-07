@@ -5,7 +5,7 @@ substitutions:
   device_name: garage-door
   id_prefix: garage_door
   friendly_name: "Garage Door"
-  use_mac_address: "false"
+  id_by_mac: "false"
   uart_tx_pin: D4
   uart_rx_pin: D2
   input_obst_pin: D7
@@ -21,13 +21,12 @@ esp32:
 esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
-  name_add_mac_suffix: ${use_mac_address}
+  name_add_mac_suffix: ${id_by_mac}
 
 # dashboard_import:
 #   package_import_url: github://ratgdo/esphome-ratgdo/v2board_esp32_d1_mini.yaml@main
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   remote_package:
     url: https://github.com/ratgdo/esphome-ratgdo
     files: [base.yaml]
@@ -36,3 +35,13 @@ packages:
 web_server:
 
 improv_serial:
+
+# text_sensor:
+#   - platform: version
+#     id: !remove ${id_prefix}_firmware_version
+
+button:
+  - platform: restart
+    id: !remove ${id_prefix}_restart
+  - platform: safe_mode
+    id: !remove ${id_prefix}_safe_mode

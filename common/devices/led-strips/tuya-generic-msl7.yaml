@@ -1,13 +1,55 @@
 substitutions:
-  project_name: "Tuya_Generic.WB8_RGBIC_Fairy_Light_Strip"
+  project_name: "Tuya_Generic.MSL7_WB8_RGBIC_Fairy_Light_Strip"
   project_version: "0.0.1"
-  hardware_info: "Tuya Generic WB8 RGBIC Fairy Light Strip"
+  hardware_info: "Tuya Generic MSL7 WB8 RGBIC Fairy Light Strip"
 
 bk72xx:
-  board: wb3s # WB8, looks just like WB3S
+  board: generic-bk7231t-qfn32-tuya # WB8, looks just like WB3S, but WB3S doesn't have GPIO16
+
+external_components:
+  # use all components from a local folder
+  - source:
+      type: local
+      path: custom_components
+    components: [ beken_spi_led_strip ]
+    refresh: always
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
-  #rgbww_light: !include ../../light/rgbww.yaml
   lt_beken_source: !include ../../beken/lt-beken-source.yaml
   #ddp: !include ../../ddp/ddp.yaml
+
+light:
+  - platform: beken_spi_led_strip
+    rgb_order: GRB
+    pin: P16
+    num_leds: 50
+    #chipset: ws2812
+    chipset: sk6812
+    #chipset: apa106
+    #chipset: sm16703
+    name: None
+
+remote_receiver:
+  pin:
+    number: GPIO26
+    inverted: true
+  dump: all
+
+# mic on P23?
+
+binary_sensor:
+  - platform: gpio
+    id: button_on_off
+    pin: 
+      number: GPIO24
+      inverted: true
+  - platform: gpio
+    id: button_music
+    pin: 
+      number: GPIO7
+      inverted: true
+  - platform: gpio
+    id: button_color
+    pin: 
+      number: GPIO9
+      inverted: true

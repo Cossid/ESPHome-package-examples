@@ -8,7 +8,6 @@ esp8266:
   restore_from_flash: true
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   web_controls_rgb: !include ../../web-controls/rgb.yaml
   web_controls_cct: !include ../../web-controls/cct.yaml
 

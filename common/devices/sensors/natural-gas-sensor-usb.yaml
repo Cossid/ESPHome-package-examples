@@ -1,0 +1,100 @@
+substitutions:
+  project_name: "Tuya_Generic.CB3S_Natural_Gas_Sensor_USB"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic CB3S Natural Gas Sensor USB"
+
+bk72xx:
+  board: cb3s
+  framework:
+    version: "0.0.0"
+    source: "https://github.com/hn/libretiny#prep-esphome6240-serialbufsize"
+    options:
+      LT_SERIAL_BUFFER_SIZE: 512
+
+# packages:
+#   lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+uart:
+  rx_pin: RX1
+  tx_pin: TX1
+  baud_rate: 9600
+
+tuya:
+
+# product id h4zi1ket7mhnucfu
+# Tuya:
+#   Datapoint 2: enum (value: 1)
+#   Datapoint 5: int value (value: 0)
+#   Datapoint 3: int value (value: 1)
+#   Datapoint 45: bitmask (value: 0)
+#   Product: '{"p":"h4zi1ket7mhnucfu","v":"1.0.0","m":2}'
+
+text_sensor:
+  - platform: "tuya"
+    name: "Self-Test Result"
+    sensor_datapoint: 1
+    filters:
+      # The Tuya DP is an enum which is converted to human-readable strings.
+      - map:
+        - 0 -> Checking
+        - 1 -> Success
+        - 2 -> Failure
+        - 3 -> Other
+  - platform: "tuya"
+    name: Fault Status
+    sensor_datapoint: 45
+    filters:
+      - map:
+        - 0 -> Fault
+        - 1 -> Serious Fault
+        - 2 -> Sensor Fault
+        - 3 -> Probe Fault
+        - 4 -> Power Fault
+        - 5 -> None # Normal
+
+binary_sensor:
+  - platform: "tuya"
+    name: "Gas Detected"
+    sensor_datapoint: 2
+    # 0: alarm
+    # 1: normal
+    # Whether a gas alarm is raised or not. Inverted since the value
+    # of "1" means "normal state". The DP is an enum with only 2 values.
+    filters:
+      - invert:
+  - platform: "tuya"
+    # Indicates whether the gas sensor preheat is in progress or not.
+    # It is done automatically when the device is powered on and the
+    # led flashes with different colors during that process.
+    name: "Sensor Preheat"
+    sensor_datapoint: 10
+
+sensor:
+  - platform: "tuya"
+    name: "Natural Gas Detection Level"
+    sensor_datapoint: 5
+    device_class: "gas"
+    unit_of_measurement: "ppm"
+
+number:
+  - platform: "tuya"
+    name: "Alarm Period"
+    unit_of_measurement: "Minutes"
+    number_datapoint: 3
+    min_value: 0
+    max_value: 60
+    step: 1
+
+switch:
+  - platform: "tuya"
+    # Trigger a self-test as if a gas level was over the threshold can
+    # be controlled by the physical button (highlighted by the LED) on
+    # the device as well.
+    name: "Alarm Self-Test"
+    switch_datapoint: 9
+    # The current value is fetched from the MCU upon initialization.
+    restore_mode: DISABLED
+  - platform: "tuya"
+    name: "Mute"
+    switch_datapoint: 14
+    restore_mode: DISABLED

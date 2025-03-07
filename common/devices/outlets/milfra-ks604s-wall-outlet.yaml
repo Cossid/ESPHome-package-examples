@@ -1,0 +1,66 @@
+substitutions:
+  project_name: "Milfra.KS604S_CB2S_Wall_Oulet_with_USB"
+  project_version: "0.0.1"
+  hardware_info: "Milfra KS604S CB2S Wall Outlet with USB"
+  restore_mode_relay1: RESTORE_DEFAULT_ON
+  restore_mode_relay2: RESTORE_DEFAULT_ON
+  restore_mode_relayUSB: RESTORE_DEFAULT_ON
+
+bk72xx:
+  board: cb2s
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+binary_sensor:
+  - platform: gpio
+    id: button_top_outlet
+    pin:
+      number: P11
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: relay1
+  - platform: gpio
+    id: button_bottom_outlet
+    pin:
+      number: P24
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: relay2
+  - platform: gpio
+    id: binary_switch_all
+    pin:
+      number: P23
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: relay1
+        - switch.toggle: relay2
+        - switch.toggle: relayUSB
+
+switch:
+  - platform: gpio
+    id: relay1
+    name: Top Outlet
+    pin: P26
+    restore_mode: ${restore_mode_relay1}
+  - platform: gpio
+    id: relay2
+    name: Bottom Outlet
+    pin: P8
+    restore_mode: ${restore_mode_relay2}
+  - platform: gpio
+    id: relayUSB
+    name: USB
+    pin: P6
+    restore_mode: ${restore_mode_relayUSB}
+
+status_led:
+  pin:
+    number: P10
+    inverted: true

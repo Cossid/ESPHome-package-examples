@@ -1,0 +1,16 @@
+substitutions:
+  device_name: !secret device-name-bulb-family-room3
+  friendly_name: Family Room Bulb 3
+  default_white_color_temperature: "2550 K"
+  area: Family Room
+  wifi_static_ip: !secret ip-bulb-family-room3
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-mid-upper-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/bulbs/cree-a19-cb8p.yaml
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_switch_id: !secret device-name-switch-family-room1

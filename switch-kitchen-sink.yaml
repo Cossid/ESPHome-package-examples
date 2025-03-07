@@ -1,7 +1,6 @@
 substitutions:
-  device_name: switch-kitchen-sink
+  device_name: !secret device-name-switch-kitchen-sink
   friendly_name: Kitchen Sink Light
-  device_group_name: group-kitchen-sink-lights
   motion_on_time: '10' # time (in seconds) to leave the relay on after motion is sensed 
   motion_off_holdoff: '0'  # how long (in seconds) to ignore motion if turned off via button or motion ending
   button_hold_for_hold_on_time: '1s'  # how long to press and hold the button to switch to hold-on mode
@@ -9,9 +8,14 @@ substitutions:
   restore_mode_motion: RESTORE_DEFAULT_ON
   restore_mode_light: ALWAYS_OFF
   area: Kitchen Sink
+  wifi_static_ip: !secret ip-switch-kitchen-sink
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-lower-mid-upper.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
   device: !include common/devices/switches/motion-single.yaml
-  device_groups: !include common/device-groups/device-groups-light.yaml
+  udp_groups_sender: !include
+    file: common/udp-groups/udp-groups-light-sender1.yaml
+    vars:
+      address1: !secret ip-bulb-kitchen-sink

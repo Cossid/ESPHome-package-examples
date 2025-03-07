@@ -1,0 +1,9 @@
+packages:
+  wifi_domain: !include wifi-domain.yaml
+  wifi_ap_protected: !include wifi-ap-protected.yaml
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_password
+      bssid: !secret wifi_ch1_bssid

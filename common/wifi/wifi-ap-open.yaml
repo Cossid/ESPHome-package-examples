@@ -1,0 +1,6 @@
+wifi:
+  ap:
+
+button:
+  - platform: factory_reset
+    name: Restart with Factory Default Settings

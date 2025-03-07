@@ -1,0 +1,101 @@
+substitutions:
+  project_name: "ELEGRP.SSS10_CB2S_TuyaMCU_Motion_Dimmer"
+  project_version: "0.0.1"
+  hardware_info: "ELEGRP SSS10 CB2S TuyaMCU Motion Dimmer"
+
+bk72xx:
+  board: cb2s
+
+uart:
+  rx_pin: RX1
+  tx_pin: TX1
+  baud_rate: 9600
+
+tuya:
+  # DPIDs processed from schema model: 000001v0xv
+
+switch:
+  - platform: tuya
+    switch_datapoint: 1
+    name: Switch Led 1
+  - platform: tuya
+    switch_datapoint: 110
+    name: Countdown Action 1
+  - platform: tuya
+    switch_datapoint: 114
+    name: Set Brightness Min
+
+number:
+  - platform: tuya
+    number_datapoint: 2
+    name: Brightness
+    min_value: 10
+    max_value: 1000
+    step: 1
+  - platform: tuya
+    number_datapoint: 3
+    name: Brightness Min
+    min_value: 0
+    max_value: 500
+    step: 1
+  - platform: tuya
+    number_datapoint: 5
+    name: Brightness Max
+    min_value: 550
+    max_value: 1000
+    step: 1
+  - platform: tuya
+    number_datapoint: 6
+    name: Countdown
+    unit_of_measurement: S
+    min_value: 0
+    max_value: 86399
+    step: 1
+  - platform: tuya
+    number_datapoint: 101
+    name: Indicator Brightness
+    min_value: 0
+    max_value: 100
+    step: 1
+  - platform: tuya
+    number_datapoint: 108
+    name: Longpress Brightness
+    min_value: 10
+    max_value: 1000
+    step: 1
+  - platform: tuya
+    number_datapoint: 111
+    name: Countdown Total
+    unit_of_measurement: S
+    min_value: 0
+    max_value: 86399
+    step: 1
+
+select:
+  - platform: tuya
+    enum_datapoint: 4
+    name: Led Type
+    optimistic: true
+    options:
+      0: Cfl
+      1: Incandescent
+      2: Halogen
+      3: Led
+  - platform: tuya
+    enum_datapoint: 103
+    name: Fade On Speed
+    optimistic: true
+    options:
+      0: Immediate
+      1: Fast
+      2: Medium
+      3: Slow
+  - platform: tuya
+    enum_datapoint: 104
+    name: Fade Off Speed
+    optimistic: true
+    options:
+      0: Immediate
+      1: Fast
+      2: Medium
+      3: Slow

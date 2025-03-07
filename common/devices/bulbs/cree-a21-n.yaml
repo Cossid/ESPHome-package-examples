@@ -1,0 +1,41 @@
+substitutions:
+  project_name: "Cree.CMA21_A21_CB8P_BP5758D_RGBWW_Bulb"
+  project_version: "0.0.1"
+  hardware_info: "Cree CMA21 A21 CB8P BP5758D RGBWW Bulb"
+  restore_mode_light: RESTORE_DEFAULT_OFF
+  cold_white_color_temperature: "6500 K"
+  warm_white_color_temperature: "2200 K"
+  default_white_color_temperature: "2200 K"
+
+bk72xx:
+  board: generic-bk7231n-qfn32-tuya # CB8P
+
+packages:
+  rgbct_light: !include ../../light/rgbww.yaml
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+bp5758d:
+  clock_pin: GPIO7
+  data_pin: GPIO8
+
+output:
+  - platform: bp5758d
+    id: output_red
+    channel: 3
+    current: 15
+  - platform: bp5758d
+    id: output_green
+    channel: 2
+    current: 15
+  - platform: bp5758d
+    id: output_blue
+    channel: 1
+    current: 15
+  - platform: bp5758d
+    id: output_cold_white
+    channel: 5
+    current: 53
+  - platform: bp5758d
+    id: output_warm_white
+    channel: 4
+    current: 50

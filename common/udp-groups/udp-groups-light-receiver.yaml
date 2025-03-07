@@ -1,0 +1,40 @@
+substitutions:
+  remote_id: "1"
+
+globals:
+  - id: ignore_remote_brightness_set
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
+udp:
+  - id: udp_receive_only_${remote_id}
+    port: 1851${remote_id}
+    update_interval: never
+
+binary_sensor:
+  - platform: udp
+    udp_id: udp_receive_only_${remote_id}
+    provider: ${remote_switch_id}
+    remote_id: light_primary_state
+    id: light_remote_state_${remote_id}
+    on_state:
+      - light.control:
+          id: light_primary
+          state: !lambda return x;
+
+sensor:
+  - platform: udp
+    udp_id: udp_receive_only_${remote_id}
+    provider: ${remote_switch_id}
+    remote_id: light_primary_brightness
+    id: light_remote_brightness_${remote_id}
+    on_value:
+      - if:
+          condition:
+            lambda: return !id(ignore_remote_brightness_set);
+          then:
+            - light.control:
+                id: light_primary
+                brightness: !lambda return x;
+                transition_length: ${brightness_transition_time}

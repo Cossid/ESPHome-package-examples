@@ -8,7 +8,6 @@ esp8266:
   restore_from_flash: true
 
 packages:
-  device_diagnostics: !include ../device-diagnostics.yaml
   rgbww_light: !include ../../light/rgbww.yaml
 
 output:

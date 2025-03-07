@@ -1,0 +1,37 @@
+substitutions:
+  remote_id: "1"
+
+binary_sensor:
+  - platform: udp
+    udp_id: udp_receive_only_${remote_id}
+    provider: ${remote_motion_id}
+    remote_id: motion_state
+    id: motion_remote_state_${remote_id}
+
+  - platform: template
+    id: motion_combined
+    lambda: return id(motion_primary).state || id(motion_remote_state_${remote_id}).state;
+    on_press:
+      then:
+        #- logger.log: "combined motion triggered"
+        -  if: 
+            condition:
+              and:
+                - lambda: return id(motion_enabled).state && (!id(light_primary).remote_values.get_state() || id(motion_activated));
+                - or:
+                  # - or:
+                  #   - lambda: return id(light_sense_state).state == 0;
+                  #   - lambda: return id(motion_activated) == 1;
+                  # - sun.is_below_horizon:
+                  - lambda: return id(sun_home).elevation() <= ${motion_elevation_cutoff};
+                  - lambda: return id(global_ignore_sun) == 1;
+            then:
+              - script.execute: motion_triggered
+    on_release:
+      then:
+        #- logger.log: "combined motion ended"
+        - if:
+            condition:
+              - lambda: return id(motion_activated) == 1;
+            then:
+              - script.execute: motion_stopped

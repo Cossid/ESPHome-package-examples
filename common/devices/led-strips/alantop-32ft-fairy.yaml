@@ -1,0 +1,38 @@
+substitutions:
+  project_name: "Alantop.CBU_RGBIC_Fairy_Light_Strip"
+  project_version: "0.0.1"
+  hardware_info: "Alantop CBU RGBIC Fairy Light Strip"
+
+bk72xx:
+  board: cbu
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+  #ddp: !include ../../ddp/ddp.yaml
+
+light:
+  - platform: beken_spi_led_strip
+    id: light_strip
+    rgb_order: GRB
+    pin: GPIO16
+    num_leds: 100
+    #chipset: ws2812 # verified not working
+    #chipset: sk6812 # works, but whites scatter
+    #chipset: apa106 # works, but seems to pulse at full white
+    chipset: sm16703 # works, but whites scatter
+    name: None
+
+remote_receiver:
+  pin: GPIO26
+  dump: all
+
+# GPIO23 is MIC
+
+binary_sensor:
+  - platform: gpio
+    id: button_on_off
+    pin: 
+      number: GPIO9
+      inverted: true
+    on_press:
+      - light.toggle: light_strip

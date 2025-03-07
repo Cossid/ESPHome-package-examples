@@ -1,0 +1,50 @@
+substitutions:
+  project_name: "HeuxGir.WF-WS01_WB3S_Switch"
+  project_version: "0.0.1"
+  hardware_info: "HeuxGir WF-WS01 WB3S Switch"
+
+bk72xx:
+  board: wb3s
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+# GPIO 11 - 3rd LED
+
+output:
+  - platform: libretiny_pwm
+    id: output_led_1
+    pin: P26
+
+light:
+  - platform: monochromatic
+    id: light_switch_1
+    output: output_led_1
+
+binary_sensor:
+  - platform: gpio
+    id: binary_switch_1
+    pin:
+      number: P10
+      inverted: true
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: switch_1
+
+switch:
+  - platform: gpio
+    id: switch_1
+    name: Relay 1
+    pin: P9
+    on_turn_on:
+      - light.turn_on: light_switch_1
+    on_turn_off:
+      - light.turn_off: light_switch_1
+  - platform: gpio
+    id: switch_3rd_led
+    name: 3rd LED
+    pin: GPIO11
+
+status_led:
+  pin: P1

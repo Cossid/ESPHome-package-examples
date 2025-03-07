@@ -1,0 +1,12 @@
+substitutions:
+  # outlet-master-bedroom-powerstrip exceeds ESPHome's 31 character host limit.
+  device_name: !secret device-name-outlet-master-bedroom-strip
+  friendly_name: Master Bedroom Powerstrip
+  area: Master Bedroom
+  wifi_static_ip: !secret ip-outlet-master-bedroom-strip
+
+packages:
+  base: !include common/base.yaml
+  wifi: !include common/wifi/wifi-upper-mid-lower.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/outlets/gosund-p2-powerstrip.yaml

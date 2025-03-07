@@ -1,11 +1,15 @@
 substitutions:
-  device_name: bulb-deck1
+  device_name: !secret device-name-bulb-deck1
   friendly_name: Deck Bulb 1
-  device_group_name: group-deck-lights
   area: Deck
+  wifi_static_ip: !secret ip-bulb-deck1
 
 packages:
   base: !include common/base.yaml
   wifi: !include common/wifi/wifi-mid-upper-lower.yaml
-  device: !include common/devices/bulbs/cree-par38.yaml
-  device_groups: !include common/device-groups/device-groups-light-receive-only.yaml
+  wifi_static_ip: !include common/wifi/wifi-static-ip.yaml
+  device: !include common/devices/bulbs/cree-par38-t.yaml
+  udp_groups_receive: !include
+    file: common/udp-groups/udp-groups-light-receiver.yaml
+    vars:
+      remote_switch_id: !secret device-name-switch-deck1

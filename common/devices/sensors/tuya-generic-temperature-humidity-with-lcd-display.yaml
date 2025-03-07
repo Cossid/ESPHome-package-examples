@@ -1,0 +1,23 @@
+substitutions:
+  project_name: "Tuya_Generic.CBU-Temperature-and-Humidity-with-LCD"
+  project_version: "0.0.1"
+  hardware_info: "Tuya Generic CBU Temperature and Humidity with LCD"
+
+packages:
+  lt_beken_source: !include ../../beken/lt-beken-source.yaml
+
+bk72xx:
+  board: cbu
+
+# P14 Button
+# T&H
+# P22 CH8305 SDA
+# P20 CH8305 SCL
+# LCD
+# P15 GN6932 DIN
+# P17 GN6932 CLK
+# P28 GN6932 STB
+
+binary_sensor:
+  - platform: gpio
+    pin: GPIO14
