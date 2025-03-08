@@ -6,6 +6,12 @@ substitutions:
   project_version: "0.0.1"
   brightness_transition_time: 0.1s
 
+globals:
+  - id: ignore_remote_brightness_set
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
 logger:
 api:
 ota:

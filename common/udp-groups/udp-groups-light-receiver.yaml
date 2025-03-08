@@ -1,12 +1,6 @@
 substitutions:
   remote_id: "1"
 
-globals:
-  - id: ignore_remote_brightness_set
-    type: bool
-    restore_value: no
-    initial_value: 'false'
-
 udp:
   - id: udp_receive_only_${remote_id}
     port: 1851${remote_id}
